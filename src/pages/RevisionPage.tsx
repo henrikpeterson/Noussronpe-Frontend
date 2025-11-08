@@ -9,6 +9,14 @@ import { useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 const RevisionPage = () => {
   // Extraire tous les niveaux uniques
   const allLevels = Array.from(
@@ -23,6 +31,10 @@ const RevisionPage = () => {
   
   // État pour la matière sélectionnée
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
+  
+  // État pour la pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
   
   // Récupérer la liste de toutes les matières
   const subjectIds = subjects.map(s => s.id);
@@ -51,6 +63,23 @@ const RevisionPage = () => {
   
   // Filtrer les matières disponibles pour le niveau sélectionné
   const availableSubjects = subjects.filter(subject => subject.levels.includes(selectedLevel));
+  
+  // Pagination
+  const totalPages = Math.ceil(filteredChapters.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedChapters = filteredChapters.slice(startIndex, endIndex);
+
+  // Réinitialiser la page quand les filtres changent
+  const handleLevelChange = (level: string) => {
+    setSelectedLevel(level);
+    setCurrentPage(1);
+  };
+
+  const handleSubjectChange = (subject: string) => {
+    setSelectedSubject(subject);
+    setCurrentPage(1);
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -81,7 +110,7 @@ const RevisionPage = () => {
                   {allLevels.map(level => (
                     <DropdownMenuItem 
                       key={level} 
-                      onClick={() => setSelectedLevel(level)}
+                      onClick={() => handleLevelChange(level)}
                       className={selectedLevel === level ? "bg-accent" : ""}
                     >
                       {level}
@@ -104,7 +133,7 @@ const RevisionPage = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-[200px]">
                   <DropdownMenuItem 
-                    onClick={() => setSelectedSubject("all")}
+                    onClick={() => handleSubjectChange("all")}
                     className={selectedSubject === "all" ? "bg-accent" : ""}
                   >
                     Toutes les matières
@@ -112,7 +141,7 @@ const RevisionPage = () => {
                   {availableSubjects.map(subject => (
                     <DropdownMenuItem 
                       key={subject.id} 
-                      onClick={() => setSelectedSubject(subject.id)}
+                      onClick={() => handleSubjectChange(subject.id)}
                       className={selectedSubject === subject.id ? "bg-accent" : ""}
                     >
                       {subject.name}
@@ -124,22 +153,58 @@ const RevisionPage = () => {
           </div>
 
           {/* Liste des chapitres */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filteredChapters.length > 0 ? (
-              filteredChapters.map(chapter => (
-                <ChapterCard 
-                  key={chapter.id} 
-                  chapter={chapter} 
-                  completed={isChapterCompleted(chapter.id)}
-                  progress={getChapterProgress(chapter.id)}
-                />
-              ))
-            ) : (
-              <p className="col-span-full text-center text-muted-foreground py-8">
-                Aucun chapitre disponible pour cette sélection.
-              </p>
-            )}
-          </div>
+          {filteredChapters.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {paginatedChapters.map(chapter => (
+                  <ChapterCard 
+                    key={chapter.id} 
+                    chapter={chapter} 
+                    completed={isChapterCompleted(chapter.id)}
+                    progress={getChapterProgress(chapter.id)}
+                  />
+                ))}
+              </div>
+              
+              {totalPages > 1 && (
+                <div className="mt-8">
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                          className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                        />
+                      </PaginationItem>
+                      
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <PaginationItem key={page}>
+                          <PaginationLink
+                            onClick={() => setCurrentPage(page)}
+                            isActive={currentPage === page}
+                            className="cursor-pointer"
+                          >
+                            {page}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      
+                      <PaginationItem>
+                        <PaginationNext 
+                          onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                          className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="text-center text-muted-foreground py-8">
+              Aucun chapitre disponible pour cette sélection.
+            </p>
+          )}
         </div>
       </main>
       

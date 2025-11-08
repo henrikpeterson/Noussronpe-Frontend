@@ -8,18 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Clock, Download, FileText, Play, School, Eye } from "lucide-react";
+import { Clock, Download, FileText, Play, School, Eye, Loader2 } from "lucide-react";
 import ExamTraining from "@/components/training/ExamTraining";
 import { useTokenConsumption } from "@/hooks/useTokenConsumption";
 import TokenConsumptionModal from "@/components/tokens/TokenConsumptionModal";
 import TokenPacksModal from "@/components/tokens/TokenPacksModal";
+import { useEpreuveDetails } from "@/hooks/useTrainingData";
+
 const ExamDetailPage = () => {
-  const {
-    id
-  } = useParams<{
-    id: string;
-  }>();
-  const exam = exams.find(e => e.id === id);
+  const {id} = useParams<{id: string}>(); 
+  const { epreuve, loading, error } = useEpreuveDetails(Number(id));
+
+  //const exam = exams.find(e => e.id === id);
   const [currentPage, setCurrentPage] = useState(1);
   const [showPreview, setShowPreview] = useState(false);
   const [isTrainingMode, setIsTrainingMode] = useState(false);
@@ -34,7 +34,43 @@ const ExamDetailPage = () => {
     cancelConsumption,
     closePacksModal,
   } = useTokenConsumption();
-  if (!exam) {
+
+  // ✅ GESTION DU CHARGEMENT ET DES ERREURS EN PREMIER
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-primary" />
+            <p className="text-lg">Chargement de l'épreuve...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Erreur</h1>
+            <p className="mb-6">{error}</p>
+            <Button asChild>
+              <a href="/training">Retour à l'espace d'entraînement</a>
+            </Button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  
+  if (!epreuve || !epreuve.id) {
     return <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-grow flex items-center justify-center">
@@ -50,28 +86,27 @@ const ExamDetailPage = () => {
       </div>;
   }
   if (isTrainingMode) {
-    return <ExamTraining exam={exam} onExit={() => setIsTrainingMode(false)} />;
+    return <ExamTraining epreuveId={epreuve.id} onExit={() => setIsTrainingMode(false)} />;
   }
-  const subject = subjects.find(s => s.id === exam.subject);
 
   // URL du PDF pour l'aperçu (URL d'exemple)
-  const pdfUrl = `https://arxiv.org/pdf/2203.15556.pdf`;
+  const pdfUrl = `http://192.168.1.82:8000/api/TrainingAndEvaluation/epreuve/${epreuve.id}/pdf/`;
   
   return <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-grow">
         <div className="h-64 bg-cover bg-center relative" style={{
-        backgroundImage: exam.imageUrl ? `url(${exam.imageUrl})` : "url(https://images.unsplash.com/photo-1610116306796-6fea9f4fae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80)"
+        backgroundImage: "url(https://images.unsplash.com/photo-1610116306796-6fea9f4fae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80)"
       }}>
           <div className="absolute inset-0 bg-black/50 flex items-end">
             <div className="container mx-auto px-4 py-8">
               <div className="flex flex-wrap gap-2 mb-4">
-                <Badge className="bg-afrique-jaune hover:bg-afrique-jaune/80">{exam.level}</Badge>
-                <Badge variant="outline" className="text-white border-white">{exam.type}</Badge>
-                <Badge variant="outline" className="text-white border-white">{exam.year}</Badge>
+                <Badge className="bg-afrique-jaune hover:bg-afrique-jaune/80">{epreuve.classe.nom}</Badge>
+                <Badge variant="outline" className="text-white border-white">{epreuve.type_epreuve}</Badge>
+                <Badge variant="outline" className="text-white border-white">{epreuve.annee}</Badge>
               </div>
-              <h1 className="text-3xl font-bold text-white">{exam.title}</h1>
+              <h1 className="text-3xl font-bold text-white">{epreuve.titre}</h1>
             </div>
           </div>
         </div>
@@ -82,14 +117,14 @@ const ExamDetailPage = () => {
               <Card className="mb-6">
                 <CardContent className="p-6">
                   <h2 className="text-xl font-bold mb-4">À propos de cette épreuve</h2>
-                  <p className="text-gray-700 mb-6">{exam.description}</p>
+                  <p className="text-gray-700 mb-6">{epreuve.description}</p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div className="flex items-center gap-2">
                       <Clock className="h-5 w-5 text-afrique-orange" />
                       <div>
                         <p className="text-sm text-gray-500">Durée</p>
-                        <p className="font-medium">{exam.duration} minutes</p>
+                        <p className="font-medium">{epreuve.duree} minutes</p>
                       </div>
                     </div>
                     
@@ -97,7 +132,7 @@ const ExamDetailPage = () => {
                       <School className="h-5 w-5 text-afrique-orange" />
                       <div>
                         <p className="text-sm text-gray-500">École</p>
-                        <p className="font-medium">{exam.school}</p>
+                        <p className="font-medium">{epreuve.ecole}</p>
                       </div>
                     </div>
                     
@@ -105,14 +140,11 @@ const ExamDetailPage = () => {
                       <FileText className="h-5 w-5 text-afrique-orange" />
                       <div>
                         <p className="text-sm text-gray-500">Matière</p>
-                        <p className="font-medium">{subject?.name || exam.subject}</p>
+                        <p className="font-medium">{epreuve.matiere.nom}</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {exam.tags.map((tag, index) => <Badge key={index} variant="outline" className="bg-gray-100">{tag}</Badge>)}
-                  </div>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
@@ -159,7 +191,8 @@ const ExamDetailPage = () => {
                     
                     {/* Iframe pour le PDF */}
                     <div className="border rounded-lg overflow-hidden mb-4">
-                      <iframe src={pdfUrl} width="100%" height="600" className="border-0" title="Aperçu de l'épreuve" />
+                      <iframe src={pdfUrl} 
+                      width="100%" height="600" className="border-0" title="Aperçu de l'épreuve" />
                     </div>
                     
                     {/* Pagination */}
@@ -188,21 +221,6 @@ const ExamDetailPage = () => {
             </div>
             
             <div>
-              <Card className="mb-6">
-                <CardContent className="p-6">
-                  <h3 className="font-bold mb-4">Épreuves similaires</h3>
-                  <div className="space-y-4">
-                    {exams.filter(e => e.id !== exam.id && e.subject === exam.subject).slice(0, 3).map(similarExam => <a key={similarExam.id} href={`/epreuves/${similarExam.id}`} className="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                          <h4 className="font-medium line-clamp-1">{similarExam.title}</h4>
-                          <div className="flex justify-between items-center mt-2 text-sm">
-                            <Badge variant="outline">{similarExam.level}</Badge>
-                            <span className="text-gray-500">{similarExam.duration} min</span>
-                          </div>
-                        </a>)}
-                  </div>
-                </CardContent>
-              </Card>
-              
               <Card>
                 <CardContent className="p-6">
                   <h3 className="font-bold mb-4">Chapitres liés</h3>
