@@ -1,28 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import AssistanceRequestForm from "@/components/assistance/AssistanceRequestForm";
 import AssistanceRequestCard from "@/components/assistance/AssistanceRequestCard";
-import AssistanceDetailModal from "@/components/assistance/AssistanceDetailModal";
-import { getStudentRequests, currentStudentStats, AssistanceRequest } from "@/data/assistance";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, HelpCircle } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MessageCircle, HelpCircle, Loader2, PlusCircle, History } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAssistance } from "@/hooks/useAssitance";
+import { AssistanceRequest } from "@/api";
 
 const AssistanceEducativePage = () => {
-  const [requests, setRequests] = useState<AssistanceRequest[]>(getStudentRequests('student1'));
-  const [selectedRequest, setSelectedRequest] = useState<AssistanceRequest | null>(null);
-  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const { 
+    demandes, 
+    loading, 
+    error, 
+    creeDemande, 
+    chargerMesDemandes,
+    clearError 
+  } = useAssistance();
+  
+  const [activeTab, setActiveTab] = useState("formulaire");
 
-  const handleViewRequest = (request: AssistanceRequest) => {
-    setSelectedRequest(request);
-    setDetailModalOpen(true);
-  };
+  // Charger les demandes au montage
+  useEffect(() => {
+    chargerMesDemandes();
+  }, []);
 
-  const handleFormSubmit = () => {
-    // Recharger les demandes après soumission
-    setRequests(getStudentRequests('student1'));
+  const handleFormSubmit = async (formData: {
+    titre: string;
+    type_question: string;
+    description: string;
+    matiere: number;
+    image?: File;
+  }) => {
+    try {
+      await creeDemande(formData);
+      await chargerMesDemandes();
+      setActiveTab("demandes"); // Basculer sur l'onglet des demandes après soumission
+    } catch (err) {
+      console.error("Erreur création demande:", err);
+    }
   };
 
   return (
@@ -31,7 +50,7 @@ const AssistanceEducativePage = () => {
       
       <main className="flex-grow bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 py-8">
-          {/* En-tête */}
+          {/* En-tête (inchangé) */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
               <MessageCircle className="h-8 w-8 text-primary" />
@@ -42,74 +61,78 @@ const AssistanceEducativePage = () => {
             </p>
           </div>
 
-          {/* Statistiques */}
-          <div className="max-w-4xl mx-auto mb-8">
-            <Alert>
-              <HelpCircle className="h-4 w-4" />
-              <AlertDescription>
-                {currentStudentStats.hasSubscription ? (
-                  <span>
-                    ✨ Tu as un abonnement actif ! Tu peux poser des questions illimitées.
-                  </span>
-                ) : (
-                  <span>
-                    Il te reste <strong>{currentStudentStats.freeQuestionsRemaining}</strong> question(s) gratuite(s). 
-                    <Button variant="link" className="px-1 h-auto">
-                      Souscrire à l'abonnement
-                    </Button>
-                    pour des questions illimitées (2000 F/trimestre).
-                  </span>
-                )}
-              </AlertDescription>
-            </Alert>
-          </div>
-
-          {/* Formulaire et demandes */}
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
-            {/* Formulaire */}
-            <div>
-              <AssistanceRequestForm onSubmit={handleFormSubmit} />
+          {/* Gestion des erreurs (inchangé) */}
+          {error && (
+            <div className="max-w-4xl mx-auto mb-4">
+              <Alert variant="destructive">
+                <AlertDescription>
+                  {error}
+                  <Button variant="ghost" size="sm" onClick={clearError} className="ml-2">
+                    ×
+                  </Button>
+                </AlertDescription>
+              </Alert>
             </div>
+          )}
 
-            {/* Mes demandes */}
-            <div>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Mes demandes</CardTitle>
-                  <CardDescription>
-                    Consulte l'historique de tes questions et leurs réponses
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {requests.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground">
-                      <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                      <p>Aucune demande pour le moment</p>
-                      <p className="text-sm">Pose ta première question !</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {requests.map((request) => (
-                        <AssistanceRequestCard
-                          key={request.id}
-                          request={request}
-                          onView={handleViewRequest}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
+          {/* Contenu principal avec onglets */}
+          <div className="max-w-4xl mx-auto">
+            <Card>
+              <CardHeader className="pb-4">
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="formulaire" className="flex items-center gap-2">
+                      <PlusCircle className="h-4 w-4" />
+                      Nouvelle demande
+                    </TabsTrigger>
+                    <TabsTrigger value="demandes" className="flex items-center gap-2">
+                      <History className="h-4 w-4" />
+                      Mes demandes ({demandes.length})
+                    </TabsTrigger>
+                  </TabsList>
+
+                  {/* Onglet 1 : Formulaire */}
+                  <TabsContent value="formulaire" className="mt-6">
+                    <AssistanceRequestForm onSubmit={handleFormSubmit} />
+                  </TabsContent>
+
+                  {/* Onglet 2 : Mes demandes */}
+                  <TabsContent value="demandes" className="mt-6">
+                    {loading ? (
+                      <div className="text-center py-8">
+                        <Loader2 className="h-8 w-8 animate-spin mx-auto mb-2" />
+                        <p className="text-muted-foreground">Chargement...</p>
+                      </div>
+                    ) : demandes.length === 0 ? (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                        <p>Aucune demande pour le moment</p>
+                        <p className="text-sm">Pose ta première question !</p>
+                        <Button 
+                          onClick={() => setActiveTab("formulaire")}
+                          className="mt-4"
+                        >
+                          Créer une demande
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {demandes.map((request) => (
+                          <AssistanceRequestCard
+                            key={request.id}
+                            request={request}
+                            onView={() => {/* Laissé vide comme avant */}}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </TabsContent>
+                </Tabs>
+              </CardHeader>
+            </Card>
           </div>
         </div>
       </main>
-
-      <AssistanceDetailModal
-        request={selectedRequest}
-        open={detailModalOpen}
-        onOpenChange={setDetailModalOpen}
-      />
 
       <Footer />
     </div>

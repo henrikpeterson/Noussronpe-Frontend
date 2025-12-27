@@ -54,13 +54,11 @@ export default function LoginPage() {
         NumeroTel: data.NumeroTel,
       }
       
-      
-
       const response = await api.post("/auth/login/", payload);
 
       // ✅ Stocker le token JWT pour l'authentification
-      localStorage.setItem('access_token', response.data.access);
-      localStorage.setItem('refresh_token', response.data.refresh);
+      localStorage.setItem('students_access_token', response.data.access);
+      localStorage.setItem('students_refresh_token', response.data.refresh);
 
       // ✅ Récupérer les informations de l'utilisateur connecté
       const userResponse = await api.get("/auth/users/me/", {
@@ -68,10 +66,10 @@ export default function LoginPage() {
       });
 
       // ✅ Stocker les informations de l'utilisateur
-      localStorage.setItem("user", JSON.stringify(userResponse.data));
+      localStorage.setItem("students_user", JSON.stringify(userResponse.data));
 
 
-      console.log("Compte créé:", response.data)
+      console.log("Élève connecté:", response.data);
       toast({
         title: "Connexion reussie avec succes",
         description: "Amuse toi bien",

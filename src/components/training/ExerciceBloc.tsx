@@ -5,7 +5,7 @@ import { ArrowRight, Send, ChevronDown, ChevronUp } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
 import QuestionCard from "./QuestionCard";
-import { Exercice, Question, Option } from '../api'; 
+import { Exercice, Question, Option } from 'src/api.tsx'; 
 
 interface ExerciceBlocProps {
   exercice: Exercice;
@@ -19,6 +19,8 @@ interface ExerciceBlocProps {
   colorScheme: string;
   showExplanations?: boolean;
 }
+
+
 
 const ExerciceBloc = ({
   exercice,
@@ -39,6 +41,16 @@ const ExerciceBloc = ({
   const allQuestionsAnswered = exercice.questions.every(
     q => answers[q.id] !== undefined && answers[q.id] !== ""
   );
+  
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  // Sécurisation si l'énoncé est vide
+  const htmlWithAbsoluteMedia = exercice.enonce
+    ? exercice.enonce.replace(
+        /src="\/media\//g,
+        `src="${apiBaseUrl}/media/`
+      )
+    : "";
 
   return (
     <div 
@@ -84,16 +96,26 @@ const ExerciceBloc = ({
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-2">
-                <Card className="bg-muted/30 border-border/40 shadow-sm">
-                  <CardContent className="pt-3 pb-3 px-3">
+                <Card className="bg-red-100 border border-red-200 shadow-sm rounded-lg">
+                  <CardContent className="pt-4 pb-4 px-4 bg-red-50">
                     <div
-                      className="prose max-w-none text-foreground
-                          text-[0.95rem] leading-relaxed tracking-normal
-                          prose-p:my-2 prose-headings:my-3
-                          prose-ul:my-2 prose-ol:my-2
-                          prose-table:text-[0.9rem] prose-table:my-2
-                          prose-th:py-1 prose-td:py-0.5"
-                      dangerouslySetInnerHTML={{ __html: exercice.enonce }}
+                      className="prose max-w-none text-gray-800
+                                text-[0.96rem] leading-relaxed tracking-normal
+                                prose-p:my-2 prose-headings:my-3
+                                prose-ul:my-2 prose-ol:my-2
+
+                                prose-img:mx-auto
+                                prose-img:my-4
+                                prose-img:rounded-md
+                                prose-img:shadow
+                                prose-img:w-[200px]
+                                md:prose-img:w-[250px]
+                                lg:prose-img:w-[280px]
+
+                                prose-table:text-[0.9rem] prose-table:my-2
+                                prose-th:py-1 prose-td:py-0.5 prose-th:text-gray-700
+                                prose-strong:text-gray-900 prose-em:text-gray-700"
+                      dangerouslySetInnerHTML={{ __html: htmlWithAbsoluteMedia }}
                     />
                   </CardContent>
                 </Card>
@@ -104,7 +126,7 @@ const ExerciceBloc = ({
 
         {/* Questions de l'exercice */}
         <div className="space-y-3 mb-4">
-          {exercice.questions.map((question, index) => (
+          {exercice.questions.map((question, index, i) => (
             <QuestionCard
               key={question.id}
               question={question}
@@ -112,6 +134,7 @@ const ExerciceBloc = ({
               onAnswerChange={(answer) => onAnswerChange(question.id, answer)}
               isFirstQuestion={index === 0}
               showExplanations={showExplanations}
+              questionNumber={index + 1}
             />
           ))}
         </div>

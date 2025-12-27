@@ -39,8 +39,8 @@ export default function Header() {
 
   // ==================== FONCTIONS ====================
   const checkAuthStatus = () => {
-    const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
-    const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+    const token = localStorage.getItem('students_access_token') || sessionStorage.getItem('students_access_token');
+    const user = localStorage.getItem('students_user') || sessionStorage.getItem('students_user');
     
     if (token && user) {
       setIsLoggedIn(true);
@@ -56,12 +56,12 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user');
-    sessionStorage.removeItem('access_token');
-    sessionStorage.removeItem('refresh_token');
-    sessionStorage.removeItem('user');
+    localStorage.removeItem('students_access_token');
+    localStorage.removeItem('students_refresh_token');
+    localStorage.removeItem('students_user');
+    sessionStorage.removeItem('students_access_token');
+    sessionStorage.removeItem('students_refresh_token');
+    sessionStorage.removeItem('students_user');
     
     setIsLoggedIn(false);
     setUserData(null);

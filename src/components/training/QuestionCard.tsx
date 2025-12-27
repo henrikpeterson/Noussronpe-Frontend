@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronUp, CheckCircle2, XCircle} from "lucide-react";
 import { useState } from "react";
-import { Exercice, Question, Option } from '../api'; 
+import { Exercice, Question, Option } from 'src/api.tsx'; 
 
 interface QuestionCardProps {
   question: Question;
@@ -15,9 +15,10 @@ interface QuestionCardProps {
   onAnswerChange: (answer: any) => void;
   isFirstQuestion?: boolean;
   showExplanations?: boolean;
+  questionNumber?: number;
 }
 
-const QuestionCard = ({ question, answer, onAnswerChange, isFirstQuestion = false, showExplanations = false }: QuestionCardProps) => {
+const QuestionCard = ({ question, answer, onAnswerChange, isFirstQuestion = false, showExplanations = false, questionNumber }: QuestionCardProps) => {
 
   console.log('🔍 QuestionCard données:', {
     questionId: question.id,
@@ -34,7 +35,7 @@ const QuestionCard = ({ question, answer, onAnswerChange, isFirstQuestion = fals
   const optionSelectionnee = optionSelectionneeIndex !== -1 ? question.options[optionSelectionneeIndex] : null;
 
   // Trouver l'option correcte
-  const optionCorrecte = question.options.find(opt => opt.correct); 
+  const optionCorrecte = question.options.find(opt => opt.correcte); 
 
 
   const handleReponseChange = (optionIndex: number, optionTexte: string) => {
@@ -53,7 +54,7 @@ const QuestionCard = ({ question, answer, onAnswerChange, isFirstQuestion = fals
             <div className="flex justify-between items-center flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <CardTitle className="text-sm md:text-base font-bold text-foreground">
-                  Question {question.id}
+                  Question {questionNumber}
                 </CardTitle>
                 <div className="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full border border-primary/20">
                   ⭐ {question.points} pts
@@ -129,9 +130,9 @@ const QuestionCard = ({ question, answer, onAnswerChange, isFirstQuestion = fals
                         estCorrecte ? 'text-green-600' : 'text-red-600'
                       }`}>
                         {estCorrecte ? (
-                          <CheckCircle2 className="h-4 w-4" title="Bonne réponse" />
+                          <CheckCircle2 className="h-4 w-4" aria-label="Bonne réponse" />
                         ) : (
-                          <XCircle className="h-4 w-4" title="Mauvaise réponse" />
+                          <XCircle className="h-4 w-4" aria-label="Mauvaise réponse" />
                         )}
                       </div>
                     )}

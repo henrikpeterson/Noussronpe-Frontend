@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Smartphone, Brain, Users } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import smartphoneStudyImage from "@/assets/Revision.png";
-import interactiveQuizImage from "@/assets/Knowledge-cuate.png";
+import interactiveQuizImage from "@/assets/Defis1vs1.png";
 import friendsChallengeImage from "@/assets/RevisionEnGroupe .png";
 
 const slides = [

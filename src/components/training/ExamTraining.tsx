@@ -14,9 +14,8 @@ interface ExamTrainingProps {
 
 // Couleurs pour chaque exercice
 const exerciceColors = [
-  "bg-green-50/90",
-  "bg-orange-50/90",
-  "bg-pink-50/90"
+  "bg-green-100",
+  "bg-blue-100"
 ];
 
 const ExamTraining = ({ epreuveId, onExit }: ExamTrainingProps) => {

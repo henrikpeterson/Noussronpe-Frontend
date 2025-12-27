@@ -90,7 +90,7 @@ const ExamDetailPage = () => {
   }
 
   // URL du PDF pour l'aperçu (URL d'exemple)
-  const pdfUrl = `http://192.168.1.82:8000/api/TrainingAndEvaluation/epreuve/${epreuve.id}/pdf/`;
+  const pdfUrl = `http://192.168.1.76:8000/api/TrainingAndEvaluation/epreuve/${epreuve.id}/pdf/`;
   
   return <div className="min-h-screen flex flex-col">
       <Header />

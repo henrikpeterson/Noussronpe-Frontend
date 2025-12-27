@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, FileText, Users, Trophy, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getSelectedChallenge } from "@/data/challenges-rewards";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 const Index = () => {
   const selectedChallenge = getSelectedChallenge();
   const [teacherLoginOpen, setTeacherLoginOpen] = useState(false);
@@ -18,85 +19,105 @@ const Index = () => {
       
       <main className="flex-grow">
         <HeroSlider />
-        
         {/* Section des fonctionnalités principales */}
         <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-blue-700 mb-4">
-            Nos outils pour t'aider à réussir
-          </h2>
-          <p className="text-blue-500 text-lg">
-            Découvre nos fonctionnalités pensées pour optimiser tes révisions
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/*Carte : Espace d'entraînement */}
-          <div className="bg-blue-500 text-white rounded-xl p-6 shadow-lg border border-blue-500 transition-all duration-300">
-            <div className="flex items-start mb-4">
-              <div className="p-3 rounded-lg bg-white/20">
-                <FileText className="h-6 w-6 text-white" />
-              </div>
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-blue-700 mb-4">
+                Nos outils pour t'aider à réussir
+              </h2>
+              <p className="text-blue-500 text-lg">
+                Découvre nos fonctionnalités pensées pour optimiser tes révisions
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-3">Espace d'entraînement</h3>
-            <p className="mb-4 text-sm opacity-100">
-              Accédez à une large collection d'épreuves scolaires, Travaux dirigés et exercices classés par matière, niveau et établissement. Entraînez-vous avec nos exercices interactifs.
-            </p>
-            <Button
-              asChild
-              variant="outline"
-              size="sm" className="border-white text-white bg-transparent hover:bg-white hover:text-blue-600 hover:border-white transition-all">
-              <Link to="/epreuves">Voir les ressources</Link>
-            </Button>
-          </div>
 
-          {/*Carte : Révision par Chapitre */}
-          <div className="bg-blue-500 text-white rounded-xl p-6 shadow-lg border border-blue-500 transition-all duration-300">
-            <div className="flex items-start mb-4">
-              <div className="p-3 rounded-lg bg-white/20">
-                <BookOpen className="h-6 w-6 text-white" />
-              </div>
-            </div>
-            <h3 className="text-xl font-semibold mb-3">Révision par Chapitre</h3>
-            <p className="mb-4 text-sm opacity-100">
-              Révisez efficacement grâce à nos fiches pédagogiques synthétiques et validez vos acquis avec des quiz interactifs par chapitre.
-            </p>
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="border-white text-white bg-transparent hover:bg-white hover:text-blue-600 hover:border-white transition-all"
-            >
-              <Link to="/revision">Commencer à réviser</Link>
-            </Button>
-          </div>
+            {/* Grille 6 cartes */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-screen-xl mx-auto">
 
-          {/*Carte : Assistance éducative */}
-          <div className="bg-blue-500 text-white rounded-xl p-6 shadow-lg border border-blue-500 transition-all duration-300">
-            <div className="flex items-start mb-4">
-              <div className="p-3 rounded-lg bg-white/20">
-                <MessageCircle className="h-6 w-6 text-white" />
-              </div>
+              {/* CARD COMPONENT MODEL */}
+              {[
+                {
+                  img: "src/assets/AssitanceEducative.png",
+                  title: "ESPACE D'ENTRAINEMENT",
+                  text: "Exerce-toi avec nos ressources interactives.",
+                  btn: "VOIR PLUS",
+                  link: "/espace-entrainement"
+                },
+                {
+                  img: "src/assets/Medicine-bro.png",
+                  title: "SANTE & HYGIENE",
+                  text: "Apprends à prendre soin de toi.",
+                  btn: "DECOUVRIR",
+                  link: "/health"
+                },
+                {
+                  img: "src/assets/Revision.png",
+                  title: "REVISION PAR CHAPITRE",
+                  text: "Révise chaque leçon facilement.",
+                  btn: "COMMENCER",
+                  link: "/revision"
+                },
+                {
+                  img: "src/assets/Winners-cuate.png",
+                  title: "CHALLENGES & RECOMPENSE",
+                  text: "Gagne des points et des recompenses physique.",
+                  btn: "VOIR LES CHALLENGES",
+                  link: "/challenges-recompenses"
+                },
+                {
+                  img: "src/assets/Winners-bro.png",
+                  title: "DEFIS 1 VS 1",
+                  text: "Défie tes amis sur n'importe quelle sujet.",
+                  btn: "LANCER UN DEFI",
+                  link: "/defi/amis"
+                },
+                {
+                  img: "src/assets/Teacher student-cuate1.png",
+                  title: "ASSISTANCE EDUCATIVE",
+                  text: "Suis tes progrès et ameliore toi.",
+                  btn: "VOIR MES STATS",
+                  link: "/assistance-educative"
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="rounded-3xl shadow-md bg-white overflow-hidden border border-blue-200 hover:shadow-xl transition-all duration-300"
+                >
+                  {/* Haut : illustration */}
+                  <div className="h-48 flex items-center justify-center">
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="h-200 object-contain"
+                    />
+                  </div>
+
+                  {/* Bas : fond bleu + texte + bouton */}
+                  <div className="bg-blue-500 py-6 px-4 text-center">
+                    <h3 className="text-lg font-bold text-white mb-2">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-white text-sm mb-4 px-2">
+                      {item.text}
+                    </p>
+
+                    <Button
+                      asChild
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6"
+                    >
+                      <Link to={item.link}>{item.btn}</Link>
+                    </Button>
+                  </div>
+                </div>
+              ))}
+
             </div>
-            <h3 className="text-xl font-semibold mb-3">Assistance Éducative</h3>
-            <p className="mb-4 text-sm opacity-100">
-              Pose tes questions à des enseignants qualifiés et obtiens de l'aide personnalisée sur tes cours et exercices.
-            </p>
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="border-white text-white bg-transparent hover:bg-white hover:text-blue-600 hover:border-white transition-all"
-            >
-              <Link to="/assistance-educative">Poser une question</Link>
-            </Button>
           </div>
-        </div>
-        </div>
         </section>
 
-        
+
+        {/*
         <div className="bg-gradient-to-br from-primary/10 to-primary/5 py-16">
           <SubjectsGrid />
         </div>
@@ -108,6 +129,8 @@ const Index = () => {
         <div className="bg-gradient-to-br from-primary/10 to-primary/5 py-16">
           <OfficialExamsPreparation />
         </div>
+        */}
+        
 
         {/* Actions rapides */}
         <section className="bg-white py-16">
@@ -176,6 +199,8 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        <TestimonialsSection />
       </main>
       
       <TeacherLoginModal open={teacherLoginOpen} onOpenChange={setTeacherLoginOpen} />

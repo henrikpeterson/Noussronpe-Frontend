@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://192.168.1.82:8000'; // Remplace par l'URL de ton backend
+const API_BASE_URL = 'http://192.168.1.76:8000'; // Remplacer par l'URL du backend
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -10,7 +10,7 @@ const api = axios.create({
 
 // Intercepteur pour ajouter le token d'authentification
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem('students_access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -125,6 +125,33 @@ export interface ResultatSoumission {
     commentaire: string;
   };
 
+}
+
+export interface AssistanceReponse {
+  id: number;
+  auteur: number;
+  message: string;
+  image?: string;
+  is_from_teacher: boolean;
+  created_at: string;
+}
+
+export interface AssistanceRequest {
+  id: number;
+  utilisateur: number;
+  titre: string;
+  type_question: "cours" | "exercice" | "comprehension" | "autres";
+  description: string;
+  matiere: number;
+  image?: string;
+  created_at: string;
+  updated_at: string;
+  statut: "en_attente" | "en_cours" | "repondue" | "fermé";
+  
+  // Champs calculés (read_only)
+  utilisateur_nom: string;
+  matiere_nom: string;
+  reponses: AssistanceReponse[]; 
 }
 
 //SERVICES - Les fonctions qui appellent votre API Django
@@ -243,4 +270,60 @@ export const trainingService = {
 
 };
 
+export const assistanceService = {
+
+  async creerDemande(
+    data: {
+    titre: string;
+    type_question: string;
+    description: string;
+    matiere: number;
+    image?: File;
+  }): Promise<AssistanceRequest>{
+    const response = await api.post(`apiv1/AssistancePedagogique/demande/`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response.data;
+  },
+  
+  async mesDemandes(): Promise<AssistanceRequest[]> {
+    const response = await api.get(`apiv1/AssistancePedagogique/historique/`);
+    return response.data; 
+  },
+  
+  //Repondre a une demande
+  async repondre(assistanceId: number, data: {
+    message: string;
+    image?: File;
+  }): Promise<AssistanceReponse> {
+    const response = await api.post(`apiv1/AssistancePedagogique/reponse/${assistanceId}`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response.data;
+  },
+  
+  // Pour les enseignants : demandes en attente
+  async demandesEnAttente(): Promise<AssistanceRequest[]> {
+    const response = await api.get(`apiv1/AssistancePedagogique/demandes/En_attente/`);
+    return response.data; // ← response.data EST le tableau
+  },
+  
+  // Pour les enseignants : demandes repondu
+  async demandesRepondue(): Promise<AssistanceRequest[]> {
+    const response = await api.get(`apiv1/AssistancePedagogique/demandes/Repondue/`);
+    return response.data; // ← response.data EST le tableau
+  },
+  
+  async getTypesQuestions(): Promise<{ data: Array<{code: string, libelle: string}> }> {
+    const response = await api.get('apiv1/AssistancePedagogique/demandes/Type_demande/');
+    return response;
+  },
+  
+  // Récupérer les matières
+  async getMatieres(): Promise<{ data: Matiere[] }> {
+    const response = await api.get('api/TrainingAndEvaluation/matieres/');
+    return response;
+  },
+  
+};
 export default api;

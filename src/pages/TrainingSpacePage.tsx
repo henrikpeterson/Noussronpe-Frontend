@@ -226,7 +226,7 @@ const TrainingSpacePage = () => {
                   <SelectValue placeholder="Matière" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Toutes les matières</SelectItem>
+                  <SelectItem value="all">Matières</SelectItem>
                   {matieres.map(matiere => (
                     <SelectItem key={matiere.id} value={matiere.id.toString()}>
                       {matiere.nom}
@@ -238,11 +238,11 @@ const TrainingSpacePage = () => {
               {/* Filtre Classe */}
               <Select value={selectedClasseId?.toString() || "all"} 
               onValueChange={(value) => handleClasseChange(value === "all" ? "all" : parseInt(value))}>
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Niveau" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tous les niveaux</SelectItem>
+                  <SelectItem value="all">Niveaux</SelectItem>
                   {classes.map(classe => (
                     <SelectItem key={classe.id} value={classe.id.toString()}>
                       {classe.nom}

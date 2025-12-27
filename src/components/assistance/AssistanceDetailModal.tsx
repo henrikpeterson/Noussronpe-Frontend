@@ -1,4 +1,4 @@
-import { AssistanceRequest } from "@/data/assistance";
+import { AssistanceRequest, AssistanceReponse } from "@/api";
 import {
   Dialog,
   DialogContent,
@@ -24,12 +24,12 @@ const AssistanceDetailModal = ({ request, open, onOpenChange }: AssistanceDetail
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-2">
-            <Badge variant="outline">{request.subject}</Badge>
-            <Badge>{request.questionType}</Badge>
+            <Badge variant="outline">{request.titre}</Badge>
+            <Badge>{request.type_question}</Badge>
           </div>
           <DialogTitle>Détails de la demande</DialogTitle>
           <DialogDescription>
-            Posée le {format(request.createdAt, "d MMMM yyyy à HH:mm", { locale: fr })}
+            {/*Posée le {format(request.createdAt, "d MMMM yyyy à HH:mm", { locale: fr })}*/}
           </DialogDescription>
         </DialogHeader>
 
@@ -52,22 +52,22 @@ const AssistanceDetailModal = ({ request, open, onOpenChange }: AssistanceDetail
           </div>
 
           {/* Réponse de l'enseignant */}
-          {request.response ? (
+          {request.reponses ? (
             <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg border-l-4 border-green-500">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-sm font-semibold text-green-900 dark:text-green-100">
-                  Réponse de {request.response.teacherName}
+                  
                 </p>
                 <p className="text-xs text-green-700 dark:text-green-300">
-                  {format(request.response.answeredAt, "d MMM à HH:mm", { locale: fr })}
+                  {format(new Date(request.created_at), "d MMMM yyyy", { locale: fr })}
                 </p>
               </div>
               <p className="text-sm text-green-800 dark:text-green-200">
-                {request.response.text}
+                {request.reponses.message}
               </p>
-              {request.response.imageUrl && (
+              {request.reponses.imageUrl && (
                 <img 
-                  src={request.response.imageUrl} 
+                  src={request.reponses.imageUrl} 
                   alt="Réponse" 
                   className="mt-3 rounded-lg max-w-full"
                 />
