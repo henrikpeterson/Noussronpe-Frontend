@@ -1,348 +1,204 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { BookOpen, Eye, EyeOff, User, Mail, Lock } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-
-//const { toast } = useToast();
-
 import api from '../api';
-import { useNavigate } from "react-router-dom";
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import motifBackground from "@/assets/Motifs_Educatif3.png"; 
 
-// 📝 Nouveau schéma
-const registerSchema = z
-  .object({
-    Prenom: z.string().min(2, "Le prénom doit contenir au moins 2 caractères"),
-    Nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
-    email: z.string().email("Veuillez entrer une adresse email valide").optional() .or(z.literal("")),
-    Sexe: z.enum(["Masculin", "Féminin"], {
-      required_error: "Veuillez sélectionner votre sexe",
-    }),
-    NumeroTel: z
-      .string()
-      .min(8, "Numéro de téléphone invalide")
-      .regex(/^[0-9+]+$/, "Le numéro ne doit contenir que des chiffres"
-      ),
-
-    Age: z.preprocess(
-      (val) => (val === "" ? undefined : Number(val)),
-      z.number().min(5, "Âge trop bas").max(25, "Âge invalide")
-    ),
-
-    Class: z.string().min(1, "La classe est requise"),
-    etablissement: z.string().min(2, "Veuillez entrer le nom de l'établissement"),
-    acceptTerms: z
-      .boolean()
-      .refine((val) => val === true, "Vous devez accepter les conditions d'utilisation"),
-  })
- 
+// ✅ Schéma strict pour forcer l'affichage des erreurs
+const registerSchema = z.object({
+  Prenom: z.string().min(2, "Ton prénom est obligatoire"),
+  Nom: z.string().min(2, "Ton nom est obligatoire"),
+  Sexe: z.enum(["Masculin", "Féminin"], { required_error: "Sélectionne ton sexe" }),
+  Age: z.preprocess((val) => (val === "" ? undefined : Number(val)), 
+    z.number({ invalid_type_error: "Indique ton âge" }).min(5, "Minimum 5 ans").max(25, "Maximum 25 ans")),
+  Class: z.string().min(1, "Sélectionne ta classe"),
+  etablissement: z.string().min(2, "Nom de l'école obligatoire"),
+  NumeroTel: z.string().min(8, "Numéro invalide"),
+  email: z.string().email("Email invalide").optional().or(z.literal("")),
+  acceptTerms: z.boolean().refine((val) => val === true, "Tu dois accepter les conditions"),
+});
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
-  
-  const navigate = useNavigate();
+  const [step, setStep] = useState(1);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
-    defaultValues: {
-      Prenom: "",
-      Nom: "",
-      email: "",
-     
-      NumeroTel: "",
-     
-      Sexe: undefined,
-      Age: 0,
-      Class: "",
-      etablissement: "",
-      acceptTerms: false,
+    defaultValues: { 
+      Prenom: "", Nom: "", Sexe: undefined, 
+      Age: undefined, Class: "", etablissement: "", 
+      NumeroTel: "", email: "", acceptTerms: false 
     },
   });
 
+  const classes = ["6eme", "5eme", "4eme", "3eme", "Seconde CD", "Seconde A4", "1ere D", "1ere C", "1ere A4", "Terminale D", "Terminale C", "Terminale A4"];
+
+  const steps = [
+    { id: 1, fields: ["Prenom", "Nom"], title: "Comment t'appelles-tu ?", sub: "Remplis tes informations.", img: "https://illustrations.popsy.co/blue/shaking-hands.svg" },
+    { id: 2, fields: ["Sexe"], title: "Ton sexe ?", sub: "Clique sur ton profil.", img: "https://illustrations.popsy.co/blue/digital-nomad.svg" },
+    { id: 3, fields: ["Class"], title: "Ta classe ?", sub: "Choisis dans la liste.", img: "https://illustrations.popsy.co/blue/back-to-school.svg" },
+    { id: 4, fields: ["Age", "etablissement"], title: "Ton parcours ?", sub: "Âge et École.", img: "https://illustrations.popsy.co/blue/graduating.svg" },
+    { id: 5, fields: ["NumeroTel"], title: "Contact ?", sub: "Ton numéro de téléphone.", img: "https://illustrations.popsy.co/blue/searching-on-phone.svg" },
+    { id: 6, fields: ["acceptTerms"], title: "Terminé !", sub: "Accepte pour créer ton compte.", img: "https://illustrations.popsy.co/blue/success.svg" }
+  ];
+
+  const handleNext = async () => {
+    const fields = steps[step - 1].fields;
+    const isValid = await form.trigger(fields as any);
+    if (isValid) setStep(step + 1);
+  };
+
   const onSubmit = async (data: RegisterFormData) => {
-     console.log("🚨 onSubmit appelé !");
-     console.log("Données du formulaire:", data);
-
-    try{
-      const payload = {
-        Nom: data.Nom,
-        Prenom: data.Prenom,
-        NumeroTel: data.NumeroTel,
-        Age: data.Age,
-        Sexe: data.Sexe,
-        etablissement: data.etablissement,
-        Class: data.Class,
-        email:data.email
-      };
-       
-      const response = await api.post("/auth/users/", payload);
-
-      console.log("Compte créé:", response.data)
-      toast({
-        title: "Compte créé avec succès 🎉",
-        description: "Tu peux maintenant te connecter à ton espace.",
-      });
-
+    try {
+      const response = await api.post("/auth/users/", data);
+      toast({ title: "Bienvenue !", description: "Compte créé avec succès." });
       navigate("/login");
-      form.reset();
-
-    }catch (error: any){
-      console.error("Erreur :", error.response?.data || error.message);
-      toast({
-        title: "Erreur",
-        description: "Impossible de créer le compte. Vérifie les informations.",
-        variant: "destructive",
-      });
+    } catch (error: any) {
+      toast({ title: "Erreur", description: "Vérifie tes informations ou ton numéro.", variant: "destructive" });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-50 flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundColor: "#06257aff", // bleu foncé
-          backgroundImage: `url(${motifBackground})`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "500px",
-        }}
-      >
-      </div>
-
-         <div className="relative w-full max-w-md text-sky-600">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-blue-700 mb-2">
-              INSCRIPTION
-            </h1>
-            <p className="text-gray-600 font-bold">
-              Créez votre compte pour commencer
-            </p>
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl bg-white rounded-[40px] shadow-2xl flex flex-col md:flex-row overflow-hidden min-h-[650px]">
+        
+        {/* GAUCHE : DESIGN (50%) */}
+        <div className="md:w-1/2 bg-blue-600 p-12 text-white flex flex-col justify-between relative">
+          <div className="relative z-10">
+            <h2 className="text-3xl font-black italic">EDULAB.</h2>
+            <div className="mt-4 flex gap-1">
+              {steps.map((s) => (
+                <div key={s.id} className={`h-1.5 flex-1 rounded-full ${s.id <= step ? 'bg-white' : 'bg-white/20'}`} />
+              ))}
+            </div>
           </div>
-
-
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="Prenom"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Prénom</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                          <Input placeholder="Prénom" {...field} className="h-10 pl-10" />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="Nom"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nom</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Nom" {...field} className="h-10" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                {/* Sexe */}
-                <FormField
-                  control={form.control}
-                  name="Sexe"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Sexe</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Sexe" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Masculin">Masculin</SelectItem>
-                          <SelectItem value="Féminin">Féminin</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* Âge */}
-                <FormField
-                  control={form.control}
-                  name="Age"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Age</FormLabel>
-                      <FormControl>
-                        <Input 
-                          type="number" 
-                          placeholder="Ex : 15" 
-                          value={field.value || ""} // ✅ Gère la valeur undefined/nulle
-                          onChange={(e) => field.onChange(e.target.value === "" ? undefined : Number(e.target.value))}
-                          className="h-10" 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-
-              {/* Classe */}
-              <FormField
-                control={form.control}
-                name="Class"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Classe</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Ex : 3ème" {...field} className="h-10" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Établissement */}
-              <FormField
-                control={form.control}
-                name="etablissement"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Établissement</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Nom de l'établissement" {...field} className="h-10" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-               <FormField
-                  control={form.control}
-                  name="NumeroTel"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Numéro de téléphone</FormLabel>
-                      <FormControl>
-                        <Input type="tel" placeholder="+22890000000" {...field} className="h-10" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                    )}
-                  />
-              {/* Email */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email (facultatif)</FormLabel>
-                    {/*petite mention explicative */}
-                    <p className="text-xs text-gray-500 mb-1">
-                      Si vous n’avez pas d’adresse email, laissez ce champ vide.
-                    </p>
-                    <FormControl>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                        <Input
-                          type="email"
-                          placeholder="exemple@email.com (facultatif)"
-                          {...field}
-                          className="h-10 pl-10"
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Conditions d'utilisation */}
-              <FormField
-                control={form.control}
-                name="acceptTerms"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel className="text-sm">
-                        J'accepte les{" "}
-                        <Link to="/terms" className="text-red-600 hover:text-orange-500">
-                          conditions d'utilisation
-                        </Link>{" "}
-                        et la{" "}
-                        <Link to="/privacy" className="text-red-600 hover:text-orange-500">
-                          politique de confidentialité
-                        </Link>
-                      </FormLabel>
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
-
-              {/* Bouton inscription */}
-              <Button
-                type="submit"
-                className="w-full h-10 bg-blue-500 hover:bg-blue-600"
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting ? "Création du compte..." : "Créer mon compte"}
-              </Button>
-            </form>
-          </Form>
-
-          {/* Lien vers connexion */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Déjà un compte ?{" "}
-              <Link to="/login" className="text-blue-600 hover:text-blue-500 font-bold">
-                Se connecter
-              </Link>
-            </p>
+          <div className="relative z-10 flex justify-center">
+            <img src={steps[step-1].img} className="max-h-72 object-contain" alt="step" />
           </div>
+          <p className="text-xl font-bold opacity-70 italic">Étape {step} / 6</p>
         </div>
 
-        {/* Retour à l'accueil */}
-        <div className="text-center mt-6">
-          <Link to="/" className="text-gray-600 hover:text-gray-800 text-sm">
-            ← Retour à l'accueil
-          </Link>
+        {/* DROITE : FORMULAIRE (50%) */}
+        <div className="md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
+          <div className="w-full max-w-md mx-auto">
+            <div className="mb-8">
+              <h1 className="text-4xl font-black text-slate-900 leading-none">{steps[step-1].title}</h1>
+              <p className="text-slate-500 text-lg mt-2">{steps[step-1].sub}</p>
+            </div>
+
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                {step === 1 && (
+                  <div className="space-y-4">
+                    <FormField control={form.control} name="Prenom" render={({ field }) => (
+                      <FormItem><FormLabel>Prénom</FormLabel><FormControl><Input placeholder="Prénom" {...field} className="h-14 rounded-2xl border-2 px-6" /></FormControl><FormMessage className="text-red-500 font-bold" /></FormItem>
+                    )}/>
+                    <FormField control={form.control} name="Nom" render={({ field }) => (
+                      <FormItem><FormLabel>Nom</FormLabel><FormControl><Input placeholder="Nom" {...field} className="h-14 rounded-2xl border-2 px-6" /></FormControl><FormMessage className="text-red-500 font-bold" /></FormItem>
+                    )}/>
+                  </div>
+                )}
+
+                {step === 2 && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField control={form.control} name="Sexe" render={({ field }) => (
+                      <>
+                        <div onClick={() => field.onChange("Masculin")} className={`cursor-pointer p-6 rounded-[2rem] border-4 flex flex-col items-center ${field.value === "Masculin" ? "border-blue-500 bg-blue-50" : "border-slate-100"}`}>
+                          <span className="text-4xl">👦</span><span className="font-bold">GARÇON</span>
+                        </div>
+                        <div onClick={() => field.onChange("Féminin")} className={`cursor-pointer p-6 rounded-[2rem] border-4 flex flex-col items-center ${field.value === "Féminin" ? "border-pink-400 bg-pink-50" : "border-slate-100"}`}>
+                          <span className="text-4xl">👧</span><span className="font-bold">FILLE</span>
+                        </div>
+                        <div className="col-span-2 text-center"><FormMessage className="text-red-500 font-bold" /></div>
+                      </>
+                    )}/>
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <div className="grid grid-cols-3 gap-2">
+                    <FormField control={form.control} name="Class" render={({ field }) => (
+                      <>
+                        {classes.map((c) => (
+                          <div key={c} onClick={() => field.onChange(c)} className={`cursor-pointer py-3 rounded-xl border-2 text-center text-xs font-bold ${field.value === c ? "bg-green-600 border-green-700 text-white" : "bg-green-50 border-green-200 text-green-700"}`}>
+                            {c}
+                          </div>
+                        ))}
+                        <div className="col-span-3 text-center"><FormMessage className="text-red-500 font-bold" /></div>
+                      </>
+                    )}/>
+                  </div>
+                )}
+
+                {step === 4 && (
+                  <div className="space-y-4">
+                    <FormField control={form.control} name="Age" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ton âge</FormLabel>
+                        <FormControl>
+                          <Input type="number" placeholder="Ex: 15" {...field} className="h-14 rounded-2xl border-2 px-6" />
+                        </FormControl>
+                        <FormMessage className="text-red-500 font-bold" />
+                      </FormItem>
+                    )}/>
+                    <FormField control={form.control} name="etablissement" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Établissement</FormLabel>
+                        <FormControl><Input placeholder="Nom de l'école" {...field} className="h-14 rounded-2xl border-2 px-6" /></FormControl>
+                        <FormMessage className="text-red-500 font-bold" />
+                      </FormItem>
+                    )}/>
+                  </div>
+                )}
+
+                {step === 5 && (
+                  <FormField control={form.control} name="NumeroTel" render={({ field }) => (
+                    <FormItem><FormLabel>Numéro de téléphone</FormLabel><FormControl><Input placeholder="+228..." {...field} className="h-14 rounded-2xl border-2 px-6" /></FormControl><FormMessage className="text-red-500 font-bold" /></FormItem>
+                  )}/>
+                )}
+
+                {step === 6 && (
+                  <FormField control={form.control} name="acceptTerms" render={({ field }) => (
+                    <FormItem className="flex items-center space-x-3 p-6 border-2 rounded-2xl">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      </FormControl>
+                      <FormLabel className="font-bold cursor-pointer">J'accepte les conditions d'utilisation</FormLabel>
+                      <FormMessage className="text-red-500 font-bold" />
+                    </FormItem>
+                  )}/>
+                )}
+
+                <div className="pt-6 space-y-3">
+                  <Button 
+                    type="button"
+                    onClick={step === 6 ? form.handleSubmit(onSubmit) : handleNext} 
+                    className="w-full h-16 rounded-2xl text-xl font-black bg-blue-600 hover:bg-blue-700"
+                  >
+                    {step === 6 ? "Créer mon compte" : "Continuer"}
+                  </Button>
+                  {step > 1 && (
+                    <button type="button" onClick={() => setStep(step - 1)} className="w-full text-slate-400 font-bold">Retour</button>
+                  )}
+                  {step === 1 && (
+                    <p className="text-center text-slate-500 font-bold">
+                      Déjà un compte ? <Link to="/login" className="text-blue-600 ml-1 hover:underline">CONNECTE TOI</Link>
+                    </p>
+                  )}
+                </div>
+              </form>
+            </Form>
+          </div>
         </div>
       </div>
     </div>

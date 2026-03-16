@@ -33,9 +33,9 @@ export const useTrainingData = ()=> {
     // Liste de toutes les classes (Terminale S, Première S, etc.)
     const [classes, setClasses] = useState<Classe[]>([]);
 
+
     // Liste de toutes les matières (Maths, Physique, etc.) 
     const [matieres, setMatieres] = useState<Matiere[]>([]);
-
 
     // Liste des types d'épreuves (DS, Composition, Examen)
     const [typesEpreuve, setTypesEpreuve] = useState<TypeEpreuve[]>([]);
@@ -136,16 +136,16 @@ export const useTrainingData = ()=> {
       try {
         console.log(`- Détail pour: ${classe.nom}...`);
         
-        // 📞 Cet endpoint retourne un TABLEAU de matières avec leurs comptes
+        // Cet endpoint retourne un TABLEAU de matières avec leurs comptes
         const countDataArray = await trainingService.getEpreuveCountByClasse(classe.id);
         
-        // 💾 Je stocke le TABLEAU COMPLET pour cette classe
+        // Je stocke le TABLEAU COMPLET pour cette classe
         counts[classe.id] = countDataArray;
         
-        //console.log(`  ✅ ${classe.nom}: ${countDataArray.length} matières avec épreuves`);
+        //console.log(`  ${classe.nom}: ${countDataArray.length} matières avec épreuves`);
         
       } catch (error) {
-        //console.log(`  ❌ Problème pour ${classe.nom}, je mets tableau vide`);
+        //console.log(`  Problème pour ${classe.nom}, je mets tableau vide`);
         counts[classe.id] = [];
       }
     }
@@ -196,7 +196,7 @@ export const useTrainingData = ()=> {
     typesEpreuve,
     resourceCountsByMatiere,
     resourceCountsByClasse,
-
+    
     loading,
     error,
 

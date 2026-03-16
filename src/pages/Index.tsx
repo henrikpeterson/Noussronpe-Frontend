@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import HeroSlider from "@/components/sections/HeroSlider";
+import HeroSection from "@/components/sections/HeroSection";
 import SubjectsGrid from "@/components/sections/SubjectsGrid";
 import ChapterRevision from "@/components/sections/ChapterRevision";
 import OfficialExamsPreparation from "@/components/sections/OfficialExamsPreparation";
@@ -11,6 +12,7 @@ import { BookOpen, FileText, Users, Trophy, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getSelectedChallenge } from "@/data/challenges-rewards";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import NewHeroSection from "@/components/sections/NewHeroSection";
 const Index = () => {
   const selectedChallenge = getSelectedChallenge();
   const [teacherLoginOpen, setTeacherLoginOpen] = useState(false);
@@ -18,13 +20,13 @@ const Index = () => {
       <Header />
       
       <main className="flex-grow">
-        <HeroSlider />
+        <NewHeroSection />
         {/* Section des fonctionnalités principales */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-blue-700 mb-4">
-                Nos outils pour t'aider à réussir
+                NOS OUTILS POUR T’AIDER A REUSSIR 
               </h2>
               <p className="text-blue-500 text-lg">
                 Découvre nos fonctionnalités pensées pour optimiser tes révisions
@@ -69,7 +71,7 @@ const Index = () => {
                   title: "DEFIS 1 VS 1",
                   text: "Défie tes amis sur n'importe quelle sujet.",
                   btn: "LANCER UN DEFI",
-                  link: "/defi/amis"
+                  link: "/MesJeux"
                 },
                 {
                   img: "src/assets/Teacher student-cuate1.png",

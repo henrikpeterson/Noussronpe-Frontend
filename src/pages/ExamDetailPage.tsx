@@ -90,7 +90,7 @@ const ExamDetailPage = () => {
   }
 
   // URL du PDF pour l'aperçu (URL d'exemple)
-  const pdfUrl = `http://192.168.1.76:8000/api/TrainingAndEvaluation/epreuve/${epreuve.id}/pdf/`;
+  const pdfUrl = `http://192.168.1.69:8000/api/TrainingAndEvaluation/epreuve/${epreuve.id}/pdf/`;
   
   return <div className="min-h-screen flex flex-col">
       <Header />
@@ -156,7 +156,7 @@ const ExamDetailPage = () => {
                       {showPreview ? "Masquer l'aperçu" : "Aperçu de l'épreuve (2 jetons)"}
                     </Button>
                     <Button 
-                      onClick={() => requestTokenConsumption(1, "Ce mode entraînement", () => setIsTrainingMode(true))} 
+                      onClick={() => requestTokenConsumption(3, "Ce mode entraînement", () => setIsTrainingMode(true))} 
                       className="bg-afrique-orange hover:bg-afrique-orange/90 flex-1 gap-2 bg-blue-500 hover:bg-blue-400 font-bold text-zinc-950"
                     >
                       <Play className="h-4 w-4" />

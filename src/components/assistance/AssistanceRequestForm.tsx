@@ -1,22 +1,35 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, Loader2, Sparkles, HelpCircle, BookOpen, Image as ImageIcon, Send } from "lucide-react";
+import { useState } from "react";
+import { Loader2, Image as ImageIcon, Mic, X, Send } from "lucide-react";
 import { toast } from "sonner";
 import { useReferenceData } from "@/hooks/useReferenceData";
 
+// Map couleurs & emojis par slug/nom de matière
+const MATIERE_STYLES: Record<string, { color: string; gradient: string; emoji: string; textColor: string }> = {
+  default:          { gradient: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#6366f1", emoji: "📚", textColor: "#6366f1" },
+  mathematiques:    { gradient: "linear-gradient(135deg,#3b82f6,#6366f1)", color: "#3b82f6", emoji: "📐", textColor: "#3b82f6" },
+  maths:            { gradient: "linear-gradient(135deg,#3b82f6,#6366f1)", color: "#3b82f6", emoji: "📐", textColor: "#3b82f6" },
+  physique:         { gradient: "linear-gradient(135deg,#f59e0b,#ef4444)", color: "#f59e0b", emoji: "⚗️", textColor: "#f59e0b" },
+  "physique chimie":{ gradient: "linear-gradient(135deg,#f59e0b,#ef4444)", color: "#f59e0b", emoji: "⚗️", textColor: "#f59e0b" },
+  chimie:           { gradient: "linear-gradient(135deg,#f59e0b,#ef4444)", color: "#f59e0b", emoji: "🧪", textColor: "#f59e0b" },
+  svt:              { gradient: "linear-gradient(135deg,#10b981,#34d399)", color: "#10b981", emoji: "🌿", textColor: "#059669" },
+  "histoire-géographie": { gradient: "linear-gradient(135deg,#f97316,#fbbf24)", color: "#f97316", emoji: "🌍", textColor: "#f97316" },
+  "histoire-geographie":{ gradient: "linear-gradient(135deg,#f97316,#fbbf24)", color: "#f97316", emoji: "🌍", textColor: "#f97316" },
+  histoire:         { gradient: "linear-gradient(135deg,#f97316,#fbbf24)", color: "#f97316", emoji: "🏛️", textColor: "#f97316" },
+  géographie:       { gradient: "linear-gradient(135deg,#f97316,#fbbf24)", color: "#f97316", emoji: "🗺️", textColor: "#f97316" },
+  anglais:          { gradient: "linear-gradient(135deg,#0ea5e9,#38bdf8)", color: "#0ea5e9", emoji: "🇬🇧", textColor: "#0284c7" },
+  francais:         { gradient: "linear-gradient(135deg,#8b5cf6,#a78bfa)", color: "#8b5cf6", emoji: "✍️", textColor: "#7c3aed" },
+  français:         { gradient: "linear-gradient(135deg,#8b5cf6,#a78bfa)", color: "#8b5cf6", emoji: "✍️", textColor: "#7c3aed" },
+  philosophie:      { gradient: "linear-gradient(135deg,#ec4899,#f43f5e)", color: "#ec4899", emoji: "🧠", textColor: "#db2777" },
+  "éducation civique": { gradient: "linear-gradient(135deg,#14b8a6,#06b6d4)", color: "#14b8a6", emoji: "⚖️", textColor: "#0f766e" },
+  "education civique":{ gradient: "linear-gradient(135deg,#14b8a6,#06b6d4)", color: "#14b8a6", emoji: "⚖️", textColor: "#0f766e" },
+  "éducation civique et morale":{ gradient: "linear-gradient(135deg,#14b8a6,#06b6d4)", color: "#14b8a6", emoji: "⚖️", textColor: "#0f766e" },
+  informatique:     { gradient: "linear-gradient(135deg,#1d4ed8,#7c3aed)", color: "#1d4ed8", emoji: "💻", textColor: "#1d4ed8" },
+};
 
-import bookIcon from "@/assets/icons/books.png";
-import pencilIcon from '/icons/edit.png';
-import questionIcon from '/icons/conversation.png';
-import lightbulbIcon from '/icons/lightbulb.png';
-import subjectIcon from '/icons/target.png';
-import sendIcon from '/icons/send.png';
-
+function getMatiereStyle(nom: string) {
+  const key = nom.toLowerCase().trim();
+  return MATIERE_STYLES[key] || MATIERE_STYLES.default;
+}
 
 interface AssistanceRequestFormProps {
   onSubmit: (data: {
@@ -29,302 +42,257 @@ interface AssistanceRequestFormProps {
 }
 
 const AssistanceRequestForm = ({ onSubmit }: AssistanceRequestFormProps) => {
-  const [titre, setTitre] = useState("");
-  const [type_question, setTypeQuestion] = useState("");
   const [description, setDescription] = useState("");
-  const [matiere, setMatiere] = useState<string>("");
+  const [matiere, setMatiere] = useState<number | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
 
-  // Récupère les données de référence
-  const { matieres, typesQuestions, loading: loadingReferences } = useReferenceData();
+  const { matieres, loading: loadingReferences } = useReferenceData();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!titre || !type_question || !description || !matiere) {
-      toast.error("Oups ! Il manque des informations", {
-        description: "Remplis tous les champs pour qu'on puisse t'aider ! ✨"
-      });
+    if (!description || !matiere) {
+      toast.error("Choisis une matière et explique ton problème ! ✨");
       return;
     }
-
     setSubmitting(true);
     try {
+      const selectedMatiere = matieres.find((m) => m.id === matiere);
+      const autoTitre = `Aide en ${selectedMatiere?.nom || "Matière"} - ${new Date().toLocaleDateString()}`;
+
       await onSubmit({
-        titre,
-        type_question,
+        titre: autoTitre,
+        type_question: "exercice",
         description,
-        matiere: parseInt(matiere),
-        image
+        matiere,
+        image: image || undefined,
       });
-      
-      toast.success("Super ! Ta question est envoyée 🚀", {
-        description: "Un enseignant va te répondre très bientôt !"
-      });
-      
-      // Reset form
-      setTitre("");
-      setTypeQuestion("");
+
       setDescription("");
-      setMatiere("");
+      setMatiere(null);
       setImage(null);
-      
     } catch (err) {
-      console.error("Erreur dans le formulaire:", err);
+      console.error(err);
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error("Image trop lourde", {
-          description: "Choisis une image de moins de 5MB s'il te plaît !"
-        });
-        return;
-      }
-      setImage(file);
-      toast.success("Image ajoutée ! 🎨", {
-        description: "Ça va aider l'enseignant à mieux comprendre !"
-      });
-    }
-  };
-  
-  const testBookIcon = "/icons/book.png"
- 
-
-  const getTypeQuestionIcon = (type: string) => {
-    const icons: Record<string, string> = {
-      'cours': bookIcon,
-      'exercice': pencilIcon,
-      'comprehension': questionIcon,
-      'autres': lightbulbIcon
-    };
-    return icons[type] || '/icons/conversation.png';
-  };
-
   if (loadingReferences) {
     return (
-      <Card className="border-2 border-dashed border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50">
-        <CardContent className="pt-6">
-          <div className="text-center py-12">
-            <div className="inline-block p-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl mb-4">
-              <Sparkles className="h-10 w-10 text-blue-500 animate-pulse" />
-            </div>
-            <p className="text-lg font-medium text-gray-700 mb-2">Préparation du formulaire...</p>
-            <p className="text-gray-500">On charge tout pour toi !</p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex flex-col items-center justify-center gap-3 py-16">
+        <Loader2 className="h-8 w-8 animate-spin text-indigo-400" />
+        <p className="text-slate-400 text-sm font-medium">Chargement des matières…</p>
+      </div>
     );
   }
 
+  const selectedStyle = matiere
+    ? getMatiereStyle(matieres.find((m) => m.id === matiere)?.nom || "")
+    : null;
+
   return (
-    
-    <div className="relative">
-      {/* Décoration */}
-      <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-yellow-200 to-pink-200 rounded-full opacity-20 blur-xl"></div>
-      <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-r from-green-200 to-blue-200 rounded-full opacity-20 blur-xl"></div>
-      
-      <Card className="border-2 border-blue-200 shadow-2xl overflow-hidden bg-gradient-to-br from-white to-blue-50/50 relative z-10">
-        {/* Header coloré */}
-        <div className="h-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"></div>
-        
-        <CardHeader className="pb-4">
-          <div className="flex items-start gap-3">
-            <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl">
-              <HelpCircle className="h-8 w-8 text-blue-600" />
-            </div>
-            <div>
-              <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                Pose ta question ! 
-                <span className="text-2xl">✨</span>
-              </CardTitle>
-              <CardDescription className="text-gray-600 text-lg">
-                Nos super enseignants sont là pour t'aider !
-              </CardDescription>
-            </div>
+    <form onSubmit={handleSubmit} className="space-y-7">
+      {/* ÉTAPE 1 : Matière */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-7 h-7 rounded-xl flex items-center justify-center text-white text-xs font-black flex-shrink-0"
+            style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}
+          >
+            1
           </div>
-        </CardHeader>
-        
-        <CardContent>
+          <h3 className="text-base font-black text-slate-700">C'est pour quelle matière ?</h3>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Titre avec emoji */}
-            <div className="space-y-3">
-              <Label htmlFor="titre" className="text-base font-semibold text-gray-700 flex items-center gap-2">
-                <span className="text-xl">💭</span>
-                Dis-nous ce qui te pose problème 🧠
-              </Label>
-              <div className="relative">
-                <Input
-                  id="titre"
-                  placeholder="Ex: Je bloque sur l'exercice 3 de maths..."
-                  value={titre}
-                  onChange={(e) => setTitre(e.target.value)}
-                  className="h-12 pl-10 text-base border-2 border-blue-200 focus:border-blue-400 rounded-xl bg-white/80"
-                />
-                <div className="absolute left-3 top-3 text-gray-400">
-                  📝
-                </div>
-              </div>
-            </div>
-
-            {/* Matière avec emoji */}
-            <div className="space-y-3">
-              <Label htmlFor="matiere" className="text-base font-semibold text-gray-700 flex items-center gap-2">
-                <span className="text-xl">📚</span>
-                C'est pour quelle matière ?
-              </Label>
-              <div className="relative">
-                <Select value={matiere} onValueChange={setMatiere}>
-                  <SelectTrigger 
-                    id="matiere" 
-                    className="h-12 pl-10 text-base border-2 border-green-200 focus:border-green-400 rounded-xl bg-white/80"
-                  >
-                    <div className="absolute left-3 top-3">
-                      <BookOpen className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <SelectValue placeholder="Choisis une matière" />
-                  </SelectTrigger>
-                  <SelectContent className="rounded-xl border-2">
-                    {matieres.map((matiereItem) => (
-                      <SelectItem 
-                        key={matiereItem.id} 
-                        value={matiereItem.id.toString()}
-                        className="text-base py-3 hover:bg-blue-50"
-                      >
-                        <span className="text-lg mr-2">📖</span>
-                        {matiereItem.nom}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Type de question avec emoji */}
-           <div className="space-y-3">
-              <Label htmlFor="type_question" className="text-base font-semibold text-gray-700 flex items-center gap-2">
-                <span className="text-xl">🎯</span>
-                C'est quel type de question ?
-              </Label>
-              <div className="grid grid-cols-2 gap-3">
-                {typesQuestions.map((type) => (
-                  <Button
-                    key={type.code}
-                    type="button"
-                    variant={type_question === type.code ? "default" : "outline"}
-                    onClick={() => setTypeQuestion(type.code)}
-                    className={`h-14 text-base rounded-xl border-2 ${
-                      type_question === type.code 
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent' 
-                        : 'border-blue-200 hover:border-blue-300 bg-white/80'
-                    }`}
-                  >
-                    <img 
-                      src={getTypeQuestionIcon(type.code)} 
-                      alt={type.libelle} 
-                      className="w-6 h-6 mr-2" 
-                    />
-                    {type.libelle}
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            {/* Description avec emoji */}
-            <div className="space-y-3">
-              <Label htmlFor="description" className="text-base font-semibold text-gray-700 flex items-center gap-2">
-                <span className="text-xl">✍️</span>
-                Explique ton problème en détails
-              </Label>
-              <Textarea
-                id="description"
-                placeholder="Décris ce que tu ne comprends pas... Sois précis pour qu'on puisse mieux t'aider !"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={5}
-                className="text-base border-2 border-purple-200 focus:border-purple-400 rounded-xl bg-white/80 resize-none"
-              />
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <span className="text-yellow-500">💡</span>
-                <span>Plus tu es précis, mieux on pourra t'aider !</span>
-              </div>
-            </div>
-
-            {/* Image avec emoji */}
-            <div className="space-y-3">
-              <Label htmlFor="image" className="text-base font-semibold text-gray-700 flex items-center gap-2">
-                <span className="text-xl">🖼️</span>
-                Veux-tu ajouter une image ? (facultatif)
-              </Label>
-              <div className="relative">
-                <input
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-                <label htmlFor="image" className="cursor-pointer">
-                  <div className={`p-4 border-2 border-dashed rounded-xl transition-all ${
-                    image 
-                      ? 'border-green-300 bg-green-50/50' 
-                      : 'border-blue-200 hover:border-blue-300 bg-white/50'
-                  }`}>
-                    <div className="flex flex-col items-center justify-center gap-3">
-                      <div className={`p-3 rounded-full ${
-                        image 
-                          ? 'bg-green-100 text-green-600' 
-                          : 'bg-blue-100 text-blue-600'
-                      }`}>
-                        {image ? <ImageIcon className="h-6 w-6" /> : <Upload className="h-6 w-6" />}
-                      </div>
-                      <div className="text-center">
-                        <p className="font-medium text-gray-700">
-                          {image ? "Image sélectionnée ! 🎉" : "Clique pour ajouter une image"}
-                        </p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          {image ? image.name : "JPG, PNG (max 5MB)"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </label>
-              </div>
-            </div>
-
-            {/* Bouton d'envoi avec animation */}
-            <div className="pt-4">
-              <Button
-                type="submit"
-                disabled={submitting || !titre || !type_question || !description || !matiere}
-                className="w-full h-14 text-lg font-bold rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+          {matieres.map((m) => {
+            const style = getMatiereStyle(m.nom);
+            const isSelected = matiere === m.id;
+            return (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => setMatiere(m.id)}
+                className="relative p-3.5 rounded-2xl transition-all duration-200 flex flex-col items-center gap-2 text-center active:scale-95"
+                style={
+                  isSelected
+                    ? {
+                        background: style.gradient,
+                        boxShadow: `0 6px 20px ${style.color}55`,
+                        border: "2px solid transparent",
+                        transform: "scale(0.97)",
+                      }
+                    : {
+                        background: "rgba(248,250,252,0.9)",
+                        border: "2px solid rgba(226,232,240,0.8)",
+                      }
+                }
               >
-                {submitting ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                    Envoi en cours...
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-5 w-5 mr-2" />
-                    Envoyer ma question à l'enseignant !
-                  </>
+                {/* Emoji */}
+                <span className="text-2xl leading-none">{style.emoji}</span>
+                <span
+                  className="font-bold text-[11px] uppercase tracking-tight leading-tight"
+                  style={{ color: isSelected ? "white" : style.textColor }}
+                >
+                  {m.nom}
+                </span>
+                {isSelected && (
+                  <span
+                    className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-white/30 flex items-center justify-center text-[9px]"
+                  >
+                    ✓
+                  </span>
                 )}
-              </Button>
-              
-              {/* Message d'encouragement */}
-             
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ÉTAPE 2 : Description */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-7 h-7 rounded-xl flex items-center justify-center text-white text-xs font-black flex-shrink-0"
+            style={{ background: "linear-gradient(135deg,#a855f7,#ec4899)" }}
+          >
+            2
+          </div>
+          <h3 className="text-base font-black text-slate-700">Explique ton problème</h3>
+        </div>
+
+        <div className="relative">
+          <textarea
+            placeholder="Décris ton problème ou ta question ici… Plus tu es précis, mieux le prof peut t'aider !"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full min-h-[130px] p-4 pr-14 text-sm text-slate-700 rounded-2xl outline-none resize-none transition-all duration-200"
+            style={{
+              background: "rgba(248,250,252,0.9)",
+              border: description
+                ? "2px solid #a855f7"
+                : "2px solid rgba(226,232,240,0.8)",
+              boxShadow: description ? "0 0 0 4px rgba(168,85,247,0.08)" : "none",
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              setIsRecording(!isRecording);
+              if (!isRecording) toast.info("Micro activé ! (Simulé)");
+            }}
+            className="absolute bottom-3 right-3 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 active:scale-90"
+            style={
+              isRecording
+                ? { background: "#ef4444", color: "white", boxShadow: "0 0 0 4px rgba(239,68,68,0.2)" }
+                : { background: "rgba(226,232,240,0.8)", color: "#94a3b8" }
+            }
+          >
+            <Mic className={`h-4 w-4 ${isRecording ? "animate-pulse" : ""}`} />
+          </button>
+        </div>
+        {description && (
+          <p className="text-right text-xs text-slate-400 font-medium">{description.length} caractères</p>
+        )}
+      </div>
+
+      {/* ÉTAPE 3 : Photo facultative */}
+      <div className="space-y-2">
+        <input
+          id="img-up"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
+        />
+
+        <label
+          htmlFor="img-up"
+          className="flex items-center justify-center gap-3 p-4 rounded-2xl cursor-pointer transition-all duration-200"
+          style={
+            image
+              ? { background: "rgba(240,253,244,0.9)", border: "2px solid #86efac" }
+              : { background: "rgba(248,250,252,0.9)", border: "2px dashed rgba(203,213,225,0.8)" }
+          }
+          onMouseEnter={(e) => {
+            if (!image) {
+              (e.currentTarget as HTMLElement).style.borderColor = "#c4b5fd";
+              (e.currentTarget as HTMLElement).style.background = "rgba(237,233,254,0.4)";
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!image) {
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(203,213,225,0.8)";
+              (e.currentTarget as HTMLElement).style.background = "rgba(248,250,252,0.9)";
+            }
+          }}
+        >
+          {image ? (
+            <>
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "linear-gradient(135deg,#dcfce7,#bbf7d0)" }}
+              >
+                <ImageIcon className="h-4 w-4 text-green-600" />
+              </div>
+              <span className="text-sm font-bold text-green-700 truncate flex-1 min-w-0">{image.name}</span>
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); setImage(null); }}
+                className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all hover:bg-red-100"
+                style={{ color: "#94a3b8" }}
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </>
+          ) : (
+            <>
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "linear-gradient(135deg,#ede9fe,#fce7f3)" }}
+              >
+                <ImageIcon className="h-4 w-4 text-indigo-400" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-slate-600">Ajouter une photo de l'exercice</p>
+                <p className="text-xs text-slate-400">Facultatif · JPG, PNG, HEIC</p>
+              </div>
+            </>
+          )}
+        </label>
+      </div>
+
+      {/* Bouton Envoyer */}
+      <button
+        type="submit"
+        disabled={submitting || !description || !matiere}
+        className="w-full h-14 rounded-2xl text-white font-black text-base tracking-wide transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98]"
+        style={
+          !description || !matiere
+            ? { background: "rgba(203,213,225,0.6)", cursor: "not-allowed", color: "#94a3b8" }
+            : selectedStyle
+            ? {
+                background: selectedStyle.gradient,
+                boxShadow: `0 6px 24px ${selectedStyle.color}50`,
+              }
+            : {
+                background: "linear-gradient(135deg,#6366f1,#8b5cf6)",
+                boxShadow: "0 6px 24px rgba(99,102,241,0.45)",
+              }
+        }
+      >
+        {submitting ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : (
+          <>
+            <Send className="h-4 w-4" />
+            ENVOYER MA QUESTION
+          </>
+        )}
+      </button>
+    </form>
   );
 };
 

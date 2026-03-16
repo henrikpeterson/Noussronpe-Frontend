@@ -1,0 +1,1255 @@
+[
+  {
+    "question": "Quelle est la capitale du Togo ?",
+    "correctAnswer": "lomé",
+    "traps": ["cotonou", "accra", "ouagadougou"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays le plu riche d'afrique ?",
+    "correctAnswer": "nigeria",
+    "traps": ["egypte", "ethiopie", "rdc"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel est le plus long fleuve d'Afrique ?",
+    "correctAnswer": "nil",
+    "traps": ["congo", "niger", "zambeze"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel désert couvre l'Afrique du Nord ?",
+    "correctAnswer": "sahara",
+    "traps": ["kalahari", "namib", "arabique"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale de la Côte d'Ivoire ?",
+    "correctAnswer": "yamoussoukro",
+    "traps": ["abidjan", "bouake", "san pedro"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays africain a la plus grande population ?",
+    "correctAnswer": "nigeria",
+    "traps": ["ethiopie", "egypte", "rdc"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale du Ghana ?",
+    "correctAnswer": "accra",
+    "traps": ["kumasi", "lome", "abidjan"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel océan borde l'Afrique à l'ouest ?",
+    "correctAnswer": "atlantique",
+    "traps": ["indien", "pacifique", "arctique"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays d'Afrique est une île ?",
+    "correctAnswer": "madagascar",
+    "traps": ["maurice", "seychelles", "comores"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale du Burkina Faso ?",
+    "correctAnswer": "ouagadougou",
+    "traps": ["bamako", "niamey", "lome"],
+    "difficulty": "easy",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays voisin du Togo est anglophone ?",
+    "correctAnswer": "ghana",
+    "traps": ["benin", "burkina", "niger"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel fleuve traverse le Mali et le Niger ?",
+    "correctAnswer": "niger",
+    "traps": ["senegal", "gambie", "volta"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale du Bénin ?",
+    "correctAnswer": "porto-novo",
+    "traps": ["cotonou", "lome", "abomey"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel lac africain est le plus profond ?",
+    "correctAnswer": "tanganyika",
+    "traps": ["victoria", "malawi", "tchad"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle montagne est la plus haute d'Afrique ?",
+    "correctAnswer": "kilimandjaro",
+    "traps": ["kenya", "rwenzori", "atlas"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays africain est traversé par l'équateur ?",
+    "correctAnswer": "congo",
+    "traps": ["algerie", "egypte", "maroc"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale de l'Angola ?",
+    "correctAnswer": "luanda",
+    "traps": ["kinshasa", "brazzaville", "windhoek"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays d'Afrique a la forme d'une corne ?",
+    "correctAnswer": "somalie",
+    "traps": ["erythree", "djibouti", "ethiopie"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel détroit sépare l'Afrique de l'Europe ?",
+    "correctAnswer": "gibraltar",
+    "traps": ["sicile", "bab-el-mandeb", "mozambique"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale du Cameroun ?",
+    "correctAnswer": "yaounde",
+    "traps": ["douala", "libreville", "bangui"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays d'Afrique est un empire antique ?",
+    "correctAnswer": "ethiopie",
+    "traps": ["ghana", "mali", "soudan"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle région d'Afrique est surnommée le Maghreb ?",
+    "correctAnswer": "nord",
+    "traps": ["ouest", "est", "sud"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays africain a pour capitale Kigali ?",
+    "correctAnswer": "rwanda",
+    "traps": ["burundi", "ouganda", "tanzanie"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel fleuve forme des chutes célèbres en Zambie ?",
+    "correctAnswer": "zambeze",
+    "traps": ["congo", "orange", "limpopo"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale du Soudan ?",
+    "correctAnswer": "khartoum",
+    "traps": ["le caire", "addis abeba", "nairobi"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays d'Afrique a pour monnaie le cedi ?",
+    "correctAnswer": "ghana",
+    "traps": ["nigeria", "kenya", "tanzanie"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle mer borde l'Afrique au nord ?",
+    "correctAnswer": "mediterranee",
+    "traps": ["rouge", "noire", "caspienne"],
+    "difficulty": "medium",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays africain est enclavé dans l'Afrique du Sud ?",
+    "correctAnswer": "lesotho",
+    "traps": ["swaziland", "botswana", "zimbabwe"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale du Tchad ?",
+    "correctAnswer": "ndjamena",
+    "traps": ["bamako", "niamey", "ouagadougou"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays d'Afrique a la plus petite superficie ?",
+    "correctAnswer": "seychelles",
+    "traps": ["gambie", "djibouti", "swaziland"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel lac africain est le plus grand en superficie ?",
+    "correctAnswer": "victoria",
+    "traps": ["tanganyika", "malawi", "tchad"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle chaîne de montagnes traverse le Maroc ?",
+    "correctAnswer": "atlas",
+    "traps": ["andines", "himalaya", "alpes"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays africain compte le plus de francophones ?",
+    "correctAnswer": "congo",
+    "traps": ["france", "canada", "belgique"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle île d'Afrique est un département français ?",
+    "correctAnswer": "reunion",
+    "traps": ["maurice", "comores", "mayotte"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel désert se trouve en Namibie ?",
+    "correctAnswer": "namib",
+    "traps": ["sahara", "kalahari", "gobi"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale du Mozambique ?",
+    "correctAnswer": "maputo",
+    "traps": ["beira", "nampula", "chimio"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays d'Afrique a pour capitale Dodoma ?",
+    "correctAnswer": "tanzanie",
+    "traps": ["kenya", "ouganda", "rwanda"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel fleuve traverse l'Afrique du Sud ?",
+    "correctAnswer": "orange",
+    "traps": ["limpopo", "vaal", "zambeze"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle région d'Afrique est appelée Sahel ?",
+    "correctAnswer": "semi-aride",
+    "traps": ["tropicale", "desertique", "equatoriale"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel pays africain possède le plus de pyramides ?",
+    "correctAnswer": "soudan",
+    "traps": ["egypte", "ethiopie", "mali"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quelle est la capitale de la Mauritanie ?",
+    "correctAnswer": "nouakchott",
+    "traps": ["dakar", "bamako", "alger"],
+    "difficulty": "hard",
+    "theme": "geographie"
+  },
+  {
+    "question": "Quel mammifère est le plus grand d'Afrique ?",
+    "correctAnswer": "elephant",
+    "traps": ["rhinoceros", "hippopotame", "girafe"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal est appelé le roi de la savane ?",
+    "correctAnswer": "lion",
+    "traps": ["tigre", "leopard", "guepard"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel oiseau ne peut pas voler ?",
+    "correctAnswer": "autruche",
+    "traps": ["aigle", "perroquet", "colombe"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel reptile a une carapace ?",
+    "correctAnswer": "tortue",
+    "traps": ["serpent", "crocodile", "lezard"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal marin est un mammifère ?",
+    "correctAnswer": "dauphin",
+    "traps": ["requin", "meduse", "crabe"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal est le meilleur ami de l'homme ?",
+    "correctAnswer": "chien",
+    "traps": ["chat", "cheval", "oiseau"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal mange de l'herbe ?",
+    "correctAnswer": "vache",
+    "traps": ["lion", "tigre", "ours"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel insecte fabrique du miel ?",
+    "correctAnswer": "abeille",
+    "traps": ["fourmi", "guepe", "mouche"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal a une longue trompe ?",
+    "correctAnswer": "elephant",
+    "traps": ["rhinoceros", "hippopotame", "tapir"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel oiseau est symbole de paix ?",
+    "correctAnswer": "colombe",
+    "traps": ["aigle", "faucon", "corbeau"],
+    "difficulty": "easy",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal est le plus rapide sur terre ?",
+    "correctAnswer": "guepard",
+    "traps": ["lion", "antilope", "autruche"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel mammifère pond des oeufs ?",
+    "correctAnswer": "ornithorynque",
+    "traps": ["kangourou", "koala", "echidna"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal a le cou le plus long ?",
+    "correctAnswer": "girafe",
+    "traps": ["elephant", "autruche", "alpaga"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel reptile change de couleur ?",
+    "correctAnswer": "cameleon",
+    "traps": ["serpent", "lezard", "gecko"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal africain a des rayures noires et blanches ?",
+    "correctAnswer": "zebre",
+    "traps": ["tigre", "antilope", "okapi"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel oiseau est connu pour imiter la parole ?",
+    "correctAnswer": "perroquet",
+    "traps": ["merle", "corbeau", "etourneau"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal vit dans une termitière ?",
+    "correctAnswer": "fourmilier",
+    "traps": ["termite", "pangolin", "tamanoir"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel mammifère marin a une défense en ivoire ?",
+    "correctAnswer": "narval",
+    "traps": ["baleine", "dauphin", "morse"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal est le plus grand primate ?",
+    "correctAnswer": "gorille",
+    "traps": ["chimpanze", "orang outan", "bonobo"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal hiberne tout l'hiver ?",
+    "correctAnswer": "ours",
+    "traps": ["loup", "renard", "cerf"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel insecte vit en colonie organisée ?",
+    "correctAnswer": "fourmi",
+    "traps": ["mouche", "papillon", "criquet"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal est le symbole de l'Australie ?",
+    "correctAnswer": "kangourou",
+    "traps": ["koala", "ornithorynque", "dingo"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel oiseau est le plus petit du monde ?",
+    "correctAnswer": "colibri",
+    "traps": ["moineau", "roitelet", "mesange"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal a le sang chaud ?",
+    "correctAnswer": "mammifere",
+    "traps": ["reptile", "poisson", "amphibien"],
+    "difficulty": "medium",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel reptile a des paupieres mobiles ?",
+    "correctAnswer": "serpent",
+    "traps": ["crocodile", "tortue", "lezard"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel mammifère pond des oeufs en Australie ?",
+    "correctAnswer": "echidna",
+    "traps": ["ornithorynque", "kangourou", "koala"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal a le cerveau le plus gros ?",
+    "correctAnswer": "cachalot",
+    "traps": ["elephant", "baleine", "dauphin"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel oiseau migrateur parcourt le plus de km ?",
+    "correctAnswer": "sterne",
+    "traps": ["hirondelle", "cigogne", "canard"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel primate est le plus proche de l'homme ?",
+    "correctAnswer": "chimpanze",
+    "traps": ["gorille", "orang outan", "bonobo"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel poisson peut changer de sexe ?",
+    "correctAnswer": "clown",
+    "traps": ["merou", "labre", "gobie"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel insecte a une durée de vie de 24h ?",
+    "correctAnswer": "ephemere",
+    "traps": ["mouche", "moustique", "fourmi"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal a trois coeurs ?",
+    "correctAnswer": "pieuvre",
+    "traps": ["calamar", "seiche", "poulpe"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel mammifère ne sait pas sauter ?",
+    "correctAnswer": "elephant",
+    "traps": ["rhinoceros", "hippopotame", "girafe"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel reptile a un troisieme oeil ?",
+    "correctAnswer": "tuatara",
+    "traps": ["iguane", "gecko", "cameleon"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel oiseau a les ailes les plus grandes ?",
+    "correctAnswer": "albatros",
+    "traps": ["condor", "aigle", "vautour"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel animal a le coeur le plus lourd ?",
+    "correctAnswer": "girafe",
+    "traps": ["elephant", "baleine", "rhinoceros"],
+    "difficulty": "hard",
+    "theme": "zoologie"
+  },
+  {
+    "question": "Quel sport se joue avec un ballon rond ?",
+    "correctAnswer": "football",
+    "traps": ["basket", "rugby", "tennis"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Combien de joueurs compte une equipe de foot ?",
+    "correctAnswer": "onze",
+    "traps": ["dix", "douze", "neuf"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sport utilise une raquette ?",
+    "correctAnswer": "tennis",
+    "traps": ["football", "basket", "natation"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a gagné la Coupe du Monde 2018 ?",
+    "correctAnswer": "france",
+    "traps": ["allemagne", "bresil", "argentine"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Dans quel sport nage on dans une piscine ?",
+    "correctAnswer": "natation",
+    "traps": ["plongeon", "waterpolo", "aviron"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel athlete est surnommé le roi du ring ?",
+    "correctAnswer": "ali",
+    "traps": ["tyson", "foreman", "frazier"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sport se joue avec un panier ?",
+    "correctAnswer": "basket",
+    "traps": ["handball", "volley", "football"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Quelle couleur n'existe pas aux Jeux Olympique ?",
+    "correctAnswer": "noir",
+    "traps": ["rouge", "bleu", "jaune"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sport utilise un volant ?",
+    "correctAnswer": "badminton",
+    "traps": ["tennis", "squash", "pelote"],
+    "difficulty": "easy",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a organisé la CAN 2023 ?",
+    "correctAnswer": "cote ivoire",
+    "traps": ["cameroun", "senegal", "egypte"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel athlete detient le record du 100m ?",
+    "correctAnswer": "Usain bolt",
+    "traps": ["gatlin", "powell", "greene"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Combien de joueurs au basket sur le terrain ?",
+    "correctAnswer": "cinq",
+    "traps": ["quatre", "six", "sept"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays africain a gagné la CAN 2022 ?",
+    "correctAnswer": "senegal",
+    "traps": ["algerie", "tunisie", "maroc"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sportif est surnommé l'abeille ?",
+    "correctAnswer": "zidane",
+    "traps": ["ronaldo", "messi", "platini"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sport se pratique sur glace ?",
+    "correctAnswer": "hockey",
+    "traps": ["patinage", "curling", "bobsleigh"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Combien de sets au tennis pour gagner ?",
+    "correctAnswer": "trois",
+    "traps": ["deux", "quatre", "cinq"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a gagné le plus de CAN ?",
+    "correctAnswer": "egypte",
+    "traps": ["cameroun", "ghana", "nigeria"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel athlete a 11 titres en JO ?",
+    "correctAnswer": "phelps",
+    "traps": ["bolt", "latynina", "spitz"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sport olympique se pratique à cheval ?",
+    "correctAnswer": "equitation",
+    "traps": ["polo", "dressage", "saut"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a remporté la premiere Coupe du Monde ?",
+    "correctAnswer": "uruguay",
+    "traps": ["bresil", "argentine", "france"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel est le club le plus titré d'Afrique ?",
+    "correctAnswer": "ahly",
+    "traps": ["esperance", "zamalek", "tp mazembe"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a organisé les JO 2016 ?",
+    "correctAnswer": "bresil",
+    "traps": ["chine", "royaume uni", "russie"],
+    "difficulty": "medium",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sportif a 7 Ballons d'Or ?",
+    "correctAnswer": "messi",
+    "traps": ["ronaldo", "platini", "cruyff"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "En quelle année le Togo a participé aux JO ?",
+    "correctAnswer": "1972",
+    "traps": ["1968", "1976", "1980"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel athlete a sauté 8m95 en longueur ?",
+    "correctAnswer": "powell",
+    "traps": ["beamon", "lewis", "pedroso"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a gagné la CAN 2019 ?",
+    "correctAnswer": "algerie",
+    "traps": ["senegal", "tunisie", "maroc"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel footballeur togolais a joué à Arsenal ?",
+    "correctAnswer": "adebayor",
+    "traps": ["toure", "drogba", "essien"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Combien de medailles d'or a Phelps en tout ?",
+    "correctAnswer": "vingt trois",
+    "traps": ["vingt", "vingt cinq", "dix huit"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a gagné le premier Mondial de rugby ?",
+    "correctAnswer": "nouvelle zelande",
+    "traps": ["australie", "angleterre", "france"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel athlete detient le record du 400m haies ?",
+    "correctAnswer": "warholm",
+    "traps": ["young", "moses", "diaz"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel pays a organisé les JO 2020 ?",
+    "correctAnswer": "japon",
+    "traps": ["chine", "coree", "russie"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Quel sportif est surnommé le roi Pelé ?",
+    "correctAnswer": "edson",
+    "traps": ["pele", "maradona", "platini"],
+    "difficulty": "hard",
+    "theme": "sport"
+  },
+  {
+    "question": "Qui fut le premier président du Ghana ?",
+    "correctAnswer": "nkrumah",
+    "traps": ["rawlings", "busia", "limann"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel homme politique est surnommé Madiba ?",
+    "correctAnswer": "mandela",
+    "traps": ["tutu", "sankara", "lumumba"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a découvert l'Amérique en 1492 ?",
+    "correctAnswer": "colomb",
+    "traps": ["vespucci", "magellan", "cortes"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel pharaon a fait construire des pyramides ?",
+    "correctAnswer": "kheops",
+    "traps": ["ramses", "tutankhamon", "akhenaton"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le premier empereur de France ?",
+    "correctAnswer": "napoleon",
+    "traps": ["charlemagne", "louis", "charles"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel scientifique a découvert la pénicilline ?",
+    "correctAnswer": "fleming",
+    "traps": ["pasteur", "curie", "koch"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui était surnommé l'homme du 18 juin ?",
+    "correctAnswer": "gaulle",
+    "traps": ["petain", "churchill", "roosevelt"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel explorateur a découvert le Congo ?",
+    "correctAnswer": "savorgnan",
+    "traps": ["stanley", "livingstone", "brazza"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a écrit 'Je pense donc je suis' ?",
+    "correctAnswer": "descartes",
+    "traps": ["pascal", "rousseau", "voltaire"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel roi de France a été guillotiné ?",
+    "correctAnswer": "louis",
+    "traps": ["charles", "henri", "francois"],
+    "difficulty": "easy",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le premier président du Burkina ?",
+    "correctAnswer": "sankara",
+    "traps": ["compaore", "yameogo", "ouedraogo"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel héros congolais lutte pour l'indépendance ?",
+    "correctAnswer": "lumumba",
+    "traps": ["kasa vubu", "tshisekedi", "mobutu"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le premier président du Sénégal ?",
+    "correctAnswer": "senghor",
+    "traps": ["diouf", "wade", "sall"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel empereur a fondé la ville de Tombouctou ?",
+    "correctAnswer": "mansa",
+    "traps": ["soundiata", "kankan", "askia"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a mené la lutte contre l'apartheid ?",
+    "correctAnswer": "mandela",
+    "traps": ["tutu", "biko", "suzman"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel pharaon a un tombeau découvert en 1922 ?",
+    "correctAnswer": "tutankhamon",
+    "traps": ["ramses", "kheops", "akhenaton"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le premier président de la Côte d'Ivoire ?",
+    "correctAnswer": "houphouet",
+    "traps": ["boigny", "bedie", "gbagbo"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel général a dirigé l'Égypte antique ?",
+    "correctAnswer": "ramses",
+    "traps": ["alexandre", "cesar", "pompée"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a découvert le vaccin contre la rage ?",
+    "correctAnswer": "pasteur",
+    "traps": ["koch", "jenner", "salk"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel explorateur a traversé l'Afrique ?",
+    "correctAnswer": "livingstone",
+    "traps": ["stanley", "brazza", "speke"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le premier empereur romain ?",
+    "correctAnswer": "auguste",
+    "traps": ["cesar", "neron", "trajan"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel roi a été vaincu à Waterloo ?",
+    "correctAnswer": "napoleon",
+    "traps": ["louis", "charles", "henri"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a écrit 'Les Misérables' ?",
+    "correctAnswer": "hugo",
+    "traps": ["zola", "dumas", "balzac"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel scientifique a formulé la relativité ?",
+    "correctAnswer": "einstein",
+    "traps": ["newton", "galilee", "bohr"],
+    "difficulty": "medium",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le premier président du Mali ?",
+    "correctAnswer": "keita",
+    "traps": ["traore", "toure", "konare"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel héros a libéré Haïti ?",
+    "correctAnswer": "louverture",
+    "traps": ["dessalines", "petion", "christophe"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a fondé l'empire du Ghana au 8e siecle ?",
+    "correctAnswer": "kaya maghan",
+    "traps": ["soumaoro", "soundiata", "mansa"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel président togolais a dirigé pendant 38 ans ?",
+    "correctAnswer": "eyadema",
+    "traps": ["gnassingbe", "olympi", "mally"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le dernier empereur d'Ethiopie ?",
+    "correctAnswer": "selassie",
+    "traps": ["menelik", "yohannes", "tewodros"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel explorateur a relié les sources du Nil ?",
+    "correctAnswer": "speke",
+    "traps": ["burton", "grant", "baker"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a dirigé la révolte des Zoulous ?",
+    "correctAnswer": "chaka",
+    "traps": ["dingane", "mzilikazi", "cetewayo"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel pharaon a un culte solaire ?",
+    "correctAnswer": "akhenaton",
+    "traps": ["tutankhamon", "ramses", "kheops"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui fut le premier roi d'Israël ?",
+    "correctAnswer": "saul",
+    "traps": ["david", "salomon", "samuel"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quel empereur a divisé Rome en deux ?",
+    "correctAnswer": "diocletien",
+    "traps": ["constantin", "theodose", "justinien"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Qui a peint la Joconde ?",
+    "correctAnswer": "leonard",
+    "traps": ["michel ange", "raphael", "donatello"],
+    "difficulty": "hard",
+    "theme": "histoire"
+  },
+  {
+    "question": "Quelle est la couleur de la banane mure ?",
+    "correctAnswer": "jaune",
+    "traps": ["verte", "rouge", "orange"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est rouge et a des pépins ?",
+    "correctAnswer": "fraise",
+    "traps": ["pomme", "cerise", "framboise"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est jaune et courbé ?",
+    "correctAnswer": "banane",
+    "traps": ["citron", "mangue", "ananas"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est vert à l'extérieur et rouge a l'interieur ?",
+    "correctAnswer": "pasteque",
+    "traps": ["melon", "pomme", "poire"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est orange et aimé des lapins ?",
+    "correctAnswer": "carotte",
+    "traps": ["orange", "mangue", "abricot"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit a une peau duveteuse ?",
+    "correctAnswer": "peche",
+    "traps": ["pomme", "poire", "abricot"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est le symbole de New York ?",
+    "correctAnswer": "pomme",
+    "traps": ["poire", "cerise", "peche"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est acide et jaune ?",
+    "correctAnswer": "citron",
+    "traps": ["orange", "pamplemousse", "lime"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit a une grosse graine au centre ?",
+    "correctAnswer": "mangue",
+    "traps": ["abricot", "cerise", "peche"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est violet et petit ?",
+    "correctAnswer": "myrtille",
+    "traps": ["mure", "raisin", "cassis"],
+    "difficulty": "easy",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit tropical a une peau épineuse ?",
+    "correctAnswer": "ananas",
+    "traps": ["durian", "jacquier", "corossol"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est aussi appelé prune de Cythère ?",
+    "correctAnswer": "pomme cythère",
+    "traps": ["mangue", "goyave", "carambole"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit vert a une chair blanche et des graines noires ?",
+    "correctAnswer": "goyave",
+    "traps": ["poire", "pomme", "coing"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit d'Afrique est appelé fruit du baobab ?",
+    "correctAnswer": "pain de singe",
+    "traps": ["tamarin", "jujube", "nere"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est riche en vitamine C ?",
+    "correctAnswer": "orange",
+    "traps": ["pomme", "poire", "banane"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit pousse en régime ?",
+    "correctAnswer": "banane",
+    "traps": ["raisin", "dattes", "noix de coco"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est un agrume ?",
+    "correctAnswer": "pamplemousse",
+    "traps": ["pasteque", "melon", "fraise"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est une drupe ?",
+    "correctAnswer": "abricot",
+    "traps": ["fraise", "framboise", "groseille"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit d'Afrique est séché en cube ?",
+    "correctAnswer": "tamarin",
+    "traps": ["gingembre", "soumbala", "nere"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est aussi appelé corossol ?",
+    "correctAnswer": "guanabana",
+    "traps": ["cherimoya", "pomme cannelle", "atemoya"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit rouge est une baie ?",
+    "correctAnswer": "groseille",
+    "traps": ["cerise", "fraise", "framboise"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit d'Afrique a des graines comestibles ?",
+    "correctAnswer": "dattier",
+    "traps": ["palmier", "baobab", "karite"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est originaire d'Amérique du Sud ?",
+    "correctAnswer": "ananas",
+    "traps": ["banane", "orange", "mangue"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est vert et poilu ?",
+    "correctAnswer": "kiwi",
+    "traps": ["peche", "abricot", "nectarine"],
+    "difficulty": "medium",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est un hybride entre orange et pamplemousse ?",
+    "correctAnswer": "pomelo",
+    "traps": ["clementine", "mandarine", "tangerine"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est aussi appelé pomme d'éléphant ?",
+    "correctAnswer": "cajou",
+    "traps": ["mangoustan", "ramboutan", "longane"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit africain est le kinkeliba ?",
+    "correctAnswer": "liane",
+    "traps": ["fruit", "feuille", "racine"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit a un noyau en forme d'étoile ?",
+    "correctAnswer": "carambole",
+    "traps": ["pomme", "poire", "peche"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est une baie de couleur pourpre ?",
+    "correctAnswer": "mure",
+    "traps": ["myrtille", "cassis", "framboise"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est appelé l'or vert du Togo ?",
+    "correctAnswer": "cafe",
+    "traps": ["cacao", "karite", "coton"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est un faux-fruit ?",
+    "correctAnswer": "fraise",
+    "traps": ["framboise", "mure", "myrtille"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit a une chair orange et des graines noires ?",
+    "correctAnswer": "papaye",
+    "traps": ["mangue", "goyave", "abricot"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit d'Afrique est fermenté en boisson ?",
+    "correctAnswer": "rônier",
+    "traps": ["palmier", "coco", "dattier"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est le plus cultivé au Togo ?",
+    "correctAnswer": "banane",
+    "traps": ["mangue", "ananas", "coco"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  },
+  {
+    "question": "Quel fruit est aussi appelé prune d'Inde ?",
+    "correctAnswer": "jamblon",
+    "traps": ["pomme rose", "prune de cythère", "pomme cannelle"],
+    "difficulty": "hard",
+    "theme": "fruits"
+  }
+]

@@ -53,9 +53,11 @@ export const useQuiz = (epreuveId: number) => {
 
     const soumettreEpreuve = async () => {
       try {   
-        console.log('🎯 SOUMETTRE_EPREUVE APPELEE');
+        console.log('SOUMETTRE_EPREUVE APPELEE');
         // VÉRIFIE SI LE TOKEN EXISTE
-        const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem('students_access_token') 
+                      || localStorage.getItem('teacher_access_token');
+        
         if (!token) {
            setError('Vous devez être connecté pour soumettre l\'épreuve');
            return;
@@ -67,13 +69,18 @@ export const useQuiz = (epreuveId: number) => {
             question: parseInt(questionId),
             reponse_donnee: reponse
         }));
+        
+        console.log('2. Réponses à envoyer:', reponsesArray);
+        console.log('3. URL:', `/soumettre_reponses/${epreuveId}/`);
 
         const result = await trainingService.soumettreReponses(epreuveId, reponsesArray);
+        console.log('4. Résultat API reçu:', result);
+
         setResultat(result);
+        console.log('5. État resultat mis à jour');
 
      } catch (err: any) {
-       console.error('💥 Erreur soumission:', err);
-
+       
        if (err.response?.status === 401) {
        setError('Session expirée. Veuillez vous reconnecter.');
        } else {
