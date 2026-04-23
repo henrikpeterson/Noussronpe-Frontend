@@ -102,6 +102,7 @@ const TrainingSpacePage = () => {
   const [showTypeDialog, setShowTypeDialog] = useState(false);
   
   //variable ou sont stockés les résultats qui arrivent de l'API (les exercices/épreuves)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [epreuves, setEpreuves] = useState<any[]>([]);
 
   const [loadingEpreuves, setLoadingEpreuves] = useState(false);

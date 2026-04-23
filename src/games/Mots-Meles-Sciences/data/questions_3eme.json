@@ -1,0 +1,31 @@
+{
+  "classe": "3ème",
+  "matiere": "PCT",
+  "questions": [
+    { "id": 1, "question": "Unité de mesure de la puissance électrique", "reponse": "WATT", "indices": ["Commence par W", "W _ _ T (4 lettres)", "La réponse est WATT"], "categorie": "Électricité" },
+    { "id": 2, "question": "Unité de mesure de l'énergie électrique", "reponse": "JOULE", "indices": ["Commence par J", "J _ _ _ E (5 lettres)", "La réponse est JOULE"], "categorie": "Électricité" },
+    { "id": 3, "question": "Appareil augmentant ou diminuant la tension", "reponse": "TRANSFORMATEUR", "indices": ["Commence par T", "T _ _ _ _ _ _ _ _ _ _ _ _ R (14 lettres)", "La réponse est TRANSFORMATEUR"], "categorie": "Électricité" },
+    { "id": 4, "question": "Courant qui change périodiquement de sens", "reponse": "ALTERNATIF", "indices": ["Commence par A", "A _ _ _ _ _ _ _ _ F (10 lettres)", "La réponse est ALTERNATIF"], "categorie": "Électricité" },
+    { "id": 5, "question": "Réaction du carbone avec l'oxygène", "reponse": "COMBUSTION", "indices": ["Commence par C", "C _ _ _ _ _ _ _ _ N (10 lettres)", "La réponse est COMBUSTION"], "categorie": "Chimie" },
+    { "id": 6, "question": "Réaction qui réduit l'oxygène", "reponse": "REDUCTION", "indices": ["Commence par R", "R _ _ _ _ _ _ _ N (9 lettres)", "La réponse est REDUCTION"], "categorie": "Chimie" },
+    { "id": 7, "question": "Liaison forte entre deux atomes par partage d'électrons", "reponse": "COVALENTE", "indices": ["Commence par C", "C _ _ _ _ _ _ _ E (9 lettres)", "La réponse est COVALENTE"], "categorie": "Chimie" },
+    { "id": 8, "question": "Combustible gazeux principal du gaz naturel", "reponse": "METHANE", "indices": ["Commence par M", "M _ _ _ _ _ E (7 lettres)", "La réponse est METHANE"], "categorie": "Chimie" },
+    { "id": 9, "question": "Carburant liquide pour les voitures", "reponse": "ESSENCE", "indices": ["Commence par E", "E _ _ _ _ _ E (7 lettres)", "La réponse est ESSENCE"], "categorie": "Énergie" },
+    { "id": 10, "question": "Énergie produite par fission de l'atome", "reponse": "NUCLEAIRE", "indices": ["Commence par N", "N _ _ _ _ _ _ _ E (9 lettres)", "La réponse est NUCLEAIRE"], "categorie": "Énergie" },
+    { "id": 11, "question": "Vitesse à laquelle un travail est effectué", "reponse": "PUISSANCE", "indices": ["Commence par P", "P _ _ _ _ _ _ _ E (9 lettres)", "La réponse est PUISSANCE"], "categorie": "Mécanique" },
+    { "id": 12, "question": "Effort exercé multiplié par la distance parcourue", "reponse": "TRAVAIL", "indices": ["Commence par T", "T _ _ _ _ _ L (7 lettres)", "La réponse est TRAVAIL"], "categorie": "Mécanique" },
+    { "id": 13, "question": "Machine qui transforme énergie thermique en mouvement", "reponse": "MOTEUR", "indices": ["Commence par M", "M _ _ _ _ R (6 lettres)", "La réponse est MOTEUR"], "categorie": "Technologie" },
+    { "id": 14, "question": "Dispositif qui produit du courant à partir d'un mouvement", "reponse": "GENERATRICE", "indices": ["Commence par G", "G _ _ _ _ _ _ _ _ _ E (11 lettres)", "La réponse est GENERATRICE"], "categorie": "Technologie" },
+    { "id": 15, "question": "Composant électronique qui amplifie un signal", "reponse": "TRANSISTOR", "indices": ["Commence par T", "T _ _ _ _ _ _ _ _ R (10 lettres)", "La réponse est TRANSISTOR"], "categorie": "Électronique" },
+    { "id": 16, "question": "Composant qui stocke des charges électriques", "reponse": "CONDENSATEUR", "indices": ["Commence par C", "C _ _ _ _ _ _ _ _ _ _ R (12 lettres)", "La réponse est CONDENSATEUR"], "categorie": "Électronique" },
+    { "id": 17, "question": "Composant qui ne laisse passer le courant que dans un sens", "reponse": "DIODE", "indices": ["Commence par D", "D _ _ _ E (5 lettres)", "La réponse est DIODE"], "categorie": "Électronique" },
+    { "id": 18, "question": "Composant qui s'oppose au passage du courant", "reponse": "RESISTANCE", "indices": ["Commence par R", "R _ _ _ _ _ _ _ _ E (10 lettres)", "La réponse est RESISTANCE"], "categorie": "Électronique" },
+    { "id": 19, "question": "Onde transportant l'énergie sans matière", "reponse": "ELECTROMAGNETIQUE", "indices": ["Commence par E", "E _ _ _ _ _ _ _ _ _ _ _ _ _ _ E (17 lettres)", "La réponse est ELECTROMAGNETIQUE"], "categorie": "Ondes" },
+    { "id": 20, "question": "Onde sonore audible par l'oreille humaine", "reponse": "SON", "indices": ["Commence par S", "S _ N (3 lettres)", "La réponse est SON"], "categorie": "Ondes" },
+    { "id": 21, "question": "Vitesse de propagation de la lumière dans le vide", "reponse": "CELERITE", "indices": ["Commence par C", "C _ _ _ _ _ _ E (8 lettres)", "La réponse est CELERITE"], "categorie": "Ondes" },
+    { "id": 22, "question": "Phénomène d'écho qui amplifie un son", "reponse": "RESONANCE", "indices": ["Commence par R", "R _ _ _ _ _ _ _ E (9 lettres)", "La réponse est RESONANCE"], "categorie": "Ondes" },
+    { "id": 23, "question": "Réseau d'ordinateurs interconnectés mondialement", "reponse": "INTERNET", "indices": ["Commence par I", "I _ _ _ _ _ _ T (8 lettres)", "La réponse est INTERNET"], "categorie": "Technologie" },
+    { "id": 24, "question": "Code à deux chiffres utilisé en informatique", "reponse": "BINAIRE", "indices": ["Commence par B", "B _ _ _ _ _ E (7 lettres)", "La réponse est BINAIRE"], "categorie": "Technologie" },
+    { "id": 25, "question": "Effet d'un aimant sur le fer", "reponse": "MAGNETISME", "indices": ["Commence par M", "M _ _ _ _ _ _ _ _ E (10 lettres)", "La réponse est MAGNETISME"], "categorie": "Magnétisme" }
+  ]
+}

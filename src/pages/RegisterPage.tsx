@@ -54,6 +54,7 @@ export default function RegisterPage() {
 
   const handleNext = async () => {
     const fields = steps[step - 1].fields;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isValid = await form.trigger(fields as any);
     if (isValid) setStep(step + 1);
   };
@@ -63,6 +64,7 @@ export default function RegisterPage() {
       const response = await api.post("/auth/users/", data);
       toast({ title: "Bienvenue !", description: "Compte créé avec succès." });
       navigate("/login");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({ title: "Erreur", description: "Vérifie tes informations ou ton numéro.", variant: "destructive" });
     }

@@ -44,6 +44,7 @@ const ExamTraining = ({ epreuveId, onExit }: ExamTrainingProps) => {
 
       const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const interval: any = setInterval(function() {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) return clearInterval(interval);

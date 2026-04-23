@@ -26,6 +26,23 @@ import ProfilePage from "./pages/ProfilePage";
 import ChallengesRewardsPage from "./pages/ChallengesRewardsPage";
 import DefisPage from "./pages/DefisPage";
 import ZTypeQuizPage from "./games/ztype-quiz/ZTypeQuizPage";
+import PuzzlePage from "./games/PuzzleGame/PuzzlePage";
+
+import MathJigsaw from "./games/math-Puzzle/components/MathJigsaw";
+
+import LevelSelect from "./games/Link-Learn/LevelSelect";
+import GamePage from "./games/Link-Learn/GamePage";
+
+import TextBuilderLevelSelect from "./games/Link-Learn/TextBuilderLevelSelect.tsx";
+
+
+import TextBuilderGameWrapper from "./games/Link-Learn/TextBuilderGameWrapper.tsx";
+import Index2L from "./games/Link-Learn/Index2L";
+
+import Index1 from "./games/Mots-Meles-Sciences/Index1.tsx";
+import MesJeux from "./pages/MesJeux";
+
+import PctGame from "./games/Mots-Meles-Sciences/components/games/PctGames";
 
 const queryClient = new QueryClient();
 
@@ -57,7 +74,16 @@ const App = () => (
           <Route path="/assistance-educative" element={<AssistanceEducativePage />} />
           <Route path="/espace-enseignant" element={<TeacherAssistancePage />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/MesJeux" element={<ZTypeQuizPage/>}/>
+          <Route path="/MesJeux" element={<MesJeux/>}/>
+          <Route path="/Z-Quiz" element={<ZTypeQuizPage/>}/>
+          <Route path="/Afri-Puzzle" element={<PuzzlePage/>}/>
+          <Route path="/levels" element={<LevelSelect />} />
+          <Route path="/game/:levelId" element={<GamePage />} />
+          <Route path="/Link-Learn" element={<Index2L />} />
+          <Route path="/math-Puzzle" element={<MathJigsaw />} />
+          <Route path="/text-builder" element={<TextBuilderLevelSelect />} />
+          <Route path="/jeu-pct" element={<PctGame/>} />
+          <Route path="/text-builder/:levelId" element={<TextBuilderGameWrapper />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

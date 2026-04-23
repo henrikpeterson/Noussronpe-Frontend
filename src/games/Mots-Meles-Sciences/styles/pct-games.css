@@ -1,0 +1,187 @@
+/*
+ * pct-game.css — Styles scopés pour le jeu PCT en Poche.
+ * Tout est encapsulé dans .pct-game pour ne pas polluer le CSS global de ta plateforme.
+ * Importe ce fichier dans PctGame.tsx, pas dans ton index.css global.
+ */
+/* Police du jeu */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+.pct-game {
+  /* ── Variables scopées ── */
+  --pct-paper: 42 45% 97%;
+  --pct-paper-line: 210 70% 78%;
+  --pct-paper-margin: 0 75% 58%;
+  --pct-foreground: 218 45% 15%;
+  --pct-primary: 218 65% 22%;
+  --pct-primary-fg: 42 50% 97%;
+  --pct-primary-glow: 218 70% 38%;
+  --pct-accent: 38 92% 55%;
+  --pct-accent-fg: 218 60% 15%;
+  --pct-success: 142 65% 42%;
+  --pct-success-fg: 42 50% 97%;
+  --pct-success-glow: 142 75% 55%;
+  --pct-destructive: 0 78% 55%;
+  --pct-destructive-fg: 42 50% 97%;
+  --pct-border: 42 25% 82%;
+  --pct-card: 40 50% 99%;
+  --pct-muted: 42 25% 90%;
+  --pct-muted-fg: 218 25% 38%;
+  --pct-gradient-paper: linear-gradient(180deg, hsl(42 45% 97%), hsl(42 40% 94%));
+  --pct-gradient-primary: linear-gradient(135deg, hsl(218 65% 22%), hsl(218 70% 38%));
+  --pct-gradient-success: linear-gradient(135deg, hsl(142 65% 42%), hsl(142 75% 55%));
+  --pct-gradient-accent: linear-gradient(135deg, hsl(38 92% 55%), hsl(28 95% 60%));
+  --pct-gradient-cell-found: linear-gradient(135deg, hsl(142 70% 50%), hsl(160 75% 48%));
+  --pct-shadow-paper: 0 1px 2px hsl(218 30% 20% / 0.06), 0 4px 12px hsl(218 30% 20% / 0.08);
+  --pct-shadow-card: 0 2px 4px hsl(218 30% 20% / 0.08), 0 8px 24px hsl(218 30% 20% / 0.10);
+  --pct-shadow-cell: inset 0 0 0 1px hsl(218 30% 70% / 0.25), 0 1px 2px hsl(218 30% 20% / 0.08);
+  --pct-shadow-cell-selected: 0 0 0 2px hsl(38 92% 55%), 0 0 12px hsl(38 92% 55% / 0.5);
+  --pct-shadow-cell-found: 0 0 0 2px hsl(142 70% 50%), 0 0 16px hsl(142 70% 50% / 0.6);
+  --pct-shadow-glow: 0 0 30px hsl(218 70% 50% / 0.25);
+  /* ── Overrides des tokens shadcn/tailwind dans le scope du jeu ── */
+  --background: var(--pct-paper);
+  --foreground: var(--pct-foreground);
+  --card: var(--pct-card);
+  --card-foreground: var(--pct-foreground);
+  --primary: var(--pct-primary);
+  --primary-foreground: var(--pct-primary-fg);
+  --secondary: 0 70% 55%;
+  --secondary-foreground: var(--pct-primary-fg);
+  --muted: var(--pct-muted);
+  --muted-foreground: var(--pct-muted-fg);
+  --accent: var(--pct-accent);
+  --accent-foreground: var(--pct-accent-fg);
+  --success: var(--pct-success);
+  --success-foreground: var(--pct-success-fg);
+  --destructive: var(--pct-destructive);
+  --destructive-foreground: var(--pct-destructive-fg);
+  --border: var(--pct-border);
+  --input: 42 25% 88%;
+  --ring: 218 65% 35%;
+  --radius: 0.85rem;
+  font-family: 'Quicksand', 'Comic Sans MS', system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+/* ── Fond cahier d'école ── */
+.pct-game .paper-bg {
+  background-color: hsl(var(--pct-paper));
+  background-image:
+    linear-gradient(to right, transparent 38px, hsl(var(--pct-paper-margin) / 0.55) 38px, hsl(var(--pct-paper-margin) / 0.55) 39px, transparent 40px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent 31px, hsl(var(--pct-paper-line) / 0.5) 31px, hsl(var(--pct-paper-line) / 0.5) 32px),
+    radial-gradient(hsl(218 30% 20% / 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 32px, 4px 4px;
+  background-position: 0 0, 0 8px, 0 0;
+}
+@media (max-width: 480px) {
+  .pct-game .paper-bg {
+    background-image:
+      linear-gradient(to right, transparent 22px, hsl(var(--pct-paper-margin) / 0.55) 22px, hsl(var(--pct-paper-margin) / 0.55) 23px, transparent 24px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 27px, hsl(var(--pct-paper-line) / 0.5) 27px, hsl(var(--pct-paper-line) / 0.5) 28px),
+      radial-gradient(hsl(218 30% 20% / 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 28px, 4px 4px;
+  }
+}
+/* ── Carte papier ── */
+.pct-game .paper-card {
+  background: var(--pct-gradient-paper);
+  box-shadow: var(--pct-shadow-paper);
+  border: 1px solid hsl(var(--pct-border));
+}
+/* ── Cellules de la grille ── */
+.pct-game .grid-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: hsl(var(--pct-card));
+  color: hsl(var(--pct-foreground));
+  box-shadow: var(--pct-shadow-cell);
+  border-radius: 7px;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  touch-action: none;
+  font-size: 0.95rem;
+}
+@media (min-width: 640px) {
+  .pct-game .grid-cell {
+    font-size: 1.05rem;
+  }
+}
+.pct-game .grid-cell-selected {
+  background: var(--pct-gradient-accent);
+  color: hsl(var(--pct-accent-fg));
+  box-shadow: var(--pct-shadow-cell-selected);
+  transform: scale(1.05);
+  z-index: 2;
+}
+.pct-game .grid-cell-found {
+  background: var(--pct-gradient-cell-found);
+  color: hsl(var(--pct-success-fg));
+  box-shadow: var(--pct-shadow-cell-found);
+}
+.pct-game .grid-cell-hint {
+  background: hsl(var(--pct-accent) / 0.35);
+  color: hsl(var(--pct-accent-fg));
+}
+/* ── Indices visuels automatiques ── */
+.pct-game .grid-cell.grid-cell-autohint-0 {
+  background: hsl(217 90% 60% / 0.35) !important;
+  color: hsl(217 90% 25%) !important;
+  box-shadow: 0 0 8px hsl(217 90% 60% / 0.5);
+}
+.pct-game .grid-cell.grid-cell-autohint-1 {
+  background: hsl(30 95% 55% / 0.35) !important;
+  color: hsl(30 80% 25%) !important;
+  box-shadow: 0 0 8px hsl(30 95% 55% / 0.5);
+}
+.pct-game .grid-cell.grid-cell-autohint-2 {
+  background: hsl(270 70% 60% / 0.35) !important;
+  color: hsl(270 70% 25%) !important;
+  box-shadow: 0 0 8px hsl(270 70% 60% / 0.5);
+}
+.pct-game .grid-cell-error {
+  background: hsl(var(--pct-destructive));
+  color: hsl(var(--pct-destructive-fg));
+  animation: pct-shake 0.4s;
+}
+/* ── Boutons tactiles ── */
+.pct-game .btn-touch {
+  min-width: 44px;
+  min-height: 44px;
+}
+/* ── Gradient du bouton primary ── */
+.pct-game .bg-gradient-primary {
+  background: var(--pct-gradient-primary);
+}
+.pct-game .shadow-glow {
+  box-shadow: var(--pct-shadow-glow);
+}
+.pct-game .shadow-card {
+  box-shadow: var(--pct-shadow-card);
+}
+/* ── Safe areas ── */
+.pct-game .safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.pct-game .safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+/* ── Animations ── */
+@keyframes pct-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+@keyframes pct-celebrate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.18) rotate(3deg); }
+  100% { transform: scale(1); }
+}
+@keyframes pct-float-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}

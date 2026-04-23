@@ -8,6 +8,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    allowedHosts: [
+      'sloan-exploitatory-oversorrowfully.ngrok-free.dev',
+      'plurally-exegetic-stanton.ngrok-free.dev'
+    ]
   },
   plugins: [
     react(),

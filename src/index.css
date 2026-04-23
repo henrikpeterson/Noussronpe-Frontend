@@ -1,8 +1,9 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap');
+
+/* Regroupement de toutes les polices */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito:wght@400;600;700&family=Fredoka:wght@300;400;500;600;700&family=Baloo+2:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -16,7 +17,6 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 27%;
 
-    /* Système de bleus modernes */
     --primary: 214 84% 56%;
     --primary-foreground: 210 40% 98%;
     --primary-hover: 214 84% 46%;
@@ -40,7 +40,7 @@
 
     --radius: 0.5rem;
     
-    /* Gradients avec bleus professionnels */
+    /* Gradients et ombres existants */
     --gradient-primary: linear-gradient(135deg, hsl(214 84% 56%), hsl(214 84% 46%));
     --gradient-subtle: linear-gradient(180deg, hsl(210 20% 98%), hsl(214 32% 91%));
     --gradient-blue-light: linear-gradient(135deg, hsl(214 84% 66%), hsl(214 84% 56%));
@@ -48,6 +48,51 @@
     --shadow-blue: 0 10px 25px -5px hsl(214 84% 56% / 0.25);
     --text-primary: hsl(215 25% 27%);
     --text-secondary: hsl(215 13% 50%);
+
+    /* --- Nouvelles couleurs "Game" ajoutées --- */
+    --game-green: 145 72% 46%;  
+    --game-yellow: 45 95% 55%;  
+    --game-orange: 25 90% 58%;  
+    --game-pink: 340 75% 60%;  
+    --game-blue: 210 85% 58%;  
+    --game-purple: 270 65% 58%;  
+    --game-teal: 175 70% 42%;  
+    --game-red: 0 75% 58%;
+    
+    --ink: 218 60% 25%;
+    --ink-glow: 145 63% 49%;
+    --ink-error: 6 78% 57%;
+    --paper: 45 71% 97%;
+    --paper-lines: 218 30% 85%;
+    --bubble: 0 0% 100%;
+    --bubble-border: 218 30% 80%;
+    --bubble-active: 218 60% 92%;
+    --phase-discovery: 200 80% 55%;
+    --phase-discovery-light: 200 80% 92%;
+    --phase-social: 280 60% 55%;
+    --phase-social-light: 280 60% 92%;
+    --phase-words: 35 90% 55%;
+    --phase-words-light: 35 90% 92%;
+    --phase-fluency: 145 63% 42%;
+    --phase-fluency-light: 145 63% 92%;
+    --phase-mastery: 6 78% 57%;
+    --phase-mastery-light: 6 78% 92%;
+
+    --border: 218 30% 85%;
+    --input: 218 30% 85%;
+    --ring: 218 45% 20%;
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+
   }
 
   * {
@@ -69,5 +114,65 @@
   .pattern-background {
     background-color: #f8f5f2;
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 V15 Q0 0 15 0 H30 Q45 0 45 15 V30 Q45 45 30 45 H15 Q0 45 0 30Z' fill='%23ff6b35' fill-opacity='0.08'/%3E%3C/svg%3E");
+  }
+}
+
+/* --- Nouveaux utilitaires ajoutés ici --- */
+@layer utilities {  
+  .text-gradient-lagoon {    
+    @apply bg-clip-text text-transparent;   
+    background-image: linear-gradient(135deg, hsl(var(--game-green)), hsl(var(--game-teal)), hsl(var(--game-blue)));  
+  }  
+
+  .shadow-lagoon {    
+    box-shadow: 0 8px 32px -8px hsl(var(--game-green) / 0.3);  
+  }  
+
+  .shadow-lagoon-lg {    
+    box-shadow: 0 16px 48px -12px hsl(var(--game-green) / 0.35);  
+  }
+}
+
+@layer utilities {
+  .paper-texture {
+    background-image: 
+      radial-gradient(ellipse at 20% 50%, hsl(35 30% 93% / 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, hsl(200 30% 95% / 0.3) 0%, transparent 50%);
+  }
+  .game-bg {
+    background-image:
+      radial-gradient(circle at 15% 85%, hsl(200 80% 55% / 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, hsl(280 60% 55% / 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, hsl(35 90% 55% / 0.04) 0%, transparent 60%);
+  }
+  .ink-line {
+    stroke: hsl(var(--ink));
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    filter: url(#ink-filter);
+  }
+  .ink-line-correct {
+    stroke: hsl(var(--ink-glow));
+    filter: drop-shadow(0 0 6px hsl(var(--ink-glow) / 0.5));
+  }
+  .ink-line-error {
+    stroke: hsl(var(--ink-error));
+    filter: drop-shadow(0 0 6px hsl(var(--ink-error) / 0.5));
+  }
+  .bubble-float {
+    animation: bubble-float 3s ease-in-out infinite;
+  }
+  @keyframes bubble-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  .word-bubble {
+    backdrop-filter: blur(8px);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .word-bubble:active {
+    transform: scale(0.95);
   }
 }

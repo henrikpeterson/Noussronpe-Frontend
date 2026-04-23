@@ -73,6 +73,7 @@ const TeacherAssistancePage = () => {
         description: "L'élève sera notifié de votre réponse"
       });
       return Promise.resolve();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast.error("Erreur", {
         description: err.message || "Impossible d'envoyer la réponse"

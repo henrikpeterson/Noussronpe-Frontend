@@ -4,11 +4,14 @@ import { Question } from 'src/api.tsx';
 
 interface QuestionCardProps {
   question: Question;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   answer: any; // La réponse stockée dans le parent
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onAnswerChange: (answer: any) => void;
   showExplanations?: boolean;
   isFirstQuestion?: boolean;
   questionNumber?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customStyle?: {shadow: any; border: string; icon: string; bg: string; card: string};
 }
 

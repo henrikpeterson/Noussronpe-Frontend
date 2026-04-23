@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://192.168.1.69:8000'; 
+const API_BASE_URL = 'https://holland-defined-typically-participant.trycloudflare.com'; 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -163,9 +163,18 @@ export const trainingService = {
    */
 
   async getClasses(): Promise<Classe[]> {
-    const response = await api.get('api/TrainingAndEvaluation/classes/');
+  try {
+    const response = await api.get("api/TrainingAndEvaluation/classes/");
+    if (!Array.isArray(response.data)) {
+      console.error("Réponse inattendue:", response.data);
+      return [];
+    }
     return response.data;
-  },
+  } catch (error) {
+    console.error("Erreur API getClasses:", error);
+    return [];
+  }
+},
 
     /**
    * Récupère toutes les matières avec leurs classes associées
@@ -232,6 +241,7 @@ export const trainingService = {
     matiere?: number;
     type_epreuve?: string;
   }): Promise<EpreuveFiltreesResponse>{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const params: any = {};
 
     if(filters.classe) params.classe = filters.classe.toString();

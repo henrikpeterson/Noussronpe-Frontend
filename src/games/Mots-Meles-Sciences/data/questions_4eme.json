@@ -1,0 +1,31 @@
+{
+  "classe": "4ème",
+  "matiere": "PCT",
+  "questions": [
+    { "id": 1, "question": "Unité de mesure de l'intensité électrique", "reponse": "AMPERE", "indices": ["Commence par A", "A _ _ _ _ E (6 lettres)", "La réponse est AMPERE"], "categorie": "Électricité" },
+    { "id": 2, "question": "Unité de mesure de la tension électrique", "reponse": "VOLT", "indices": ["Commence par V", "V _ _ T (4 lettres)", "La réponse est VOLT"], "categorie": "Électricité" },
+    { "id": 3, "question": "Appareil pour mesurer l'intensité du courant", "reponse": "AMPEREMETRE", "indices": ["Commence par A", "A _ _ _ _ _ _ _ _ _ E (11 lettres)", "La réponse est AMPEREMETRE"], "categorie": "Électricité" },
+    { "id": 4, "question": "Appareil pour mesurer la tension", "reponse": "VOLTMETRE", "indices": ["Commence par V", "V _ _ _ _ _ _ _ E (9 lettres)", "La réponse est VOLTMETRE"], "categorie": "Électricité" },
+    { "id": 5, "question": "Unité de résistance électrique", "reponse": "OHM", "indices": ["Commence par O", "O _ M (3 lettres)", "La réponse est OHM"], "categorie": "Électricité" },
+    { "id": 6, "question": "Réaction qui produit de la chaleur", "reponse": "EXOTHERMIQUE", "indices": ["Commence par E", "E _ _ _ _ _ _ _ _ _ _ E (12 lettres)", "La réponse est EXOTHERMIQUE"], "categorie": "Chimie" },
+    { "id": 7, "question": "Solution qui conduit le courant électrique", "reponse": "ELECTROLYTE", "indices": ["Commence par E", "E _ _ _ _ _ _ _ _ _ E (11 lettres)", "La réponse est ELECTROLYTE"], "categorie": "Chimie" },
+    { "id": 8, "question": "Particule de charge négative", "reponse": "ELECTRON", "indices": ["Commence par E", "E _ _ _ _ _ _ N (8 lettres)", "La réponse est ELECTRON"], "categorie": "Atome" },
+    { "id": 9, "question": "Particule de charge positive du noyau", "reponse": "PROTON", "indices": ["Commence par P", "P _ _ _ _ N (6 lettres)", "La réponse est PROTON"], "categorie": "Atome" },
+    { "id": 10, "question": "Particule neutre du noyau atomique", "reponse": "NEUTRON", "indices": ["Commence par N", "N _ _ _ _ _ N (7 lettres)", "La réponse est NEUTRON"], "categorie": "Atome" },
+    { "id": 11, "question": "Centre de l'atome contenant les protons", "reponse": "NOYAU", "indices": ["Commence par N", "N _ _ _ U (5 lettres)", "La réponse est NOYAU"], "categorie": "Atome" },
+    { "id": 12, "question": "Mécanisme transmettant un mouvement par dents", "reponse": "ENGRENAGE", "indices": ["Commence par E", "E _ _ _ _ _ _ _ E (9 lettres)", "La réponse est ENGRENAGE"], "categorie": "Mécanique" },
+    { "id": 13, "question": "Force qui s'oppose au mouvement", "reponse": "FROTTEMENT", "indices": ["Commence par F", "F _ _ _ _ _ _ _ _ T (10 lettres)", "La réponse est FROTTEMENT"], "categorie": "Mécanique" },
+    { "id": 14, "question": "Énergie liée au mouvement", "reponse": "MECANIQUE", "indices": ["Commence par M", "M _ _ _ _ _ _ _ E (9 lettres)", "La réponse est MECANIQUE"], "categorie": "Énergie" },
+    { "id": 15, "question": "Source d'énergie utilisant la chaleur du sous-sol", "reponse": "GEOTHERMIE", "indices": ["Commence par G", "G _ _ _ _ _ _ _ _ E (10 lettres)", "La réponse est GEOTHERMIE"], "categorie": "Énergie" },
+    { "id": 16, "question": "Production électrique avec une chute d'eau", "reponse": "HYDRAULIQUE", "indices": ["Commence par H", "H _ _ _ _ _ _ _ _ _ E (11 lettres)", "La réponse est HYDRAULIQUE"], "categorie": "Énergie" },
+    { "id": 17, "question": "Lentille bombée qui converge la lumière", "reponse": "CONVERGENTE", "indices": ["Commence par C", "C _ _ _ _ _ _ _ _ _ E (11 lettres)", "La réponse est CONVERGENTE"], "categorie": "Optique" },
+    { "id": 18, "question": "Phénomène où la lumière revient sur sa source", "reponse": "REFLEXION", "indices": ["Commence par R", "R _ _ _ _ _ _ _ N (9 lettres)", "La réponse est REFLEXION"], "categorie": "Optique" },
+    { "id": 19, "question": "Déviation de la lumière en changeant de milieu", "reponse": "REFRACTION", "indices": ["Commence par R", "R _ _ _ _ _ _ _ _ N (10 lettres)", "La réponse est REFRACTION"], "categorie": "Optique" },
+    { "id": 20, "question": "Surface polie qui renvoie l'image", "reponse": "MIROIR", "indices": ["Commence par M", "M _ _ _ _ R (6 lettres)", "La réponse est MIROIR"], "categorie": "Optique" },
+    { "id": 21, "question": "Appareil optique pour observer le ciel", "reponse": "TELESCOPE", "indices": ["Commence par T", "T _ _ _ _ _ _ _ E (9 lettres)", "La réponse est TELESCOPE"], "categorie": "Optique" },
+    { "id": 22, "question": "Décomposition de la lumière blanche", "reponse": "SPECTRE", "indices": ["Commence par S", "S _ _ _ _ _ E (7 lettres)", "La réponse est SPECTRE"], "categorie": "Optique" },
+    { "id": 23, "question": "Acide présent dans l'estomac", "reponse": "CHLORHYDRIQUE", "indices": ["Commence par C", "C _ _ _ _ _ _ _ _ _ _ _ E (13 lettres)", "La réponse est CHLORHYDRIQUE"], "categorie": "Chimie" },
+    { "id": 24, "question": "Base forte connue, soude caustique", "reponse": "HYDROXYDE", "indices": ["Commence par H", "H _ _ _ _ _ _ _ E (9 lettres)", "La réponse est HYDROXYDE"], "categorie": "Chimie" },
+    { "id": 25, "question": "Mesure de l'acidité d'une solution", "reponse": "PH", "indices": ["Commence par P", "P H (2 lettres)", "La réponse est PH"], "categorie": "Chimie" }
+  ]
+}

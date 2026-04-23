@@ -134,6 +134,7 @@ export const useTrainingData = ()=> {
     
     for (const classe of classesList) {
       try {
+        console.log("Classe brute:", classe);
         console.log(`- Détail pour: ${classe.nom}...`);
         
         // Cet endpoint retourne un TABLEAU de matières avec leurs comptes

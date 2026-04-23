@@ -1,0 +1,31 @@
+{
+  "classe": "5ème",
+  "matiere": "PCT",
+  "questions": [
+    { "id": 1, "question": "Unité de mesure de la masse", "reponse": "KILOGRAMME", "indices": ["Commence par K", "K _ _ _ _ _ _ _ _ E (10 lettres)", "La réponse est KILOGRAMME"], "categorie": "Mesures" },
+    { "id": 2, "question": "Instrument pour mesurer la masse", "reponse": "BALANCE", "indices": ["Commence par B", "B _ _ _ _ _ E (7 lettres)", "La réponse est BALANCE"], "categorie": "Mesures" },
+    { "id": 3, "question": "Unité de volume du système international", "reponse": "LITRE", "indices": ["Commence par L", "L _ _ _ E (5 lettres)", "La réponse est LITRE"], "categorie": "Mesures" },
+    { "id": 4, "question": "Rapport de la masse au volume d'un corps", "reponse": "MASSEVOLUMIQUE", "indices": ["Commence par M", "M _ _ _ _ _ _ _ _ _ _ _ _ E (14 lettres)", "La réponse est MASSEVOLUMIQUE"], "categorie": "Propriétés" },
+    { "id": 5, "question": "Métal liquide à température ambiante", "reponse": "MERCURE", "indices": ["Commence par M", "M _ _ _ _ _ E (7 lettres)", "La réponse est MERCURE"], "categorie": "Métaux" },
+    { "id": 6, "question": "Métal jaune brillant et précieux", "reponse": "OR", "indices": ["Commence par O", "O R (2 lettres)", "La réponse est OR"], "categorie": "Métaux" },
+    { "id": 7, "question": "Action de l'eau sur le fer qui forme la rouille", "reponse": "OXYDATION", "indices": ["Commence par O", "O _ _ _ _ _ _ _ N (9 lettres)", "La réponse est OXYDATION"], "categorie": "Réactions" },
+    { "id": 8, "question": "Source de courant continu rechargeable", "reponse": "ACCUMULATEUR", "indices": ["Commence par A", "A _ _ _ _ _ _ _ _ _ _ R (12 lettres)", "La réponse est ACCUMULATEUR"], "categorie": "Électricité" },
+    { "id": 9, "question": "Circuit où les composants sont l'un après l'autre", "reponse": "SERIE", "indices": ["Commence par S", "S _ _ _ E (5 lettres)", "La réponse est SERIE"], "categorie": "Électricité" },
+    { "id": 10, "question": "Circuit où les composants sont en branches séparées", "reponse": "DERIVATION", "indices": ["Commence par D", "D _ _ _ _ _ _ _ _ N (10 lettres)", "La réponse est DERIVATION"], "categorie": "Électricité" },
+    { "id": 11, "question": "Petite particule constituant la matière", "reponse": "MOLECULE", "indices": ["Commence par M", "M _ _ _ _ _ _ E (8 lettres)", "La réponse est MOLECULE"], "categorie": "Matière" },
+    { "id": 12, "question": "Plus petite partie d'un élément chimique", "reponse": "ATOME", "indices": ["Commence par A", "A _ _ _ E (5 lettres)", "La réponse est ATOME"], "categorie": "Matière" },
+    { "id": 13, "question": "Forme d'énergie produite par le mouvement", "reponse": "CINETIQUE", "indices": ["Commence par C", "C _ _ _ _ _ _ _ E (9 lettres)", "La réponse est CINETIQUE"], "categorie": "Énergie" },
+    { "id": 14, "question": "Source d'énergie renouvelable provenant du soleil", "reponse": "SOLAIRE", "indices": ["Commence par S", "S _ _ _ _ _ E (7 lettres)", "La réponse est SOLAIRE"], "categorie": "Énergie" },
+    { "id": 15, "question": "Combustible fossile noir utilisé pour produire l'énergie", "reponse": "CHARBON", "indices": ["Commence par C", "C _ _ _ _ _ N (7 lettres)", "La réponse est CHARBON"], "categorie": "Énergie" },
+    { "id": 16, "question": "Mouvement des molécules dû à la chaleur", "reponse": "AGITATION", "indices": ["Commence par A", "A _ _ _ _ _ _ _ N (9 lettres)", "La réponse est AGITATION"], "categorie": "Matière" },
+    { "id": 17, "question": "Outil tranchant pour couper le bois", "reponse": "SCIE", "indices": ["Commence par S", "S _ _ E (4 lettres)", "La réponse est SCIE"], "categorie": "Outils" },
+    { "id": 18, "question": "Outil pour enfoncer des clous", "reponse": "MARTEAU", "indices": ["Commence par M", "M _ _ _ _ _ U (7 lettres)", "La réponse est MARTEAU"], "categorie": "Outils" },
+    { "id": 19, "question": "Matériau plastique très utilisé", "reponse": "POLYETHYLENE", "indices": ["Commence par P", "P _ _ _ _ _ _ _ _ _ _ E (12 lettres)", "La réponse est POLYETHYLENE"], "categorie": "Matériaux" },
+    { "id": 20, "question": "Pluie chargée d'acides polluants", "reponse": "ACIDE", "indices": ["Commence par A", "A _ _ _ E (5 lettres)", "La réponse est ACIDE"], "categorie": "Environnement" },
+    { "id": 21, "question": "Couche protectrice de la Terre contre les UV", "reponse": "OZONE", "indices": ["Commence par O", "O _ _ _ E (5 lettres)", "La réponse est OZONE"], "categorie": "Environnement" },
+    { "id": 22, "question": "Vapeur d'eau visible dans le ciel", "reponse": "NUAGE", "indices": ["Commence par N", "N _ _ _ E (5 lettres)", "La réponse est NUAGE"], "categorie": "Météo" },
+    { "id": 23, "question": "Phénomène lumineux dans le ciel pendant un orage", "reponse": "ECLAIR", "indices": ["Commence par E", "E _ _ _ _ R (6 lettres)", "La réponse est ECLAIR"], "categorie": "Météo" },
+    { "id": 24, "question": "Bruit qui suit l'éclair", "reponse": "TONNERRE", "indices": ["Commence par T", "T _ _ _ _ _ _ E (8 lettres)", "La réponse est TONNERRE"], "categorie": "Météo" },
+    { "id": 25, "question": "Mouvement de l'air dans l'atmosphère", "reponse": "VENT", "indices": ["Commence par V", "V _ _ T (4 lettres)", "La réponse est VENT"], "categorie": "Météo" }
+  ]
+}

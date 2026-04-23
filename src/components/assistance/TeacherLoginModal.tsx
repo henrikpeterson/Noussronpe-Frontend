@@ -62,6 +62,7 @@ const TeacherLoginModal = ({ open, onOpenChange }: TeacherLoginModalProps) => {
       onOpenChange(false);
       navigate("/espace-enseignant");
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Erreur login:", error);
 

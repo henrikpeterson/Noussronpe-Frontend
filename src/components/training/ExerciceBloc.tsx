@@ -29,7 +29,9 @@ interface ExerciceBlocProps {
   exercice: Exercice;
   exerciceNumber: number;
   totalExercices: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   answers: Record<number, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onAnswerChange: (questionId: number, answer: any) => void;
   onNext: () => void;
   onSubmit: () => void;
