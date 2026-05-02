@@ -3,6 +3,7 @@ import { BookOpen, Trophy, BarChart3, ArrowRight, Star, Zap, Users } from "lucid
 import { motion } from "framer-motion";
 
 import type { Variants } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -169,13 +170,15 @@ export default function NewHeroSection() {
             className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-14"
           >
             <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                size="lg"
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 h-14 text-lg font-bold rounded-xl shadow-lg shadow-blue-200 transition-colors"
-              >
-                Commencer maintenant
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+              <Link to="/dashboard" className="no-underline"> 
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 h-14 text-lg font-bold rounded-xl shadow-lg shadow-blue-200 transition-colors"
+                >
+                  Commencer maintenant
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>

@@ -19,6 +19,11 @@ export default {
 			}
 		},
 		extend: {
+			// AJOUT : FONTFAMILY FREDOKA
+			fontFamily: {
+				sans: ['Inter', 'system-ui', 'sans-serif'], // Police par défaut
+				fredoka: ['Fredoka', 'sans-serif'], // Police pour Sidebar & branding
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -128,6 +133,10 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
-	plugins: [require('@tailwindcss/typography')],
+	plugins: [
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	require("tailwindcss-animate"),
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	require('@tailwindcss/typography')
+ ],
 } satisfies Config;

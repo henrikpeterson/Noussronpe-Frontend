@@ -1,4 +1,9 @@
 
+import '@fontsource/fredoka/400.css'; // Regular
+import '@fontsource/fredoka/500.css'; // Medium
+import '@fontsource/fredoka/600.css'; // Semi-bold
+import '@fontsource/fredoka/700.css'; // Bold
+
 import { Toaster as ShadcnToaster} from "@/components/ui/toaster";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -44,6 +49,9 @@ import MesJeux from "./pages/MesJeux";
 
 import PctGame from "./games/Mots-Meles-Sciences/components/games/PctGames";
 
+import Dashboard from "./newpages/dashboard.tsx";
+
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -84,6 +92,7 @@ const App = () => (
           <Route path="/text-builder" element={<TextBuilderLevelSelect />} />
           <Route path="/jeu-pct" element={<PctGame/>} />
           <Route path="/text-builder/:levelId" element={<TextBuilderGameWrapper />} />
+          <Route path="/dashboard" element={<Dashboard />}/>
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

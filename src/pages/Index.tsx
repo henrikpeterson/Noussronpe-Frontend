@@ -392,7 +392,7 @@ function JourneySection() {
             </div>
 
             {/* Bouton CTA vers outils */}
-            <Link to="/assistance-educative">
+            <Link to="/dashboard">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
