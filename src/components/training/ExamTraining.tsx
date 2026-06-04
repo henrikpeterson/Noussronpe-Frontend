@@ -6,6 +6,7 @@ import { X, Trophy, RotateCcw, Loader2 } from "lucide-react";
 import ExerciceBloc from "./ExerciceBloc";
 import { useQuiz } from "@/hooks/useQuiz";
 import confetti from 'canvas-confetti';
+import { useTrainingData } from '@/hooks/useTrainingData';
 
 interface ExamTrainingProps {
   epreuveId: number;

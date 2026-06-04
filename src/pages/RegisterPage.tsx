@@ -77,7 +77,7 @@ export default function RegisterPage() {
         {/* GAUCHE : DESIGN (50%) */}
         <div className="md:w-1/2 bg-blue-600 p-12 text-white flex flex-col justify-between relative">
           <div className="relative z-10">
-            <h2 className="text-3xl font-black italic">EDULAB.</h2>
+            <h2 className="text-3xl font-black italic">REVIZ+</h2>
             <div className="mt-4 flex gap-1">
               {steps.map((s) => (
                 <div key={s.id} className={`h-1.5 flex-1 rounded-full ${s.id <= step ? 'bg-white' : 'bg-white/20'}`} />

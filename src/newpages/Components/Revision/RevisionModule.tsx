@@ -1,56 +1,58 @@
+/**
+ * ====================================================
+ * REVISIONMODULE - Simplifié (plus de step "study")
+ * ====================================================
+ */
+
 import { useState } from "react";
 import SubjectGrid from "./SubjectGrid";
 import Roadmap from "./Roadmap";
-import StudyView from "./StudyView";
 import { motion, AnimatePresence } from "framer-motion";
+import { SUBJECTS } from "@/newpages/data/Subjects";
 
-/**
- * 📚 MODULE RÉVISION - Gestion des 3 vues (A → B → C)
- */
-export type RevisionStep = "subjects" | "roadmap" | "study";
+// ====================================================
+// MODIFICATION : Plus que 2 steps (subjects + roadmap)
+// ===================================================
+
+export type RevisionStep = "subjects" | "roadmap";
 
 export interface SelectedSubject {
   id: string;
   name: string;
   color: string;
+  gradient: string;
 }
 
-export interface SelectedChapter {
-  id: string;
-  title: string;
-  price: number;
-}
+// SUPPRESSION : SelectedChapter plus nécessaire ici
 
 const RevisionModule = () => {
   const [currentStep, setCurrentStep] = useState<RevisionStep>("subjects");
   const [selectedSubject, setSelectedSubject] = useState<SelectedSubject | null>(null);
-  const [selectedChapter, setSelectedChapter] = useState<SelectedChapter | null>(null);
 
-  // Handler : Sélection matière → Passe à Roadmap
-  const handleSubjectSelect = (subject: SelectedSubject) => {
-    setSelectedSubject(subject);
-    setCurrentStep("roadmap");
-  };
-
-  // Handler : Sélection chapitre → Passe à Study View
-  const handleChapterSelect = (chapter: SelectedChapter) => {
-    setSelectedChapter(chapter);
-    setCurrentStep("study");
-  };
-
-  // Handler : Retour arrière
-  const handleBack = () => {
-    if (currentStep === "study") {
+  // ═══════════════════════════════════════════════════════════
+  // HANDLERS
+  // ═══════════════════════════════════════════════════════════
+  
+  const handleSubjectSelect = (subjectId: string) => {
+    const subject = SUBJECTS.find(s => s.id === subjectId);
+    if (subject) {
+      setSelectedSubject({
+        id: subject.id,
+        name: subject.name,
+        color: subject.color,
+        gradient: subject.gradient,
+      });
       setCurrentStep("roadmap");
-      setSelectedChapter(null);
-    } else if (currentStep === "roadmap") {
-      setCurrentStep("subjects");
-      setSelectedSubject(null);
     }
   };
 
+  const handleBack = () => {
+    setCurrentStep("subjects");
+    setSelectedSubject(null);
+  };
+
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="w-full min-h-screen">
       <AnimatePresence mode="wait">
         
         {/* ═══════ ÉTAPE A : Grille Matières ═══════ */}
@@ -60,7 +62,7 @@ const RevisionModule = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <SubjectGrid onSelectSubject={handleSubjectSelect} />
           </motion.div>
@@ -73,28 +75,10 @@ const RevisionModule = () => {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <Roadmap 
               subject={selectedSubject}
-              onSelectChapter={handleChapterSelect}
-              onBack={handleBack}
-            />
-          </motion.div>
-        )}
-
-        {/* ═══════ ÉTAPE C : Mode Étude (Split-Screen) ═══════ */}
-        {currentStep === "study" && selectedChapter && selectedSubject && (
-          <motion.div
-            key="study"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.3 }}
-          >
-            <StudyView 
-              subject={selectedSubject}
-              chapter={selectedChapter}
               onBack={handleBack}
             />
           </motion.div>

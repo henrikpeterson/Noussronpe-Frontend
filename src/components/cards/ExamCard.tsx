@@ -43,7 +43,7 @@ export default function ExamCard({ exam }: ExamCardProps) {
   } = useTokenConsumption();
 
   //const pdfUrl = `http://192.168.1.69:8000/api/TrainingAndEvaluation/epreuve/${exam.id}/pdf/`;
-  const pdfUrl = `https://holland-defined-typically-participant.trycloudflare.com/api/TrainingAndEvaluation/epreuve/${exam.id}/pdf/`;
+  const pdfUrl = `http://192.168.100.12:8000/api/TrainingAndEvaluation/epreuve/${exam.id}/pdf/`;
 
   // ✅ SI LE MODE ENTRAÎNEMENT EST ACTIVÉ : 
   // On affiche le composant en "Overlay" (plein écran par-dessus tout)

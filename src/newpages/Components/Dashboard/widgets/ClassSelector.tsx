@@ -3,8 +3,10 @@ import { GraduationCap, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /**
- * WIDGET SÉLECTEUR DE CLASSE
+ * CLASS SELECTOR - Style 3D Duolingo
+ * Arrière-plan orange avec effet neubrutaliste
  */
+
 const CLASSES = ["6ème", "5ème", "4ème", "3ème", "2nde", "1ère", "Terminale"];
 
 const ClassSelector = () => {
@@ -12,48 +14,73 @@ const ClassSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-3xl p-5 border-2 border-slate-100 shadow-sm">
-      <div className="flex items-center gap-2 mb-3">
-        <GraduationCap className="w-4 h-4 text-blue-600" />
-        <h4 className="text-sm font-bold text-slate-700">Ma Classe</h4>
+    <div className={`
+      /* Arrière-plan Orange + Bordure 3D */
+      bg-[#ff9600] 
+      rounded-3xl 
+      p-4 
+      border-b-[6px] border-[#e68a00] 
+      border-l-2 border-r-2 
+      shadow-sm
+    `}>
+      
+      {/* Header - Texte blanc pour contraster avec l'orange */}
+      <div className="flex items-center gap-2 mb-4">
+        <GraduationCap className="w-5 h-5 text-white" />
+        <h4 className="text-sm font-black text-white/90 font-fredoka uppercase tracking-wider">
+          MA CLASSE
+        </h4>
       </div>
 
+      {/* Dropdown / Sélecteur */}
       <div className="relative">
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
-          whileTap={{ scale: 0.98 }}
-          className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl px-4 py-3 flex items-center justify-between transition-all duration-300 hover:border-blue-400"
+          whileHover={{ y: -2 }}
+          whileTap={{ y: 4 }}
+          className={`
+            w-full 
+            bg-white 
+            border-2 border-slate-200 
+            border-b-[6px] 
+            rounded-2xl 
+            px-4 py-2 
+            flex items-center justify-between 
+            transition-all 
+            active:border-b-0
+          `}
         >
-          <span className="text-base font-black text-blue-700">{selectedClass}</span>
+          <span className="text-lg font-black text-slate-700 font-fredoka">
+            {selectedClass}
+          </span>
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <ChevronDown className="w-5 h-5 text-blue-600" />
+            <ChevronDown className="w-6 h-6 text-[#ff9600] stroke-[3px]" />
           </motion.div>
         </motion.button>
 
+        {/* Options dropdown 3D */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-full mt-2 w-full bg-white border-2 border-slate-200 rounded-2xl shadow-xl z-10 overflow-hidden"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 5 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-slate-200 border-b-[6px] rounded-2xl shadow-xl z-20 overflow-hidden"
             >
-              {CLASSES.map((classe, index) => (
-                <motion.button
+              {CLASSES.map((classe) => (
+                <button
                   key={classe}
                   onClick={() => {
                     setSelectedClass(classe);
                     setIsOpen(false);
                   }}
-                  whileHover={{ backgroundColor: "#EFF6FF" }}
-                  className="w-full px-4 py-3 text-left text-sm font-bold text-slate-700 transition-colors border-b border-slate-100 last:border-b-0"
+                  className="w-full px-4 py-3 text-left text-base font-black text-slate-600 font-fredoka hover:bg-orange-50 hover:text-[#ff9600] transition-colors border-b border-slate-100 last:border-b-0"
                 >
                   {classe}
-                </motion.button>
+                </button>
               ))}
             </motion.div>
           )}

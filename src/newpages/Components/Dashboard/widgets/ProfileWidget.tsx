@@ -2,51 +2,64 @@ import { Coins } from "lucide-react";
 import { motion } from "framer-motion";
 
 /**
- * WIDGET PROFIL - Avatar + Jetons de savoir
+ * PROFILE WIDGET - Style 3D Gamifié
+ * Application du style "Neubrutalisme doux"
  */
+
 const ProfileWidget = () => {
-  const userName = "Alex Martin";
-  const tokens = 1250;
+  const user = {
+    name: "ALEX MARTIN",
+    initials: "AM",
+    level: 12,
+    tokens: 50,
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-5 border-2 border-blue-100"
+      className="bg-[#44C942] rounded-3xl p-3 border-b-[6px] border-[#007D0A] border-l-2 border-r-2 shadow-sm text-white "
     >
-      <div className="flex items-center gap-4 mb-4">
-        {/* Avatar */}
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-lg">
-          AM
-        </div>
-
-        {/* Nom */}
-        <div>
-          <p className="text-sm text-slate-600 font-medium">Bienvenue,</p>
-          <h3 className="text-lg font-black text-slate-900">{userName}</h3>
-        </div>
-      </div>
-
-      {/* Jetons de Savoir */}
-      <div className="bg-white rounded-2xl p-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center">
-            <Coins className="w-5 h-5 text-white" />
+      
+      {/* Section Profil */}
+      <div className="flex flex-col items-center mb-6">
+        
+        {/* Avatar 3D */}
+        <div className="relative mb-3 group cursor-pointer">
+          <div className="w-20 h-20 rounded-full bg-[#1cb0f6] border-b-[6px] border-[#1899d6] flex items-center justify-center text-white font-black text-2xl transition-all active:border-b-0 active:translate-y-[4px]">
+            {user.initials}
           </div>
-          <div>
-            <p className="text-xs text-slate-600 font-medium">Jetons de Savoir</p>
-            <p className="text-xl font-black text-slate-900">{tokens.toLocaleString()}</p>
+          
+          {/* Badge Level 3D */}
+          <div className="absolute -bottom-1 -right-1 bg-[#ffc800] rounded-xl px-3 py-1 border-b-4 border-[#e5a500] shadow-sm">
+            <span className="text-[10px] font-black text-[#af7e00] uppercase tracking-wider">
+              Niv {user.level}
+            </span>
           </div>
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-3 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-lg"
-        >
-          + Gagner
-        </motion.button>
+        {/* Nom utilisateur */}
+        <h3 className="text-lg font-black text-slate-800 font-fredoka uppercase tracking-wide">
+          {user.name}
+        </h3>
       </div>
+
+      {/* Card Jetons 3D */}
+      <div className="relative group">
+        <div className="bg-[#fff4e5] border-2 border-[#ffc800] border-b-[6px] rounded-2xl p-4 flex items-center justify-between transition-all">
+          <div className="flex items-center gap-3">
+            {/* Icône Jeton Style Duo */}
+            <div className="w-12 h-12 bg-[#ffc800] border-b-4 border-[#e5a500] rounded-2xl flex items-center justify-center shadow-inner">
+              <Coins className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <p className="text-[10px] text-[#af7e00] font-black uppercase tracking-tighter">Jetons de Savoir</p>
+              <p className="text-2xl font-black text-[#af7e00] leading-none">{user.tokens.toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </motion.div>
   );
 };

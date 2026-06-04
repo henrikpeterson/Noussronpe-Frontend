@@ -234,7 +234,7 @@ export default function MathJigsaw() {
     <div className="min-h-screen flex flex-col items-center px-4 py-4 sm:py-8 relative overflow-hidden">
 
       {/* ════════════════════════════════════════════════════════════════
-          🎨 BACKGROUND CAHIER DE CLASSE
+          BACKGROUND CAHIER DE CLASSE
           ════════════════════════════════════════════════════════════════ */}
       
       {/* Fond papier crème */}

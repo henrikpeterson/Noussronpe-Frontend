@@ -1,12 +1,15 @@
-import { X } from "lucide-react";
+import HeaderStats from "./widgets/HeaderStats";
 import ProfileWidget from "./widgets/ProfileWidget";
 import ClassSelector from "./widgets/ClassSelector";
-import DailyGoals from "./widgets/DailyGoals";
-import { motion } from "framer-motion";
+import HealthWidget from "./widgets/HealthWidget";
+import WidgetFooter from "./widgets/WidgetFooter";
+import { X } from "lucide-react";
 
 /**
- * 📊 WIDGET BAR - Colonne droite persistante (Desktop) ou Drawer (Mobile)
+ * 📊 WIDGETBAR - Colonne droite du Dashboard
+ * Gestion correcte de la hauteur sur tous écrans
  */
+
 interface WidgetBarProps {
   onClose?: () => void;
   isMobile?: boolean;
@@ -14,24 +17,51 @@ interface WidgetBarProps {
 
 const WidgetBar = ({ onClose, isMobile = false }: WidgetBarProps) => {
   return (
-    <aside className={`${isMobile ? 'w-full' : 'w-80'} bg-white border-l border-slate-200 p-6 overflow-y-auto`}>
+    <aside 
+      className={`
+        ${isMobile ? 'w-full' : 'w-[20vw] min-w-[260px] max-w-[320px]'} 
+        bg-[#F9FAFB] 
+        border-l border-slate-200 
+        
+        flex flex-col
+        h-screen
+        overflow-hidden
+        
+      `}
+    >
       
-      {/* Header Mobile (bouton fermer) */}
+      {/* ═══════════ HEADER MOBILE (bouton fermer) ═══════════ */}
       {isMobile && (
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-black text-slate-900">Mes Infos</h2>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-xl transition">
+        <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-slate-200 flex-shrink-0">
+          <h2 className="text-lg font-bold text-slate-900">Tableau de bord</h2>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
+          >
             <X className="w-5 h-5 text-slate-600" />
           </button>
         </div>
       )}
 
-      {/* Stack de Widgets */}
-      <div className="space-y-6">
-        <ProfileWidget />
-        <ClassSelector />
-        <DailyGoals />
+      {/* ═══════════ HEADER STATS (sticky top) ═══════════ */}
+      <div className="flex-shrink-0">
+        <HeaderStats />
       </div>
+
+      {/* ═══════════ WIDGETS (scrollable) ═══════════ */}
+      <div className="flex-1 overflow-y-auto pl-4 pr-6 py-4">
+        <div className="w-full space-y-4">
+          <ProfileWidget />
+          <ClassSelector />
+          <HealthWidget />
+        </div>
+      </div>
+
+      {/* ═══════════ FOOTER (pas sticky, scroll naturel) ═══════════ */}
+      <div className="flex-shrink-0">
+        <WidgetFooter />
+      </div>
+
     </aside>
   );
 };

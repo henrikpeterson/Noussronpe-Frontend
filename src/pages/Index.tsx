@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "@/components/header/Header";
+import Header1 from "@/components/header/Header1";
 import Footer from "@/components/footer/Footer";
 import TeacherLoginModal from "@/components/assistance/TeacherLoginModal";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,8 @@ import {
 import { Link } from "react-router-dom";
 import { getSelectedChallenge } from "@/data/challenges-rewards";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
-import NewHeroSection from "@/components/sections/NewHeroSection";
+
+import NewHeroSection1 from "@/components/sections/NewHeroSectionUpte";
 import { motion } from "framer-motion";
 
 /* ═══════════════════════════════════════════════════════════
@@ -503,11 +505,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <Header1 />
 
       <main className="flex-grow">
         {/* Section Hero */}
-        <NewHeroSection />
+        <NewHeroSection1 />
 
         {/* ══════════ NOUVELLE SECTION : PARCOURS EN 3 ÉTAPES ══════════ */}
         <JourneySection />

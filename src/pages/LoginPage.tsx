@@ -80,8 +80,6 @@ export default function LoginPage() {
     }
   };
 
-
-
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl bg-white rounded-[40px] shadow-2xl flex flex-col md:flex-row overflow-hidden min-h-[600px]">
@@ -95,7 +93,7 @@ export default function LoginPage() {
           <div className="absolute bottom-1/4 left-10 w-12 h-12 bg-white/10 rounded-full"></div>
 
           <div className="relative z-10">
-            <h2 className="text-3xl font-black italic tracking-tighter">EDULAB.</h2>
+            <h2 className="text-3xl font-black italic tracking-tighter">REVIZ+</h2>
           </div>
 
           <div className="relative z-10 flex flex-col items-center">

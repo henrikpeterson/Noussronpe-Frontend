@@ -1,166 +1,77 @@
 import { motion } from "framer-motion";
-
-// ═══════════════════════════════════════════════════════════
-// ✅ IMPORTS DE TES SVG (à ajuster selon le chemin)
-// ═══════════════════════════════════════════════════════════
-
-// Option A : Si tes SVG sont dans src/assets/
-import RevisionSVG from "@/assets/Revision.svg?react";
-import EntrainementSVG from "@/assets/entrainement.svg?react";
-import JeuxSVG from "@/assets/jeux.svg?react";
-import AssistanceSVG from "@/assets/AssistanceEducative.svg?react";
-
-// OU Option B : Si dans src/assets/icons/
-// import RevisionSVG from "@/assets/icons/Revision.svg?react";
-// import EntrainementSVG from "@/assets/icons/entrainement.svg?react";
-// import JeuxSVG from "@/assets/icons/jeux.svg?react";
-// import AssistanceSVG from "@/assets/icons/AssitanceEducative.svg?react";
-
-/**
- * 📍 SIDEBAR DESKTOP - Navigation principale style Coddy
- * Avec icônes SVG custom
- */
+import { BookOpen, Dumbbell, Gamepad2, Users } from "lucide-react";
+import logo from "src/assets/RevizNew.webp";
 
 interface SidebarProps {
   activeModule: "revision" | "entrainement" | "jeux" | "assistance";
   onModuleChange: (module: "revision" | "entrainement" | "jeux" | "assistance") => void;
 }
 
-// ═══════════════════════════════════════════════════════════
-// CONFIGURATION DES ITEMS DE NAVIGATION (avec tes SVG)
-// ═══════════════════════════════════════════════════════════
 const NAV_ITEMS = [
-  { 
-    id: "revision" as const,
-    icon: RevisionSVG,
-    label: "Révision",
-  },
-  { 
-    id: "entrainement" as const,
-    icon: EntrainementSVG,
-    label: "Entraînement",
-  },
-  { 
-    id: "jeux" as const,
-    icon: JeuxSVG,
-    label: "Jeux",
-  },
-  { 
-    id: "assistance" as const,
-    icon: AssistanceSVG,
-    label: "Assistance",
-  },
+  { id: "revision" as const, icon: BookOpen, label: "FICHES DE REVISIONS", color: "#1cb0f6" },
+  { id: "entrainement" as const, icon: Dumbbell, label: "ESPACE ENTRAINEMENT", color: "#f39223" },
+  { id: "jeux" as const, icon: Gamepad2, label: "JEUX EDUCATIFS", color: "#58cc02" },
+  { id: "assistance" as const, icon: Users, label: "ASSISTANCE EDUCATIVE", color: "#ff4b4b" },
 ];
 
-// ═══════════════════════════════════════════════════════════
-// COMPOSANT PRINCIPAL
-// ═══════════════════════════════════════════════════════════
 const Sidebar = ({ activeModule, onModuleChange }: SidebarProps) => {
   return (
-    <aside 
-      className="
-        hidden lg:flex
-        w-[200px] 
-        flex-col 
-        bg-white 
-        border-r border-slate-200
-        h-screen
-      "
-    >
+    <aside className="hidden lg:flex w-[18vw] min-w-[220px] max-w-[290px] flex-col bg-[#F2FCFF] border-r-2 border-slate-200 h-screen">
       
-      {/* ═══════════ LOGO REVIZ+ ═══════════ */}
+      {/* LOGO */}
       <div className="px-5 pt-6 pb-4">
         <h1 
-          className="text-2xl font-black tracking-tight cursor-pointer font-fredoka"
-          style={{
-            background: "linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
+          className="text-3xl font-black tracking-tight cursor-pointer font-fredoka text-[#1cb0f6]"
           onClick={() => onModuleChange("revision")}
         >
           Reviz+
         </h1>
       </div>
 
-      {/* ═══════════ NAVIGATION ITEMS ═══════════ */}
-      <nav className="flex-1 px-3 py-2">
-        <ul className="space-y-1">
+      {/* NAVIGATION */}
+      <nav className="flex-1 px-4 py-2">
+        <ul className="space-y-4">
           {NAV_ITEMS.map((item, index) => {
             const isActive = activeModule === item.id;
-            const IconComponent = item.icon;
+            const Icon = item.icon;
 
             return (
-              <motion.li
-                key={item.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.3 }}
-              >
+              <motion.li key={item.id}>
                 <motion.button
                   onClick={() => onModuleChange(item.id)}
-                  whileHover={{ x: 2 }}
-                  whileTap={{ scale: 0.98 }}
+                  /* EFFET 3D AU CLIC : Le bouton descend physiquement */
+                  whileTap={{ y: 3 }}
                   className={`
                     w-full
-                    relative
-                    flex items-center gap-3
-                    px-3.5 py-2.5
-                    rounded-xl
-                    transition-all duration-200
+                    flex items-center gap-4
+                    px-4 py-3
+                    rounded-2xl
+                    transition-all duration-100
+                    font-fredoka
                     group
+                    relative
+                    border-2
                     ${
                       isActive
-                        ? "bg-slate-100"
-                        : "hover:bg-slate-50"
+                        ? "bg-[#ddf4ff] border-[#1cb0f6] border-b-4 text-[#1cb0f6]" 
+                        : "bg-white border-transparent hover:bg-slate-50 text-slate-500"
                     }
                   `}
                 >
-                  {/* SVG Icon */}
-                  <div className="flex-shrink-0 w-5 h-5 transition-transform duration-200 group-hover:scale-110">
-                    <IconComponent 
-                      className={`
-                        w-full h-full
-                        transition-all duration-200
-                        ${isActive ? "opacity-100" : "opacity-70 group-hover:opacity-100"}
-                      `}
-                      style={{
-                        // Permet de coloriser le SVG si fill="currentColor" dans le SVG
-                        color: isActive ? "#2563EB" : "#64748B",
-                      }}
-                    />
-                  </div>
+                  {/* Icône */}
+                  <Icon 
+                    className={`w-6 h-6 flex-shrink-0 transition-transform group-hover:scale-110`}
+                    style={{ color: isActive ? "#1cb0f6" : "#afafaf" }}
+                  />
 
-                  {/* Label */}
-                  <div className="flex-1 min-w-0 text-left">
-                    <p
-                      className={`
-                        text-[15px] font-semibold leading-tight truncate
-                        font-fredoka
-                        transition-colors duration-200
-                        ${
-                          isActive
-                            ? "text-slate-900"
-                            : "text-slate-600 group-hover:text-slate-900"
-                        }
-                      `}
-                    >
-                      {item.label}
-                    </p>
-                  </div>
+                  {/* Label - Texte plus gras (font-black) */}
+                  <span className={`text-[clamp(11px,1vw,14px)] font-black tracking-wide uppercase`}>
+                    {item.label}
+                  </span>
 
-                  {/* Indicateur actif (petit point) */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute right-2 w-1.5 h-1.5 bg-blue-600 rounded-full"
-                      transition={{ 
-                        type: "spring", 
-                        stiffness: 380, 
-                        damping: 30 
-                      }}
-                    />
+                  {/* Simulation de l'épaisseur 3D quand il est inactif (optionnel) */}
+                  {!isActive && (
+                    <div className="absolute inset-0 border-b-4 border-transparent group-active:border-b-0" />
                   )}
                 </motion.button>
               </motion.li>
@@ -169,10 +80,10 @@ const Sidebar = ({ activeModule, onModuleChange }: SidebarProps) => {
         </ul>
       </nav>
 
-      {/* ═══════════ FOOTER (optionnel) ═══════════ */}
-      <div className="px-5 py-4 border-t border-slate-200">
-        <p className="text-xs text-slate-500 text-center font-medium">
-          Version 2.0
+      {/* FOOTER 3D */}
+      <div className="m-4 bg-[#1cb0f6] p-3 border-b-[6px] border-[#1899d6] border-l-2 border-r-2 rounded-2xl shadow-md">
+        <p className="text-[12px] text-white text-center font-black font-fredoka uppercase tracking-wider">
+          © 2026 Tech4Ed Tout droits reserve.
         </p>
       </div>
 
