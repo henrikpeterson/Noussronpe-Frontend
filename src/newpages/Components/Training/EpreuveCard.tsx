@@ -147,7 +147,7 @@ const EpreuveCard = ({ epreuve, onTraiter }: EpreuveCardProps) => {
   /**
    * URL publique du PDF via l'endpoint Django
    */
-  const urlPdf = `http://192.168.100.12:8000/api/TrainingAndEvaluation/epreuve/${epreuve.id}/pdf/`;
+  const urlPdf = `http://192.168.1.72:8000/api/TrainingAndEvaluation/epreuve/${epreuve.id}/pdf/`;
 
   // ----------------------------------------------------------
   // RENDER

@@ -16,39 +16,7 @@ export interface Subject {
 }
 
 export const SUBJECTS: Subject[] = [
-  {
-    id: "mathematiques",
-    name: "Mathématiques",
-    description: "Maîtrise les nombres, équations et géométrie.",
-    image: "src/assets/Subjects/Mathematique.webp",
-    chapters: 15,
-    exercises: 52,
-    color: "#2563EB",
-    gradient: "from-blue-600 to-indigo-600",
-    lightBg: "bg-blue-50",
-  },
-  {
-    id: "physique",
-    name: "Physique",
-    description: "Comprends les lois de la nature et de l'énergie.",
-    image: "src/assets/Subjects/Physique.webp",
-    chapters: 12,
-    exercises: 45,
-    color: "#ed8b3a",
-    gradient: "from-purple-600 to-violet-600",
-    lightBg: "bg-purple-50",
-  },
-  {
-    id: "chimie",
-    name: "Chimie",
-    description: "Explore les molécules et les réactions chimiques.",
-    image: "src/assets/Subjects/Chimie.webp",
-    chapters: 10,
-    exercises: 38,
-    color: "#059669",
-    gradient: "from-green-600 to-emerald-600",
-    lightBg: "bg-green-50",
-  },
+  
   {
     id: "svt",
     name: "SVT",
@@ -61,7 +29,7 @@ export const SUBJECTS: Subject[] = [
     lightBg: "bg-emerald-50",
   },
   {
-    id: "anglais",
+    id: "Ang",
     name: "Anglais",
     description: "Perfectionne ta grammaire et ton vocabulaire.",
     image: "src/assets/Subjects/Anglais.webp",
@@ -72,7 +40,7 @@ export const SUBJECTS: Subject[] = [
     lightBg: "bg-red-50",
   },
   {
-    id: "histoire",
+    id: "Histo",
     name: "Histoire",
     description: "Voyage à travers les époques et civilisations.",
     image: "src/assets/Subjects/Histoire.webp",
@@ -83,7 +51,7 @@ export const SUBJECTS: Subject[] = [
     lightBg: "bg-amber-50",
   },
   {
-    id: "geographie",
+    id: "Geo",
     name: "Géographie",
     description: "Explore les territoires, climats et populations.",
     image: "src/assets/Subjects/Geographie.webp",
@@ -92,5 +60,27 @@ export const SUBJECTS: Subject[] = [
     color: "#0891B2",
     gradient: "from-cyan-600 to-blue-600",
     lightBg: "bg-cyan-50",
+  },
+  {
+    id: "mathematiques",
+    name: "Mathématiques",
+    description: "Maîtrise les nombres, équations et géométrie.",
+    image: "src/assets/Subjects/Mathematique.webp",
+    chapters: 15,
+    exercises: 52,
+    color: "#2563EB",
+    gradient: "from-blue-600 to-indigo-600",
+    lightBg: "bg-blue-50",
+  },
+  {
+    id: "PCT",
+    name: "Physique Chimie",
+    description: "Comprends les lois de la nature et de l'énergie.",
+    image: "src/assets/Subjects/Physique.webp",
+    chapters: 12,
+    exercises: 45,
+    color: "#ed8b3a",
+    gradient: "from-purple-600 to-violet-600",
+    lightBg: "bg-purple-50",
   },
 ];

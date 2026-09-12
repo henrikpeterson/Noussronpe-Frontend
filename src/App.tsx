@@ -52,6 +52,7 @@ import PctGame from "./games/Mots-Meles-Sciences/components/games/PctGames";
 import Dashboard from "./newpages/dashboard.tsx";
 import StudyPage from "./newpages/StudyPage.tsx";
 import QuizPage from './newpages/QuizPage.tsx';
+import ScorePage from './newpages/ScorePage.tsx';
 
 const queryClient = new QueryClient();
 
@@ -94,8 +95,9 @@ const App = () => (
           <Route path="/jeu-pct" element={<PctGame/>} />
           <Route path="/text-builder/:levelId" element={<TextBuilderGameWrapper />} />
           <Route path="/dashboard" element={<Dashboard />}/>
-          <Route path="/study/:subjectId/:chapterId" element={<StudyPage />} />
+          <Route path="/study/:subjectId/:leconId" element={<StudyPage />} />
           <Route path="/quiz/:epreuveId" element={<QuizPage />} />
+          <Route path="/quiz/:epreuveId/score" element={<ScorePage />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

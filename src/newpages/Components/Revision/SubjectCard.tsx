@@ -6,11 +6,23 @@ import type { Subject } from "@/newpages/data/Subjects";
  * SUBJECT CARD - Carte matière (60% image / 40% contenu)
  * Design ultra-stylé avec bouton gradient
  */
-
 interface SubjectCardProps {
-  subject: Subject;
+  subject: {
+    id: string;
+    name: string;
+    description: string;
+    image: string;
+    chapters: number; // vient maintenant de nb_lecons réel
+    exercises: number; // vient de nb_epreuves réel
+    color: string;
+    gradient: string;
+    lightBg: string;
+    isAvailable?: boolean; // NEW
+    nbLecons?: number; // NEW
+  };
   index: number;
-  onSelect: (subjectId: string) => void;
+  onSelect: (id: string) => void;
+  disabled?: boolean; // NEW
 }
 
 const SubjectCard = ({ subject, index, onSelect }: SubjectCardProps) => {
@@ -71,7 +83,7 @@ const SubjectCard = ({ subject, index, onSelect }: SubjectCardProps) => {
               background: `linear-gradient(135deg, ${subject.color}E6, ${subject.color}CC)`
             }}
           >
-            {subject.chapters} chapitres
+            {subject.chapters} lecons
           </div>
         </div>
       </div>
@@ -101,11 +113,7 @@ const SubjectCard = ({ subject, index, onSelect }: SubjectCardProps) => {
           <div className="flex items-center gap-4 mb-4 text-slate-500">
             <div className="flex items-center gap-1.5">
               <BookOpen className="w-4 h-4" />
-              <span className="text-xs font-semibold">{subject.chapters} chapitres</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Target className="w-4 h-4" />
-              <span className="text-xs font-semibold">{subject.exercises} exercices</span>
+              <span className="text-xs font-semibold">{subject.chapters} lecons</span>
             </div>
           </div>
 

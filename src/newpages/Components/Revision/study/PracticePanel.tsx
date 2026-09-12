@@ -1,160 +1,95 @@
-/**
- * ════════════════════════════════════════════════════════════════════════
- * PRACTICEPANEL - Panel droit avec header sticky interne
- * ════════════════════════════════════════════════════════════════════════
- * 
- * CHANGEMENTS MAJEURS :
- * - Plus de card wrapper
- * - bg-slate-50 (fond gris léger)
- * - Header sticky INTERNE avec progress bar
- * - Bouton retour DANS le panel
- * - h-screen overflow-y-auto
- * 
- * ════════════════════════════════════════════════════════════════════════
- */
-
+// src/.../PracticePanel.tsx - FIX CONTINUER bloqué
 import { ArrowLeft } from 'lucide-react';
-import { getChapterContent } from '@/newpages/data/studyData';
 import ModeSelector from './ModeSelector';
 import QuizView from './QuizView';
 import FlashcardView from './FlashcardView';
-import type { StudyMode, Answer, SelectedSubject, SelectedChapter } from '@/newpages/Components/Revision/study/types';
+import type { StudyMode } from '@/hooks/useLeconStudy';
+import type { LeconDetailApi, QuestionApi } from '@/newpages/data/revision';
+import type { FlashCard } from './types';
 
-interface PracticePanelProps {
-  subject: SelectedSubject;
-  chapter: SelectedChapter;
+interface Props {
+  subject: { id: string; color: string };
+  lecon: LeconDetailApi;
   mode: StudyMode;
+  questions: QuestionApi[];
+  flashcards: FlashCard[];
   currentIndex: number;
   totalQuestions: number;
-  answers: Answer[];
   progress: number;
+  error: string | null;
   onBack: () => void;
   onModeSelect: (mode: 'quiz' | 'flashcard') => void;
-  onAnswer: (answer: number | string, isCorrect: boolean) => void;
-  onNext: () => void;
+  onValidateQuiz: (optionIndex: number) => Promise<any>;
+  onNextQuestion: () => void; // NEW - pour Quiz
+  onNextFlashcard: () => void; // pour Flashcards
   onComplete: () => void;
 }
 
-const PracticePanel = ({ 
-  subject,
-  chapter,
-  mode, 
-  currentIndex, 
-  totalQuestions,
-  answers, 
-  progress,
-  onBack,
-  onModeSelect, 
-  onAnswer, 
-  onNext, 
-  onComplete,
-}: PracticePanelProps) => {
-  
-  /**
-   * ═══════════════════════════════════════════════════════════
-   * RÉCUPÉRATION DES DONNÉES
-   * ═══════════════════════════════════════════════════════════
-   */
-  const chapterContent = getChapterContent(chapter.id);
-
-  if (!chapterContent) {
-    return (
-      <div className="h-screen bg-slate-50 flex items-center justify-center">
-        <p className="text-slate-600">Contenu non disponible</p>
-      </div>
-    );
-  }
-
-  /**
-   * ═══════════════════════════════════════════════════════════
-   * RENDER
-   * ═══════════════════════════════════════════════════════════
-   */
+const PracticePanel = ({
+  subject, mode, questions, flashcards,
+  currentIndex, totalQuestions, progress, error,
+  onBack, onModeSelect, onValidateQuiz, onNextQuestion, onNextFlashcard, onComplete
+}: Props) => {
   return (
     <div className="h-screen bg-slate-50 flex flex-col overflow-hidden">
-      
-      {/* ═══════════════════════════════════════════════════════ */}
-      {/* HEADER STICKY INTERNE */}
-      {/* ═══════════════════════════════════════════════════════ */}
-      <div className="bg-white px-4 md:px-6 py-3 md:py-4 border-b border-slate-200 
-                      flex-shrink-0 sticky top-0 z-10">
-        
-        <div className="flex items-center gap-3 md:gap-4">
-          
-          {/* Bouton retour */}
-          <button
-            onClick={onBack}
-            className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center
-                       text-slate-600 hover:bg-slate-100 rounded-lg
-                       transition-colors flex-shrink-0"
-          >
+      <div className="bg-white px-4 py-3 border-b border-slate-200 sticky top-0 z-10">
+        <div className="flex items-center gap-3">
+          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center hover:bg-slate-100 rounded-lg">
             <ArrowLeft className="w-5 h-5" />
           </button>
-
-          {/* Progress bar */}
           {mode && totalQuestions > 0 && (
             <div className="flex-1">
-              <div className="flex items-center justify-between mb-1.5">
+              <div className="flex justify-between mb-1.5">
                 <span className="text-xs font-bold text-slate-600">
-                  Question {currentIndex + 1} / {totalQuestions}
+                  {mode === 'quiz' ? `Question ${currentIndex + 1} / ${totalQuestions}` : `Carte ${currentIndex + 1} / ${totalQuestions}`}
                 </span>
-                <span className="text-xs font-bold text-slate-600">
-                  {progress}%
-                </span>
+                <span className="text-xs font-bold">{progress}%</span>
               </div>
-              <div className="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
-                <div 
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ 
-                    width: `${progress}%`,
-                    backgroundColor: subject.color 
-                  }}
-                />
+              <div className="w-full bg-slate-200 rounded-full h-1.5">
+                <div className="h-full rounded-full transition-all duration-500" style={{ width: `${progress}%`, backgroundColor: subject.color }} />
               </div>
             </div>
           )}
-
         </div>
+        {error && <div className="mt-3 bg-red-50 border border-red-200 text-red-700 text-sm p-3 rounded-xl">{error}</div>}
       </div>
 
-      {/* ═══════════════════════════════════════════════════════ */}
-      {/* CONTENU SCROLLABLE */}
-      {/* ═══════════════════════════════════════════════════════ */}
       <div className="flex-1 overflow-y-auto">
-        <div className="px-4 md:px-6 py-6 md:py-8">
+        <div className="px-4 py-6">
+          {!mode && <ModeSelector onSelect={onModeSelect} />}
           
-          {/* Mode non sélectionné → ModeSelector */}
-          {!mode && (
-            <ModeSelector onSelect={onModeSelect} />
-          )}
-
-          {/* Mode Quiz */}
           {mode === 'quiz' && (
             <QuizView
-              questions={chapterContent.quiz.questions}
+              questions={questions}
               currentIndex={currentIndex}
-              answers={answers}
-              onAnswer={onAnswer}
-              onNext={onNext}
+              onValidate={onValidateQuiz}
+              // FIX : on incrémente vraiment l'index dans le hook parent
+              onNext={() => {
+                console.log('[PracticePanel] Quiz CONTINUER cliqué');
+                if (currentIndex + 1 >= totalQuestions) {
+                  onComplete();
+                } else {
+                  onNextQuestion(); // <-- FIX : avance à la question suivante
+                }
+              }}
               onComplete={onComplete}
-              subjectColor={subject.color}
             />
           )}
 
-          {/* Mode Flashcard */}
           {mode === 'flashcard' && (
             <FlashcardView
-              cards={chapterContent.flashcards.cards}
+              cards={flashcards}
               currentIndex={currentIndex}
-              onNext={onNext}
+              onNext={() => {
+                if (currentIndex + 1 >= totalQuestions) onComplete();
+                else onNextFlashcard();
+              }}
               onComplete={onComplete}
               subjectColor={subject.color}
             />
           )}
-
         </div>
       </div>
-
     </div>
   );
 };

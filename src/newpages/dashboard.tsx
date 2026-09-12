@@ -7,6 +7,7 @@ import WidgetBar from "@/newpages/Components/Dashboard/WidgetsBar";
 import MobileHeader from "@/newpages/Components/Dashboard/MobileHeader";
 import RevisionModule from "@/newpages/Components/Revision/RevisionModule";
 import TrainingModule from "@/newpages/Components/Training/TrainingModule";
+import AssistanceModule from "@/newpages/Components/Assistance/AssistanceModule";
 import GamesGrid from "./Components/Revision/GamesGrid";
 import { useNavigate } from "react-router-dom";
 import { GAMES } from "@/newpages/data/Games";
@@ -65,12 +66,7 @@ const Dashboard = () => {
                   {activeModule === "revision" && <RevisionModule />}
                   {activeModule === "entrainement" && <TrainingModule />}
                   {activeModule === "jeux" && <GamesGrid onSelectSubject={handleSelectGame}/>}
-                  {activeModule === "assistance" && (
-                    <div className="py-8">
-                      <h2 className="text-2xl font-black font-fredoka">Module Assistance</h2>
-                      <p className="text-slate-600 mt-2 font-medium">À venir prochainement...</p>
-                    </div>
-                  )}
+                  {activeModule === "assistance" && <AssistanceModule/>}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -104,12 +100,7 @@ const Dashboard = () => {
                   {activeModule === "revision" && <RevisionModule />}
                   {activeModule === "entrainement" && <TrainingModule />}
                   {activeModule === "jeux" && <GamesGrid onSelectSubject={handleSelectGame}/>}
-                  {activeModule === "assistance" && (
-                    <div className="py-6">
-                      <h2 className="text-2xl font-black font-fredoka">Module Assistance</h2>
-                      <p className="text-slate-600 mt-2 font-medium">À venir prochainement...</p>
-                    </div>
-                  )}
+                  {activeModule === "assistance" && <AssistanceModule/>}
                 </motion.div>
               </AnimatePresence>
             </div>

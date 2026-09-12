@@ -1,313 +1,268 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, Lock, CheckCircle2, Coins, PlayCircle } from "lucide-react";
-import { useNavigate } from 'react-router-dom'; // ← AJOUT
-import type { SelectedSubject } from "./RevisionModule";
+// src/newpages/Components/Revision/Roadmap.tsx - PHASE 2 - 100% Backend
+// Remplace MOCK_CHAPTERS + price/Coins par API réelle
+// Propre, commenté, production-ready
 
-// ══════════════════════════════════════════════════════════════
-// MODIFICATION : Suppression de onSelectChapter
-// On navigue directement vers la page
-// ══════════════════════════════════════════════════════════════
+import { motion } from "framer-motion";
+import { ArrowLeft, Lock, CheckCircle2, Play, Sparkles, Trophy, BookOpen, Clock } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import type { SelectedSubject } from "./RevisionModule";
+import { useLeconsRoadmap, type LeconEnrichie } from '@/hooks/useLeconsRoadmap';
+
 interface RoadmapProps {
-  subject: SelectedSubject;
+  subject: SelectedSubject; // {id: slug ex "svt", name: "SVT", color: "#..."}
+  classe: string | null; // "6ème" | "3ème" | null - vient de useMatieres / user.Class
   onBack: () => void;
 }
 
-export type ChapterStatus = "completed" | "current" | "locked";
-
-export interface Chapter {
-  id: string;
-  title: string;
-  status: ChapterStatus;
-  price: number;
-}
-
-const MOCK_CHAPTERS: Chapter[] = [
-  { id: "ch1", title: "Les nombres entiers", status: "completed", price: 0 },
-  { id: "ch2", title: "Les fractions", status: "completed", price: 0 },
-  { id: "ch3", title: "Les équations", status: "current", price: 50 },
-  { id: "ch4", title: "Les fonctions linéaires", status: "locked", price: 100 },
-  { id: "ch5", title: "La géométrie plane", status: "locked", price: 100 },
-  { id: "ch6", title: "Les statistiques", status: "locked", price: 150 },
-  { id: "ch7", title: "Les probabilités", status: "locked", price: 150 },
-  { id: "ch8", title: "Les puissances", status: "locked", price: 200 },
-];
-
-const Roadmap = ({ subject, onBack }: RoadmapProps) => {
-  const [hoveredChapter, setHoveredChapter] = useState<string | null>(null);
-  
-  // ══════════════════════════════════════════════════════════════
-  // ✅ AJOUT : Hook de navigation
-  // ══════════════════════════════════════════════════════════════
+const Roadmap = ({ subject, classe, onBack }: RoadmapProps) => {
   const navigate = useNavigate();
+  const {
+    lecons,
+    isLoading,
+    error,
+    completedCount,
+    totalCount,
+    progressPercentage,
+    isAuthenticated,
+  } = useLeconsRoadmap(subject.id, classe);
 
-  // ══════════════════════════════════════════════════════════════
-  // ✅ MODIFICATION : Fonction de navigation vers StudyPage
-  // ══════════════════════════════════════════════════════════════
-  const handleChapterClick = (chapter: Chapter) => {
-    if (chapter.status === "locked") return;
+  const handleChapterClick = (lecon: LeconEnrichie) => {
+    console.log('[Roadmap] Click lecon', lecon.id, lecon.titre, 'status', lecon.status, 'is_locked', lecon.is_locked);
+    if (lecon.status === "locked") return;
 
-    // Naviguer vers la page d'étude indépendante
+    // Navigation vers StudyView - on passe leçon id réel
+    // StudyView fera ensuite GET /lecons/{id}/ + /questions/ + /flashcards/
     navigate(
-      `/study/${subject.id}/${chapter.id}?title=${encodeURIComponent(chapter.title)}&price=${chapter.price}`
+      `/study/${subject.id}/${lecon.id}?title=${encodeURIComponent(lecon.titre)}&theme=${encodeURIComponent(lecon.theme.titre)}`
     );
   };
 
-  const isChapterAccessible = (chapter: Chapter): boolean => {
-    return chapter.status !== "locked";
-  };
+  // ---------- Loading ----------
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 py-4 md:py-6">
+        <div className="h-20 bg-slate-100 rounded-3xl animate-pulse mb-6" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3, 4, 5, 6].map(i => (
+            <div key={i} className="h-40 bg-slate-100 rounded-3xl animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
-  const completedCount = MOCK_CHAPTERS.filter(ch => ch.status === "completed").length;
-  const totalCount = MOCK_CHAPTERS.length;
-  const progressPercentage = (completedCount / totalCount) * 100;
+  // ---------- Error ----------
+  if (error) {
+    return (
+      <div className="w-full max-w-6xl mx-auto px-3 py-6 text-center">
+        <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
+          <p className="text-red-800 font-bold">Erreur chargement parcours: {error}</p>
+          <button onClick={onBack} className="mt-4 px-4 py-2 bg-slate-100 rounded-xl">Retour</button>
+        </div>
+      </div>
+    );
+  }
+
+  // ---------- Empty (pas de leçons pour cette matière/classe) ----------
+  if (totalCount === 0) {
+    return (
+      <div className="w-full max-w-6xl mx-auto px-3 py-6">
+        <div className="flex items-center gap-3 mb-6">
+          <button onClick={onBack} className="w-11 h-11 bg-slate-100 rounded-2xl flex items-center justify-center">
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <h2 className="text-2xl font-black">{subject.name}</h2>
+        </div>
+        <div className="bg-amber-50 border-2 border-amber-200 rounded-2xl p-8 text-center">
+          <p className="font-black text-amber-900">Aucune leçon pour {subject.name} en {classe || '6ème'} 📚</p>
+          <p className="text-sm text-amber-700 mt-2">Le contenu arrive bientôt. Essaie une autre matière.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-8">
+    <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 py-4 md:py-6 space-y-6 md:space-y-8">
       
-      {/* ═══ Header avec bouton retour ═══ */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      {/* En-tête avec progression réelle */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 md:p-6 rounded-3xl border-2 border-b-4 border-slate-200 shadow-sm">
+        <div className="flex items-center gap-3 md:gap-4">
           <motion.button
             onClick={onBack}
-            whileHover={{ scale: 1.05, x: -4 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-12 h-12 bg-white border-2 border-slate-200 rounded-2xl 
-                       flex items-center justify-center hover:border-slate-300 
-                       transition-colors"
+            className="w-11 h-11 md:w-12 md:h-12 bg-slate-100 border-2 border-b-4 border-slate-200 hover:bg-slate-200 rounded-2xl flex items-center justify-center transition-all shrink-0 active:translate-y-0.5"
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />
           </motion.button>
 
           <div>
-            <h2 className="text-3xl font-black text-slate-900 flex items-center gap-3">
-              {subject.name}
+            <div className="flex items-center gap-2">
               <span className="text-2xl">📖</span>
-            </h2>
-            <p className="text-slate-600 text-base font-medium mt-1">
-              Suis ton parcours chapitre par chapitre
+              <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+                {subject.name}
+              </h2>
+              {classe && (
+                <span className="text-xs font-bold bg-slate-100 border border-slate-200 px-2 py-1 rounded-full">
+                  {classe}
+                </span>
+              )}
+            </div>
+            <p className="text-xs md:text-sm font-bold text-slate-500 mt-0.5">
+              {isAuthenticated ? 'Suis ton parcours leçon par leçon' : 'Connecte-toi pour débloquer tout le parcours'}
             </p>
           </div>
         </div>
 
-        {/* Badge progression */}
-        <div className="hidden md:flex items-center gap-3 bg-white border-2 
-                        border-slate-100 rounded-2xl px-5 py-3">
-          <div className="text-right">
-            <p className="text-xs text-slate-600 font-semibold">Progression</p>
-            <p className="text-xl font-black" style={{ color: subject.color }}>
-              {completedCount}/{totalCount}
-            </p>
+        {/* Badge Progression réelle depuis backend */}
+        <div className="flex items-center gap-4 bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-3 shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-amber-600 shrink-0">
+            <Trophy className="w-5 h-5" />
           </div>
-          <div className="w-16 h-16">
-            <svg className="transform -rotate-90" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="16" fill="none" stroke="#E2E8F0" strokeWidth="3" />
-              <circle 
-                cx="18" 
-                cy="18" 
-                r="16" 
-                fill="none" 
-                stroke={subject.color}
-                strokeWidth="3"
-                strokeDasharray={`${progressPercentage} 100`}
-                strokeLinecap="round"
+          <div className="flex-1 sm:w-36">
+            <div className="flex justify-between items-center text-xs font-black mb-1.5">
+              <span className="text-slate-500">PROGRÈS</span>
+              <span className="text-slate-800">{completedCount}/{totalCount} ({progressPercentage}%)</span>
+            </div>
+            <div className="w-full h-3 bg-slate-200 rounded-full overflow-hidden p-0.5">
+              <div 
+                className="h-full rounded-full transition-all duration-500"
+                style={{ 
+                  width: `${progressPercentage}%`,
+                  backgroundColor: subject.color || '#3B82F6'
+                }}
               />
-            </svg>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* ═══ ROADMAP VERTICALE ═══ */}
-      <div className="max-w-3xl mx-auto bg-white rounded-3xl p-8 border-2 
-                      border-slate-100 shadow-lg">
-        
-        <div className="relative">
-          
-          {/* Ligne verticale centrale */}
-          <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b 
-                          from-slate-200 via-slate-300 to-slate-200" />
+      {/* Grille des Leçons avec Thème parent affiché (ta demande) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {lecons.map((lecon, index) => {
+          const isLocked = lecon.status === "locked";
+          const isCompleted = lecon.status === "completed";
+          const isCurrent = lecon.status === "current";
 
-          {/* Liste des chapitres */}
-          <div className="space-y-6">
-            {MOCK_CHAPTERS.map((chapter, index) => {
-              const isLocked = chapter.status === "locked";
-              const isCompleted = chapter.status === "completed";
-              const isCurrent = chapter.status === "current";
-              const isHovered = hoveredChapter === chapter.id;
-              const isAccessible = isChapterAccessible(chapter);
+          return (
+            <motion.div
+              key={lecon.id}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.04, duration: 0.3 }}
+              whileHover={!isLocked ? { y: -4 } : {}}
+              whileTap={!isLocked ? { scale: 0.98 } : {}}
+              onClick={() => handleChapterClick(lecon)}
+              className={`relative flex flex-col justify-between p-5 rounded-3xl border-2 transition-all duration-200 select-none ${
+                isCompleted
+                  ? 'bg-emerald-50/60 border-emerald-300 border-b-[6px] border-b-emerald-500 hover:border-emerald-400 cursor-pointer'
+                  : isCurrent
+                  ? 'bg-white border-blue-400 border-b-[6px] border-b-blue-600 shadow-md ring-2 ring-blue-400/20 cursor-pointer'
+                  : 'bg-slate-100/70 border-slate-200 border-b-[6px] border-b-slate-300 opacity-75 cursor-not-allowed'
+              }`}
+            >
+              {/* Top Bar : Chapitre + Thème + Status */}
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className={`text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-xl border ${
+                  isCompleted
+                    ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                    : isCurrent
+                    ? 'bg-blue-100 text-blue-800 border-blue-200'
+                    : 'bg-slate-200 text-slate-600 border-slate-300'
+                }`}>
+                  Leçon {index + 1}
+                </span>
 
-              return (
-                <motion.div
-                  key={chapter.id}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.4 }}
-                  onMouseEnter={() => setHoveredChapter(chapter.id)}
-                  onMouseLeave={() => setHoveredChapter(null)}
-                  className="relative flex items-center gap-6"
-                >
-                  
-                  {/* ═══ NŒUD HEXAGONAL ═══ */}
-                  <motion.button
-                    onClick={() => handleChapterClick(chapter)} // ✅ MODIFICATION
-                    disabled={isLocked}
-                    whileHover={isAccessible ? { scale: 1.15, rotate: 5 } : {}}
-                    whileTap={isAccessible ? { scale: 0.95 } : {}}
-                    className="relative z-10 flex-shrink-0"
-                  >
-                    {/* Hexagone SVG */}
-                    <div className="relative w-16 h-16">
-                      <svg viewBox="0 0 100 100" className="w-full h-full">
-                        <polygon
-                          points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"
-                          fill="rgba(0,0,0,0.1)"
-                          transform="translate(2, 2)"
-                        />
-                        <polygon
-                          points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"
-                          fill={
-                            isCompleted 
-                              ? subject.color 
-                              : isCurrent 
-                                ? "#FFF" 
-                                : "#F1F5F9"
-                          }
-                          stroke={
-                            isCompleted || isCurrent 
-                              ? subject.color 
-                              : "#CBD5E1"
-                          }
-                          strokeWidth="4"
-                          className="transition-all duration-300"
-                        />
-                      </svg>
-
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        {isCompleted && (
-                          <CheckCircle2 className="w-7 h-7 text-white" />
-                        )}
-                        {isCurrent && (
-                          <PlayCircle 
-                            className="w-7 h-7" 
-                            style={{ color: subject.color }}
-                          />
-                        )}
-                        {isLocked && (
-                          <Lock className="w-6 h-6 text-slate-400" />
-                        )}
-                      </div>
-
-                      {isCurrent && (
-                        <motion.div
-                          animate={{ 
-                            scale: [1, 1.3, 1],
-                            opacity: [0.5, 0, 0.5]
-                          }}
-                          transition={{ 
-                            duration: 2, 
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
-                          className="absolute inset-0 rounded-full"
-                          style={{ 
-                            border: `3px solid ${subject.color}`,
-                          }}
-                        />
-                      )}
+                <div className="flex items-center gap-1.5">
+                  {isCompleted && (
+                    <span className="flex items-center gap-1 text-xs font-black text-emerald-700 bg-emerald-100/80 px-2.5 py-1 rounded-xl border border-emerald-200">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      {lecon.progression.meilleur_score ? `${lecon.progression.meilleur_score}%` : 'Fait'}
+                    </span>
+                  )}
+                  {isCurrent && (
+                    <span className="flex items-center gap-1 text-xs font-black text-blue-700 bg-blue-100/80 px-2.5 py-1 rounded-xl border border-blue-200 animate-pulse">
+                      <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                      En cours
+                    </span>
+                  )}
+                  {isLocked && (
+                    <div className="w-8 h-8 rounded-xl bg-slate-200/80 border border-slate-300 flex items-center justify-center text-slate-500">
+                      <Lock className="w-4 h-4" />
                     </div>
-                  </motion.button>
+                  )}
+                </div>
+              </div>
 
-                  {/* ═══ CARTE INFO CHAPITRE ═══ */}
-                  <motion.div
-                    animate={{
-                      scale: isHovered && isAccessible ? 1.02 : 1,
-                      x: isHovered && isAccessible ? 4 : 0,
-                    }}
-                    className={`flex-1 bg-gradient-to-r ${
-                      isCompleted 
-                        ? 'from-green-50 to-emerald-50 border-green-200' 
-                        : isCurrent 
-                          ? 'from-blue-50 to-indigo-50 border-blue-200'
-                          : 'from-slate-50 to-slate-100 border-slate-200'
-                    } border-2 rounded-2xl p-4 transition-all duration-300 ${
-                      isLocked ? 'opacity-60' : 'cursor-pointer'
-                    }`}
-                    onClick={() => handleChapterClick(chapter)} // ✅ MODIFICATION
-                  >
-                    <div className="flex items-center justify-between">
-                      
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-1">
-                          <span className="text-xs font-black text-slate-500">
-                            Chapitre {index + 1}
-                          </span>
-                          {isCompleted && (
-                            <span className="text-xs font-bold text-green-600 
-                                           bg-green-100 px-2 py-0.5 rounded-full">
-                              ✓ Terminé
-                            </span>
-                          )}
-                          {isCurrent && (
-                            <span className="text-xs font-bold text-blue-600 
-                                           bg-blue-100 px-2 py-0.5 rounded-full">
-                              ⚡ En cours
-                            </span>
-                          )}
-                        </div>
-                        <h4 className="text-base font-black text-slate-900">
-                          {chapter.title}
-                        </h4>
-                      </div>
+              {/* Badge Thème parent - TA DEMANDE */}
+              <div className="flex items-center gap-1.5 mb-2">
+                <BookOpen className="w-3.5 h-3.5 text-slate-400" />
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wide truncate">
+                  {lecon.theme.titre}
+                </span>
+              </div>
 
-                      {chapter.price > 0 && (
-                        <div className="flex items-center gap-2 bg-white/70 rounded-xl 
-                                        px-3 py-2 border border-slate-200">
-                          <Coins className="w-4 h-4 text-amber-600" />
-                          <span className="text-sm font-black text-slate-900">
-                            {chapter.price}
-                          </span>
-                        </div>
-                      )}
+              {/* Titre Leçon */}
+              <div className="my-2 min-h-[3rem] flex items-center">
+                <h3 className={`text-base md:text-lg font-black leading-snug tracking-tight ${
+                  isLocked ? 'text-slate-500' : 'text-slate-900'
+                }`}>
+                  {lecon.titre}
+                </h3>
+              </div>
 
-                      {chapter.price === 0 && !isCompleted && (
-                        <span className="text-xs font-bold text-emerald-600 
-                                       bg-emerald-100 px-3 py-1 rounded-full">
-                          Gratuit
-                        </span>
-                      )}
-                    </div>
+              {/* Pied : durée + QCM/Flashcards + bouton Play */}
+              <div className="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-xl">
+                    <Clock className="w-3 h-3" />
+                    {lecon.duree} min
+                  </span>
+                  <span className="text-xs font-bold text-slate-500">
+                    {lecon.nb_questions} QCM • {lecon.nb_flashcards} cartes
+                  </span>
+                </div>
 
-                    {isLocked && isHovered && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-2 text-xs text-slate-600 font-medium"
-                      >
-                        🔒 Termine les chapitres précédents pour déverrouiller
-                      </motion.div>
-                    )}
-                  </motion.div>
+                {!isLocked && (
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center border-2 border-b-4 transition-transform active:translate-y-0.5 ${
+                    isCurrent
+                      ? 'bg-blue-600 border-blue-700 text-white shadow-sm'
+                      : isCompleted
+                      ? 'bg-emerald-600 border-emerald-700 text-white'
+                      : 'bg-slate-800 border-slate-900 text-white'
+                  }`}>
+                    <Play className="w-4 h-4 fill-current ml-0.5" />
+                  </div>
+                )}
+              </div>
 
-                </motion.div>
-              );
-            })}
-          </div>
-
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-8 text-center bg-gradient-to-r from-indigo-50 to-purple-50 
-                     border-2 border-indigo-200 rounded-2xl p-5"
-        >
-          <p className="text-sm font-bold text-indigo-900">
-            🎯 Continue comme ça ! Il te reste {totalCount - completedCount} chapitres à maîtriser
-          </p>
-        </motion.div>
-
+              {/* Tooltip si verrouillé */}
+              {isLocked && (
+                <div className="mt-3 text-[11px] font-bold text-slate-500">
+                  {!isAuthenticated
+                    ? '🔒 Connecte-toi pour débloquer'
+                    : `🔒 Termine la leçon précédente à 75%`}
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
 
+      {/* Bannière motivation */}
+      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl p-5 md:p-6 text-white border-2 border-b-6 border-indigo-700 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3 text-center sm:text-left">
+          <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl shrink-0">
+            🎯
+          </div>
+          <div>
+            <h4 className="font-black text-base md:text-lg">Prêt à relever le défi ?</h4>
+            <p className="text-xs md:text-sm text-indigo-100 font-medium">
+              Il te reste {totalCount - completedCount} leçon{totalCount - completedCount > 1 ? 's' : ''} à valider pour terminer {subject.name} {classe ? `en ${classe}` : ''}.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = 'http://192.168.100.12:8000';
+const API_BASE_URL = 'http://192.168.1.72:8000';
 
 const teacherApi = axios.create({
   baseURL: API_BASE_URL,

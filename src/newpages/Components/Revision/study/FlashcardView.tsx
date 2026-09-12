@@ -1,103 +1,81 @@
-/**
- * ════════════════════════════════════════════════════════════════════════
- * FLASHCARDVIEW - Interface Flashcards
- * ════════════════════════════════════════════════════════════════════════
- * 
- * RÔLE :
- * - Affiche une carte question/réponse
- * - Animation flip pour révéler la réponse
- * - Bouton "Suivant" pour avancer
- * 
- * DESIGN :
- * - Carte 3D avec effet flip horizontal
- * - Face avant : question + bouton "Afficher réponse"
- * - Face arrière : réponse + bouton "Suivant"
- * 
- * ANIMATION :
- * - Transition flip douce (rotateY)
- * - Changement de gradient avant/arrière
- * 
- * ════════════════════════════════════════════════════════════════════════
- */
+// src/.../FlashcardView.tsx - FIX V2 - Rules of Hooks
+// Tous les hooks AVANT les return
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { FlashcardViewProps } from '@/newpages/Components/Revision/study/types';
+import type { FlashCard } from './types';
 
-const FlashcardView = ({ 
-  cards, 
-  currentIndex, 
-  onNext, 
-  onComplete,
-  subjectColor 
-}: FlashcardViewProps) => {
-  
-  /**
-   * ═══════════════════════════════════════════════════════════
-   * ÉTAT LOCAL
-   * ═══════════════════════════════════════════════════════════
-   */
+interface Props {
+  cards: FlashCard[];
+  currentIndex: number;
+  onNext: () => void;
+  onComplete: () => void;
+  subjectColor?: string;
+}
+
+const FlashcardView = ({ cards, currentIndex, onNext, onComplete, subjectColor = '#3B82F6' }: Props) => {
+  // TOUS LES HOOKS EN HAUT, AVANT TOUT RETURN
   const [isFlipped, setIsFlipped] = useState(false);
 
-  // Carte actuelle
-  const currentCard = cards[currentIndex];
-
-  /**
-   * ═══════════════════════════════════════════════════════════
-   * RESET À CHAQUE NOUVELLE CARTE
-   * ═══════════════════════════════════════════════════════════
-   */
   useEffect(() => {
     setIsFlipped(false);
   }, [currentIndex]);
 
-  /**
-   * ═══════════════════════════════════════════════════════════
-   * HANDLERS
-   * ═══════════════════════════════════════════════════════════
-   */
+  // Maintenant seulement les guards (après les hooks)
+  if (!cards || cards.length === 0) {
+    return (
+      <div className="bg-white rounded-3xl p-8 border-2 border-amber-200 text-center">
+        <p className="text-6xl mb-4">🃏</p>
+        <p className="font-bold text-slate-800">Aucune flashcard pour cette leçon</p>
+        <p className="text-sm text-slate-500 mt-2">Le contenu arrive bientôt.</p>
+        <button onClick={onComplete} className="mt-4 px-6 py-2 bg-slate-100 rounded-xl">
+          Retour
+        </button>
+      </div>
+    );
+  }
 
-  // ─────────────────────────────────────────────────────────
-  // Flip pour révéler la réponse
-  // ─────────────────────────────────────────────────────────
-  const handleFlip = () => {
-    setIsFlipped(true);
-  };
+  if (currentIndex >= cards.length) {
+    return (
+      <div className="bg-white rounded-3xl p-8 border-2 border-green-200 text-center">
+        <p className="text-6xl mb-4">🎉</p>
+        <p className="font-bold text-slate-800">Toutes les cartes vues !</p>
+        <button onClick={onComplete} className="mt-4 px-8 py-3 bg-[#0080FF] text-white font-bold rounded-xl">
+          Terminer
+        </button>
+      </div>
+    );
+  }
 
-  // ─────────────────────────────────────────────────────────
-  // Passer à la carte suivante
-  // ─────────────────────────────────────────────────────────
+  const currentCard = cards[currentIndex];
+
+  if (!currentCard) {
+    return (
+      <div className="bg-white rounded-3xl p-8 text-center">
+        <p className="text-slate-600">Carte introuvable (index {currentIndex})</p>
+        <button onClick={onComplete} className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-xl">
+          Terminer
+        </button>
+      </div>
+    );
+  }
+
+  const handleFlip = () => setIsFlipped(true);
   const handleNext = () => {
-    if (currentIndex >= cards.length - 1) {
-      // Dernière carte → Compléter
-      onComplete();
-    } else {
-      // Carte suivante
-      onNext();
-    }
+    if (currentIndex >= cards.length - 1) onComplete();
+    else onNext();
   };
 
-  /**
-   * ═══════════════════════════════════════════════════════════
-   * RENDER
-   * ═══════════════════════════════════════════════════════════
-   */
   return (
-    <div className="bg-white rounded-3xl p-6 md:p-8 border-2 border-slate-100 
-                    shadow-lg min-h-[500px] flex flex-col">
-      
-      {/* ═══ PROGRESSION ═══ */}
+    <div className="bg-white rounded-3xl p-6 md:p-8 border-2 border-slate-100 shadow-lg min-h-[500px] flex flex-col">
       <div className="mb-6">
         <p className="text-sm font-bold text-slate-600 mb-2">
           Carte {currentIndex + 1} / {cards.length}
         </p>
-        
         <div className="w-full bg-slate-200 rounded-full h-1.5">
           <motion.div
             initial={{ width: 0 }}
-            animate={{ 
-              width: `${((currentIndex + 1) / cards.length) * 100}%` 
-            }}
+            animate={{ width: `${((currentIndex + 1) / cards.length) * 100}%` }}
             transition={{ duration: 0.4 }}
             className="h-full rounded-full"
             style={{ backgroundColor: subjectColor }}
@@ -105,105 +83,67 @@ const FlashcardView = ({
         </div>
       </div>
 
-      {/* ═══ CARTE FLIP ═══ */}
-      <div className="flex-1 flex items-center justify-center perspective-1000">
-        
+      <div className="flex-1 flex items-center justify-center">
         <AnimatePresence mode="wait">
-          
-          {/* ─────────────────────────────────────────────── */}
-          {/* FACE AVANT : QUESTION */}
-          {/* ─────────────────────────────────────────────── */}
           {!isFlipped ? (
             <motion.div
-              key="question"
+              key={`q-${currentCard.id}-${currentIndex}`}
               initial={{ rotateY: -90, opacity: 0 }}
               animate={{ rotateY: 0, opacity: 1 }}
               exit={{ rotateY: 90, opacity: 0 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              transition={{ duration: 0.5 }}
               className="w-full max-w-2xl"
             >
-              <div className="bg-gradient-to-br from-slate-50 to-slate-100 
-                              border-2 border-slate-200 rounded-3xl p-8 
-                              shadow-xl min-h-[300px] flex flex-col 
-                              justify-center items-center">
-                
-                {/* Question */}
-                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 
-                               text-center mb-8">
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 rounded-3xl p-8 shadow-xl min-h-[300px] flex flex-col justify-center items-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 text-center mb-8">
                   {currentCard.question}
                 </h3>
-
-                {/* Hint (optionnel) */}
                 {currentCard.hint && (
                   <p className="text-sm text-slate-600 italic text-center mb-6">
                     💡 {currentCard.hint}
                   </p>
                 )}
-
-                {/* Bouton flip */}
                 <motion.button
                   onClick={handleFlip}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-[#0080FF] hover:bg-[#0066CC] 
-                             text-white font-bold rounded-xl 
-                             shadow-lg hover:shadow-xl transition-all"
+                  className="px-8 py-4 bg-[#0080FF] hover:bg-[#0066CC] text-white font-bold rounded-xl shadow-lg"
                 >
                   Afficher la réponse
                 </motion.button>
               </div>
             </motion.div>
-
           ) : (
-
-            /* ─────────────────────────────────────────────── */
-            /* FACE ARRIÈRE : RÉPONSE */
-            /* ─────────────────────────────────────────────── */
             <motion.div
-              key="answer"
+              key={`a-${currentCard.id}-${currentIndex}`}
               initial={{ rotateY: -90, opacity: 0 }}
               animate={{ rotateY: 0, opacity: 1 }}
               exit={{ rotateY: 90, opacity: 0 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              transition={{ duration: 0.5 }}
               className="w-full max-w-2xl"
             >
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 
-                              border-2 border-green-200 rounded-3xl p-8 
-                              shadow-xl min-h-[300px] flex flex-col 
-                              justify-center items-center">
-                
-                {/* Icône checkmark */}
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-3xl p-8 shadow-xl min-h-[300px] flex flex-col justify-center items-center">
                 <div className="text-5xl mb-4">✅</div>
-
-                {/* Réponse */}
-                <p className="text-xl md:text-2xl font-bold text-green-900 
-                              text-center mb-8">
+                <p className="text-xl md:text-2xl font-bold text-green-900 text-center mb-8">
                   {currentCard.answer}
                 </p>
-
-                {/* Bouton suivant */}
                 <motion.button
                   onClick={handleNext}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-[#0080FF] hover:bg-[#0066CC] 
-                             text-white font-bold rounded-xl 
-                             shadow-lg hover:shadow-xl transition-all"
+                  className="px-8 py-4 bg-[#0080FF] hover:bg-[#0066CC] text-white font-bold rounded-xl shadow-lg"
                 >
                   {currentIndex >= cards.length - 1 ? 'Terminer' : 'Suivant →'}
                 </motion.button>
               </div>
             </motion.div>
           )}
-
         </AnimatePresence>
       </div>
 
-      {/* ═══ NOTE INFORMATIVE ═══ */}
       <p className="text-xs text-slate-500 text-center mt-4">
         💡 Prends le temps de bien mémoriser chaque carte
       </p>
-
     </div>
   );
 };
