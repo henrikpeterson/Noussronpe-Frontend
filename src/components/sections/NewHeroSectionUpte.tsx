@@ -3,7 +3,7 @@ import { ArrowRight, Star, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { Link } from "react-router-dom";
-
+import studentsImg from "@/assets/Students4.png"
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number = 0) => ({
@@ -71,7 +71,7 @@ export default function NewHeroSection() {
 
               {/* --- L'IMAGE --- */}
               <img
-                src="src/assets/Students4.png"
+                src={studentsImg}
                 alt="Étudiant qui révise"
                 /* On s'assure que l'image est au-dessus du glow avec relative z-10 */
                 className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[500px] h-auto drop-shadow-[0_20px_50px_rgba(37,99,235,0.25)]"
