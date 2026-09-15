@@ -8,6 +8,7 @@ import { LogIn, UserPlus, ShieldAlert } from "lucide-react";
 import AssistanceList from "@/newpages/Components/Assistance/views/AssistanceList";
 import NouvelleDemandeForm from "@/newpages/Components/Assistance/views/NouvelleDemandeForm";
 import FilDiscussion from "@/newpages/Components/Assistance/views/FilDiscussion";
+import { Link } from "react-router-dom";
 // ═══════════════════════════════════════════════════════════
 // TYPES
 // ═══════════════════════════════════════════════════════════
@@ -78,8 +79,8 @@ const EtatNonConnecte = () => (
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
         
         {/* Bouton Se connecter (Style Bleu Tactile) */}
-        <a
-          href="/login"
+        <Link
+          to="/login"
           className="flex items-center justify-center gap-2.5 px-8 h-12
                      bg-blue-500 hover:bg-blue-400 text-white font-black text-xs uppercase tracking-widest
                      rounded-2xl border-b-[5px] border-blue-600
@@ -87,11 +88,11 @@ const EtatNonConnecte = () => (
         >
           <LogIn size={18} strokeWidth={2.5} />
           <span>Se connecter</span>
-        </a>
+        </Link>
 
         {/* Bouton Créer un compte (Style Bloc Blanc 3D) */}
-        <a
-          href="/register"
+        <Link
+          to ="/register"
           className="flex items-center justify-center gap-2.5 px-8 h-12
                      bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-widest
                      rounded-2xl border-2 border-slate-200 border-b-[5px]
@@ -99,7 +100,7 @@ const EtatNonConnecte = () => (
         >
           <UserPlus size={18} strokeWidth={2.5} />
           <span>Créer un compte</span>
-        </a>
+        </Link>
 
       </div>
     </div>
