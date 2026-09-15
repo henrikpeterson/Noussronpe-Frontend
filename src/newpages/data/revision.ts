@@ -1,8 +1,8 @@
 // src/api/revision.ts - FINAL CONSOLIDÉ - Phases 1+2+3
 // Production-ready, commenté, avec tous les fixs (token students_access_token, classe auto, flashcards mapping)
 
-const API_BASE_URL = 'http://192.168.1.69:8000/api';
-const AUTH_BASE_URL = 'http://192.168.1.69:8000';
+const API_BASE_URL = 'https://revizdev.pythonanywhere.com/api';
+const AUTH_BASE_URL = 'https://revizdev.pythonanywhere.com';
 
 // ===================== TYPES =====================
 export interface MatiereRevisionApi {

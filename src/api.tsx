@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://192.168.1.69:8000/'; 
+const API_BASE_URL = 'https://revizdev.pythonanywhere.com/'; 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {

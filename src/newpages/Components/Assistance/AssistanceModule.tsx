@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAssistance } from '@/hooks/useAssitance';
-import { AssistanceRequest } from "@/api";
+import { AssistanceReponse, AssistanceRequest } from "@/api";
 
 import { LogIn, UserPlus, ShieldAlert } from "lucide-react";
 
