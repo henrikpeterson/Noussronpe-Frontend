@@ -2,6 +2,12 @@
  *CONFIGURATION DES MATIÈRES
  * 7 matières avec images, couleurs et descriptions
  */
+import SubjectsImg from "@/assets/Subjects/SVT.webp"
+import SubjectsImg1 from "@/assets/Subjects/Anglais.webp"
+import SubjectsImg2 from "@/assets/Subjects/Histoire.webp"
+import SubjectsImg3 from "@/assets/Subjects/Geographie.webp"
+import SubjectsImg4 from "@/assets/Subjects/Mathematique.webp"
+import SubjectsImg5 from "@/assets/Subjects/Physique.webp"
 
 export interface Subject {
   id: string;
@@ -21,7 +27,7 @@ export const SUBJECTS: Subject[] = [
     id: "svt",
     name: "SVT",
     description: "Découvre le vivant, l'évolution et l'environnement.",
-    image: "src/assets/Subjects/SVT.webp",
+    image: SubjectsImg,
     chapters: 14,
     exercises: 42,
     color: "#1310b9",
@@ -32,7 +38,7 @@ export const SUBJECTS: Subject[] = [
     id: "Ang",
     name: "Anglais",
     description: "Perfectionne ta grammaire et ton vocabulaire.",
-    image: "src/assets/Subjects/Anglais.webp",
+    image: SubjectsImg1,
     chapters: 8,
     exercises: 35,
     color: "#DC2626",
@@ -43,7 +49,7 @@ export const SUBJECTS: Subject[] = [
     id: "Histo",
     name: "Histoire",
     description: "Voyage à travers les époques et civilisations.",
-    image: "src/assets/Subjects/Histoire.webp",
+    image: SubjectsImg2,
     chapters: 11,
     exercises: 40,
     color: "#d4ff15",
@@ -54,7 +60,7 @@ export const SUBJECTS: Subject[] = [
     id: "Geo",
     name: "Géographie",
     description: "Explore les territoires, climats et populations.",
-    image: "src/assets/Subjects/Geographie.webp",
+    image: SubjectsImg3,
     chapters: 9,
     exercises: 30,
     color: "#0891B2",
@@ -65,7 +71,7 @@ export const SUBJECTS: Subject[] = [
     id: "mathematiques",
     name: "Mathématiques",
     description: "Maîtrise les nombres, équations et géométrie.",
-    image: "src/assets/Subjects/Mathematique.webp",
+    image: SubjectsImg4,
     chapters: 15,
     exercises: 52,
     color: "#2563EB",
@@ -76,7 +82,7 @@ export const SUBJECTS: Subject[] = [
     id: "PCT",
     name: "Physique Chimie",
     description: "Comprends les lois de la nature et de l'énergie.",
-    image: "src/assets/Subjects/Physique.webp",
+    image: SubjectsImg5,
     chapters: 12,
     exercises: 45,
     color: "#ed8b3a",
